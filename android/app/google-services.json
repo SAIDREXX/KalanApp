@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1048494155891",
+    "project_id": "kalanapp-rexx",
+    "storage_bucket": "kalanapp-rexx.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1048494155891:android:f48284568607dafda3a206",
+        "android_client_info": {
+          "package_name": "com.kalan.kalanapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1048494155891-c3qtefdikloda79m23c06bso8o4cefgq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kalan.kalanapp",
+            "certificate_hash": "cbdabd4b257bbaa07fd670f6084f01fe841029aa"
+          }
+        },
+        {
+          "client_id": "1048494155891-tev04kflo3lin236gki16j2o1k49egdk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4-ESxsQJFgQXq5eboNfLPQDmKHQF7xRU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1048494155891-hr6i2c5dbn9vql0suunlvhp1i1hm8959.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
