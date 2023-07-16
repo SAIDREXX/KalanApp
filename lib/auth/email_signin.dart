@@ -10,6 +10,7 @@ class Auth {
   Future<void> singInWithEmailAndPassword({
     required String email,
     required String password,
+
   }) async {
     await _firebaseAuth.signInWithEmailAndPassword(
       email: email,
