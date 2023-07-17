@@ -1,8 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
+
         android:label="Kalan"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        >
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -31,8 +34,11 @@
             android:value="2" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDE6sEp8iacbtoJD4LI4zToKWudSNRUAys" />
-            
+            android:value="AIzaSyB_u_XB0Y7A3uTLc44hTq6in6ETYsgGC9Y" />
 
-    </application>
+
+
+
+    </application
+        >
 </manifest>
