@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kalanapp/view/reestablish_screen.dart';
+import 'package:kalanapp/view/forgot_password.dart';
 import '../constants/colors.dart';
 import 'package:kalanapp/auth/google_signin.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -185,15 +185,19 @@ class LoginPageState extends State<LoginPage> {
                             inactiveTrackColor: ColorConstants.jazPalette2,
                           ),
                           MaterialButton(
-                            onPressed: () async{
-                              String email = emailController.text; // Obtener el valor del campo de texto
-                              String password = passwordController.text; // Obtener el valor del campo de contraseña
+                            onPressed: () async {
+                              String email = emailController
+                                  .text; // Obtener el valor del campo de texto
+                              String password = passwordController
+                                  .text; // Obtener el valor del campo de contraseña
 
                               //verificacion del auteticacion
-                              await Auth().singInWithEmailAndPassword(email: email, password: password);
+                              await Auth().singInWithEmailAndPassword(
+                                  email: email, password: password);
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context)=>HomeScreen(),
+                                MaterialPageRoute(
+                                  builder: (context) => HomeScreen(),
                                 ),
                               );
                             },
@@ -274,23 +278,23 @@ class LoginPageState extends State<LoginPage> {
                           const SizedBox(
                             height: 22,
                           ),
-                      // dirige a la pagina de restablecimiento de contraseña
-                      GestureDetector(
-                        onTap: () => Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => const reestablisPage(),
-                          ),
-                        ),
-                          child: Text(
-                            'Olvidé mi contraseña',
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: ColorConstants.jazPalette3,
+                          // dirige a la pagina de restablecimiento de contraseña
+                          GestureDetector(
+                            onTap: () => Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (context) => const ForgotPage(),
+                              ),
                             ),
-                            textAlign: TextAlign.center,
+                            child: Text(
+                              'Olvidé mi contraseña',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: ColorConstants.jazPalette3,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
                           ),
-                      ),
                         ],
                       ),
                     ),
