@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:kalanapp/constants/colors.dart';
-import 'package:kalanapp/view/login_page.dart';
 
 class ForgotPage extends StatefulWidget {
   const ForgotPage({super.key});
 
   @override
-  ForgotPageState createState() => ForgotPageState();
+  State<ForgotPage> createState() => _ForgotPageState();
 }
 
-class ForgotPageState extends State<ForgotPage> {
+class _ForgotPageState extends State<ForgotPage> {
+  @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -37,7 +37,7 @@ class ForgotPageState extends State<ForgotPage> {
                     child: Image.asset('assets/kalan_logo_full.png'),
                   ),
                   const SizedBox(
-                    height: 8,
+                    height: 40,
                   ),
                   const Text(
                     'Conecta, Protege y Comparte con Kalan',
@@ -48,9 +48,6 @@ class ForgotPageState extends State<ForgotPage> {
                         fontFamily: 'Roboto',
                         fontStyle: FontStyle.normal),
                   ),
-                  const SizedBox(
-                    height: 100,
-                  )
                 ],
               ),
             ),
@@ -61,10 +58,12 @@ class ForgotPageState extends State<ForgotPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      height: height / 3.3,
+                      height: height / 3.5,
                       margin: const EdgeInsets.all(20),
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 32, vertical: 20),
+                        horizontal: 32,
+                        vertical: 20,
+                      ),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(32),
@@ -73,7 +72,7 @@ class ForgotPageState extends State<ForgotPage> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           const Text(
-                            'Restablecimiento de contraseña',
+                            'Olvidé Mi Contraseña',
                             style: TextStyle(
                                 fontSize: 23, fontWeight: FontWeight.w500),
                             textAlign: TextAlign.center,
@@ -81,7 +80,6 @@ class ForgotPageState extends State<ForgotPage> {
                           const SizedBox(
                             height: 22,
                           ),
-                          //Correo
                           SizedBox(
                             height: 42,
                             child: TextField(
@@ -102,47 +100,31 @@ class ForgotPageState extends State<ForgotPage> {
                               ),
                             ),
                           ),
-
                           const SizedBox(
-                            height: 25,
+                            height: 18,
                           ),
-                          //Boton de registro:
                           MaterialButton(
                             onPressed: () {},
                             color: ColorConstants.jazPalette1,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(31),
                             ),
-                            height: 40,
+                            height: 38,
                             child: const Text(
-                              ' Restablecer',
+                              'Iniciar Sesión',
                               style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 20,
+                                  fontSize: 13,
                                   fontWeight: FontWeight.w700),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () => Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (context) => const LoginPage(),
-                        ),
-                      ),
-                      child: Text(
-                        '¿Ya tienes una cuenta? Inicia Sesion',
-                        style: TextStyle(
-                          color: ColorConstants.jazPalette1,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    )
                   ],
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
