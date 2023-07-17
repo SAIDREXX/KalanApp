@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kalanapp/constants/colors.dart';
 import 'package:kalanapp/view/login_page.dart';
@@ -11,7 +10,6 @@ class ForgotPage extends StatefulWidget {
 }
 
 class ForgotPageState extends State<ForgotPage> {
-  bool _obscureText = true;
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
