@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:kalanapp/constants/colors.dart';
 import 'package:kalanapp/view/login_page.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:kalanapp/auth/email_signin.dart';
-
+import 'package:kalanapp/firebase_options.dart';
+import 'package:kalanapp/main.dart';
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
 
-// TODO: Guardar la imformacion en la base de datos de firestore
   //TODO: añadir las alertas bien ejemplo (se registro correctamente, fallos de registro, etc..)
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -25,6 +24,8 @@ class _RegisterPageState extends State<RegisterPage> {
     TextEditingController passwordController = TextEditingController();
     TextEditingController cofirmPasswordController = TextEditingController();
     TextEditingController NameController = TextEditingController();
+    TextEditingController PhonenumberController = TextEditingController();
+
     return Scaffold(
       backgroundColor: ColorConstants.jazPalette2,
       body: SizedBox(
@@ -105,7 +106,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               decoration: InputDecoration(
                                 labelText: 'Nombre',
                                 contentPadding:
-                                    const EdgeInsets.fromLTRB(20, 20, 15, 25),
+                                const EdgeInsets.fromLTRB(20, 20, 15, 25),
                                 suffixIcon: const Icon(Icons.perm_identity),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(32),
@@ -150,6 +151,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           SizedBox(
                             height: 42,
                             child: TextField(
+                              controller: PhonenumberController,
                               textAlign: TextAlign.left,
                               decoration: InputDecoration(
                                 labelText: 'Teléfono',
@@ -179,7 +181,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               decoration: InputDecoration(
                                 labelText: 'Contraseña',
                                 contentPadding:
-                                    const EdgeInsets.fromLTRB(20, 20, 15, 25),
+                                const EdgeInsets.fromLTRB(20, 20, 15, 25),
                                 suffixIcon: IconTheme(
                                   data: IconThemeData(
                                     color: _obscureText
@@ -265,47 +267,53 @@ class _RegisterPageState extends State<RegisterPage> {
                               String email = emailController.text;
                               String veripassword = cofirmPasswordController.text;
                               String name = NameController.text;
+                              String PhoneNumber = PhonenumberController.text;
+
                               //verifica si es la misma contraseña
                               if(password == veripassword){
-                                    try{
-                                      await Auth().registerWithEmailAndPassword(email, password);
-                                    }catch(e){
-                                      showDialog(
-                                          context: context,
-                                          builder: (BuildContext context){
-                                            return AlertDialog(
-                                              title: Text('Error'),
-                                              content: Text(e.toString()),
-                                              actions: [
-                                                  TextButton(
-                                                      onPressed:(){
-                                                        Navigator.of(context).pop();
-                                                      },
-                                                      child: Text('Aceptar'))
-                                              ],
-                                            );
-                                          }
-                                          );
-                                    }
+                                try{
+                                  await Auth().registerWithEmailAndPassword(email, password);
 
-                              }else{
-                                      showDialog(
+                                  //envia los datos a la Funcion de addUsuarios
+                                  await addUsuarios(name, PhoneNumber, email, password);
+
+                                }catch(e){
+                                  showDialog(
                                       context: context,
-                                      builder: (BuildContext context)
-                                      {
+                                      builder: (BuildContext context){
                                         return AlertDialog(
                                           title: Text('Error'),
-                                          content: Text(' credenciales no identicas'),
+                                          content: Text(e.toString()),
                                           actions: [
                                             TextButton(
-                                                onPressed: () {
+                                                onPressed:(){
                                                   Navigator.of(context).pop();
                                                 },
                                                 child: Text('Aceptar'))
                                           ],
                                         );
                                       }
+                                  );
+                                }
+
+                              }else{
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context)
+                                    {
+                                      return AlertDialog(
+                                        title: Text('Error'),
+                                        content: Text(' credenciales no identicas'),
+                                        actions: [
+                                          TextButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Text('Aceptar'))
+                                        ],
                                       );
+                                    }
+                                );
 
 
                               }
