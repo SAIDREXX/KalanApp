@@ -22,6 +22,22 @@
           }
         },
         {
+          "client_id": "1048494155891-l3r05u6clr3t3thudclag4aujeqfak58.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kalan.kalanapp",
+            "certificate_hash": "75cc647f23b154e279060939f53651fbc829dd42"
+          }
+        },
+        {
+          "client_id": "1048494155891-r4600egeie118hp2c92mr4jt0gd3pf7s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kalan.kalanapp",
+            "certificate_hash": "ebe4b3468e2cdca28e98caad83a36575725646cf"
+          }
+        },
+        {
           "client_id": "1048494155891-tev04kflo3lin236gki16j2o1k49egdk.apps.googleusercontent.com",
           "client_type": 3
         }

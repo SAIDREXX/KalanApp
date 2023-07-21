@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:kalanapp/constants/colors.dart';
 import 'package:kalanapp/view/login_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:kalanapp/auth/email_signin.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
-// TODO: guardar usuarios o registrar usuarios a firebase(conectar).
+
+// TODO: Guardar la imformacion en la base de datos de firestore
+  //TODO: añadir las alertas bien ejemplo (se registro correctamente, fallos de registro, etc..)
   @override
   State<RegisterPage> createState() => _RegisterPageState();
 }
@@ -16,6 +20,11 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
 
+    //variables que se almacena
+    TextEditingController emailController = TextEditingController();
+    TextEditingController passwordController = TextEditingController();
+    TextEditingController cofirmPasswordController = TextEditingController();
+    TextEditingController NameController = TextEditingController();
     return Scaffold(
       backgroundColor: ColorConstants.jazPalette2,
       body: SizedBox(
@@ -91,6 +100,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           SizedBox(
                             height: 42,
                             child: TextField(
+                              controller: NameController,
                               textAlign: TextAlign.left,
                               decoration: InputDecoration(
                                 labelText: 'Nombre',
@@ -115,6 +125,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           SizedBox(
                             height: 42,
                             child: TextField(
+                              controller: emailController,
                               textAlign: TextAlign.left,
                               decoration: InputDecoration(
                                 labelText: 'Correo Electrónico',
@@ -162,6 +173,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           SizedBox(
                             height: 42,
                             child: TextField(
+                              controller: passwordController,
                               textAlign: TextAlign.left,
                               obscureText: _obscureText,
                               decoration: InputDecoration(
@@ -204,6 +216,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           SizedBox(
                             height: 42,
                             child: TextField(
+                              controller: cofirmPasswordController,
                               textAlign: TextAlign.left,
                               obscureText: _obscureText,
                               decoration: InputDecoration(
@@ -245,7 +258,58 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                           //Boton de registro:
                           MaterialButton(
-                            onPressed: () {},
+                            onPressed: () async {
+                              //accion cuando se preciona el boton
+
+                              String password = passwordController.text;
+                              String email = emailController.text;
+                              String veripassword = cofirmPasswordController.text;
+                              String name = NameController.text;
+                              //verifica si es la misma contraseña
+                              if(password == veripassword){
+                                    try{
+                                      await Auth().registerWithEmailAndPassword(email, password);
+                                    }catch(e){
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context){
+                                            return AlertDialog(
+                                              title: Text('Error'),
+                                              content: Text(e.toString()),
+                                              actions: [
+                                                  TextButton(
+                                                      onPressed:(){
+                                                        Navigator.of(context).pop();
+                                                      },
+                                                      child: Text('Aceptar'))
+                                              ],
+                                            );
+                                          }
+                                          );
+                                    }
+
+                              }else{
+                                      showDialog(
+                                      context: context,
+                                      builder: (BuildContext context)
+                                      {
+                                        return AlertDialog(
+                                          title: Text('Error'),
+                                          content: Text(' credenciales no identicas'),
+                                          actions: [
+                                            TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: Text('Aceptar'))
+                                          ],
+                                        );
+                                      }
+                                      );
+
+
+                              }
+                            },
                             color: ColorConstants.jazPalette1,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(31),

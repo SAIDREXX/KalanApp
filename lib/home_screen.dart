@@ -1,5 +1,5 @@
-import 'dart:async';
-
+  import 'dart:async';
+import 'package:location/location.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -11,26 +11,32 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreen extends State<HomeScreen> {
-  final Completer<GoogleMapController> _controller =
+  Location _location = Location();
+  final Completer<GoogleMapController>_controller =
       Completer<GoogleMapController>();
 
+
   static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
+      target: LatLng(37.42796133580664, -122.085749655962),
+      zoom: 14.4746,
+
   );
-
-  static const CameraPosition _kLake = CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(37.43296265331129, -122.08832357078792),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SafeArea(
+        child: Scaffold(
+          appBar : AppBar(
+            //Barra de la App
+             title: Text('Bienvenido A Kalan') ,
+    ),
+            //Se llama cajon de navegacion
+          drawer: const NavigationDrawer(),
+
       body: GoogleMap(
         //zomControlsEneabled: activa y desativa el + y - de google maps
         zoomControlsEnabled: false,
+        myLocationEnabled:true,
+        myLocationButtonEnabled: false,
         mapType: MapType.normal,
         initialCameraPosition: _kGooglePlex,
         onMapCreated: (GoogleMapController controller) {
@@ -38,20 +44,51 @@ class _HomeScreen extends State<HomeScreen> {
         },
       ),
       floatingActionButton: Column(
+
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          FloatingActionButton.extended(
-            onPressed: _goToTheLake,
-            label: const Text(''),
-            icon: const Icon(Icons.gps_fixed),
-          ),
-        ],
+        FloatingActionButton.extended(
+        onPressed: _goToTheLake,
+        label: const Text(''),
+        icon: const Icon(Icons.gps_fixed),
       ),
+      ],
+      ),
+    ),
     );
   }
 
   Future<void> _goToTheLake() async {
-    final GoogleMapController controller = await _controller.future;
-    await controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
+   final GoogleMapController controller = await _controller.future;
+
+   LocationData locationData;
+
+   try {
+     locationData = await _location.getLocation();
+   }catch(e){
+     print('Error de la ubiacion $e');
+     return;
+   }
+
+   final LatLng currentLocation = LatLng(
+       locationData.latitude!,
+       locationData.longitude!,
+   );
+
+   controller.animateCamera(CameraUpdate.newCameraPosition(
+     CameraPosition(
+         target: currentLocation,
+       zoom: 15,
+     ),
+   ));
+
   }
+}
+//COdigo de Cajon  de navegacion
+class NavigationDrawer extends StatelessWidget{
+  const NavigationDrawer({Key? key}): super(key:key);
+
+//TODO: Terminar las opciones de cajon de navegacion.
+  @override
+  Widget build (BuildContext context) => Drawer();
 }
