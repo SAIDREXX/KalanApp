@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kalanapp/view/forgot_password.dart';
+import 'package:kalanapp/view/settings/settings_main.dart';
 import '../constants/colors.dart';
 import 'package:kalanapp/auth/google_signin.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -283,8 +284,9 @@ class LoginPageState extends State<LoginPage> {
                           // dirige a la pagina de restablecimiento de contraseña
                           GestureDetector(
                             onTap: () => Navigator.of(context).pushReplacement(
+                              //Cambiar a ForgotPage() después De Settings
                               MaterialPageRoute(
-                                builder: (context) => const ForgotPage(),
+                                builder: (context) => const SettingsPage(),
                               ),
                             ),
                             child: Text(
