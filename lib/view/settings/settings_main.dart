@@ -22,37 +22,30 @@ class SettingsPageState extends State<SettingsPage> {
         child: Stack(
           children: [
             Container(
-              height: height / 2,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: ColorConstants.jazPalette3,
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(60),
-                  bottomRight: Radius.circular(60),
+                height: height / 2,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: ColorConstants.jazPalette3,
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(60),
+                    bottomRight: Radius.circular(60),
+                  ),
                 ),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: 70,
-                    child: Image.asset('assets/splash.png'),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 50),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        child: Icon(
+                          Icons.settings,
+                          size: 150,
+                          color: ColorConstants.jazPalette4,
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(
-                    height: 40,
-                  ),
-                  const Text(
-                    'Conecta, Protege y Comparte con Kalan',
-                    style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: 'Roboto',
-                        fontStyle: FontStyle.normal),
-                  ),
-                ],
-              ),
-            ),
+                )),
             SingleChildScrollView(
               child: SizedBox(
                 height: height,
@@ -60,7 +53,7 @@ class SettingsPageState extends State<SettingsPage> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Container(
-                      height: height / 1.9,
+                      height: height / 1.45,
                       margin: const EdgeInsets.all(20),
                       padding: const EdgeInsets.symmetric(
                         horizontal: 32,
@@ -76,7 +69,7 @@ class SettingsPageState extends State<SettingsPage> {
                           Row(
                             children: [
                               const Icon(
-                                Icons.cancel_outlined,
+                                Icons.close,
                                 size: 25,
                               ),
                               const SizedBox(
@@ -124,53 +117,356 @@ class SettingsPageState extends State<SettingsPage> {
                           const SizedBox(
                             width: 20,
                           ),
-                          Container(
-                              width: 100,
-                              height: 42,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
+                          OutlinedButton(
+                            onPressed: () {},
+                            style: OutlinedButton.styleFrom(
+                              side: BorderSide(
+                                color: ColorConstants.greyScale1,
+                                width: 1,
+                              ),
+                              shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(32),
-                                border: Border.all(
-                                  color: ColorConstants.greyScale4,
-                                  width: 2,
+                              ),
+                            ),
+                            child: SizedBox(
+                              height: 42,
+                              child: Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.person_outline,
+                                      color: ColorConstants.jazPalette8,
+                                      size: 30,
+                                    ),
+                                    //const SizedBox(width: 50),
+                                    Text(
+                                      'Cuenta',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: ColorConstants.greyScale2,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(6),
-                                    child: Icon(
-                                      Icons.person_2_outlined,
-                                      color: ColorConstants.jazPalette3,
-                                      size: 28,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 7,
+                          ),
+                          //Linea
+                          Container(
+                            color: ColorConstants.greyScale1,
+                            height: 1,
+                          ),
+                          const SizedBox(
+                            height: 7,
+                          ),
+                          OutlinedButton(
+                            onPressed: () {},
+                            style: OutlinedButton.styleFrom(
+                              side: BorderSide(
+                                color: ColorConstants.greyScale1,
+                                width: 1,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(32),
+                              ),
+                            ),
+                            child: SizedBox(
+                              height: 42,
+                              child: Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.notifications_none_outlined,
+                                      color: ColorConstants.jazPalette8,
+                                      size: 30,
                                     ),
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          'Cuenta',
-                                          style: TextStyle(
-                                              color: ColorConstants.jazPalette2,
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ],
+                                    //const SizedBox(width: 50),
+                                    Text(
+                                      'Notificaciones',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: ColorConstants.greyScale2,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              )),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 7,
+                          ),
+                          //Linea
+                          Container(
+                            color: ColorConstants.greyScale1,
+                            height: 1,
+                          ),
+                          const SizedBox(
+                            height: 7,
+                          ),
+                          OutlinedButton(
+                            onPressed: () {},
+                            style: OutlinedButton.styleFrom(
+                              side: BorderSide(
+                                color: ColorConstants.greyScale1,
+                                width: 1,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(32),
+                              ),
+                            ),
+                            child: SizedBox(
+                              height: 42,
+                              child: Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.location_on_outlined,
+                                      color: ColorConstants.jazPalette8,
+                                      size: 30,
+                                    ),
+                                    //const SizedBox(width: 50),
+                                    Text(
+                                      'Ubicación',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: ColorConstants.greyScale2,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 7,
+                          ),
+                          //Linea
+                          Container(
+                            color: ColorConstants.greyScale1,
+                            height: 1,
+                          ),
+                          const SizedBox(
+                            height: 7,
+                          ),
+                          OutlinedButton(
+                            onPressed: () {},
+                            style: OutlinedButton.styleFrom(
+                              side: BorderSide(
+                                color: ColorConstants.greyScale1,
+                                width: 1,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(32),
+                              ),
+                            ),
+                            child: SizedBox(
+                              height: 42,
+                              child: Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.class_outlined,
+                                      color: ColorConstants.jazPalette8,
+                                      size: 30,
+                                    ),
+                                    //const SizedBox(width: 50),
+                                    Text(
+                                      'Privacidad y Seguridad',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: ColorConstants.greyScale2,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 7,
+                          ),
+                          //Linea
+                          Container(
+                            color: ColorConstants.greyScale1,
+                            height: 1,
+                          ),
+                          const SizedBox(
+                            height: 7,
+                          ),
+                          OutlinedButton(
+                            onPressed: () {},
+                            style: OutlinedButton.styleFrom(
+                              side: BorderSide(
+                                color: ColorConstants.greyScale1,
+                                width: 1,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(32),
+                              ),
+                            ),
+                            child: SizedBox(
+                              height: 42,
+                              child: Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.question_mark_outlined,
+                                      color: ColorConstants.jazPalette8,
+                                      size: 30,
+                                    ),
+                                    //const SizedBox(width: 50),
+                                    Text(
+                                      'Soporte',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: ColorConstants.greyScale2,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 7,
+                          ),
+                          //Linea
+                          Container(
+                            color: ColorConstants.greyScale1,
+                            height: 1,
+                          ),
+                          const SizedBox(
+                            height: 7,
+                          ),
+                          OutlinedButton(
+                            onPressed: () {},
+                            style: OutlinedButton.styleFrom(
+                              side: BorderSide(
+                                color: ColorConstants.greyScale1,
+                                width: 1,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(32),
+                              ),
+                            ),
+                            child: SizedBox(
+                              height: 42,
+                              child: Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.info_outline,
+                                      color: ColorConstants.jazPalette8,
+                                      size: 30,
+                                    ),
+                                    //const SizedBox(width: 50),
+                                    Text(
+                                      'Información',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: ColorConstants.greyScale2,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 7,
+                          ),
+                          //Linea
+                          Container(
+                            color: ColorConstants.greyScale1,
+                            height: 1,
+                          ),
+                          const SizedBox(
+                            height: 7,
+                          ),
+                          OutlinedButton(
+                            onPressed: () {},
+                            style: OutlinedButton.styleFrom(
+                              side: BorderSide(
+                                color: ColorConstants.greyScale1,
+                                width: 1,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(32),
+                              ),
+                            ),
+                            child: SizedBox(
+                              height: 42,
+                              child: Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.door_back_door_outlined,
+                                      color: ColorConstants.jazPalette8,
+                                      size: 30,
+                                    ),
+                                    //const SizedBox(width: 50),
+                                    Text(
+                                      'Cerrar Sesión',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: ColorConstants.greyScale2,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 2,
+                          ),
+                          Text(
+                            'Version 1.2.3.4.5',
+                            style: TextStyle(
+                                color: ColorConstants.greyScale2, fontSize: 12),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(
+                            height: 2,
+                          ),
+                          Text(
+                            'Copyright 2023 Kalan, Inc.',
+                            style: TextStyle(
+                                color: ColorConstants.greyScale2, fontSize: 12),
+                            textAlign: TextAlign.center,
+                          ),
                         ],
                       ),
                     )
                   ],
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
