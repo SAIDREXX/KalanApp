@@ -50,7 +50,7 @@ class SettingsPageState extends State<SettingsPage> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
-                  height: height / 1.3,
+                  height: height / 1.45,
                   margin: const EdgeInsets.all(20),
                   padding: const EdgeInsets.symmetric(
                     horizontal: 32,
