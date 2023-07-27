@@ -36,43 +36,12 @@ class SettingsPageState extends State<SettingsPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Image.asset(
-                      'assets/default_test_image.png',
-                      width: 100,
-                      height: 100,
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'SAIDREXXX',
-                          style: TextStyle(
-                              fontSize: 23,
-                              fontWeight: FontWeight.w600,
-                              fontFamily: 'Inter,',
-                              color: ColorConstants.starterWhite),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'example@example.com',
-                          style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Inter',
-                              color: ColorConstants.greyScale4,
-                              decoration: TextDecoration.underline),
-                        ),
-                      ],
+                    SizedBox(
+                      child: Icon(
+                        Icons.settings,
+                        size: 150,
+                        color: ColorConstants.jazPalette4,
+                      ),
                     ),
                   ],
                 ),
@@ -121,6 +90,9 @@ class SettingsPageState extends State<SettingsPage> {
                               Icons.wb_sunny_outlined,
                               size: 25,
                             ),
+                            const SizedBox(
+                              width: 5,
+                            ),
                             Expanded(
                               child: SwitchListTile.adaptive(
                                 value: _isDarkMode,
@@ -134,13 +106,18 @@ class SettingsPageState extends State<SettingsPage> {
                                 inactiveTrackColor: ColorConstants.jazPalette2,
                               ),
                             ),
+                            const SizedBox(
+                              width: 1,
+                            ),
                             const Icon(
                               Icons.nightlight_outlined,
                               size: 25,
                             ),
                           ],
                         ),
-
+                        const SizedBox(
+                          width: 20,
+                        ),
                         OutlinedButton(
                           onPressed: () {},
                           style: OutlinedButton.styleFrom(
@@ -635,7 +612,7 @@ class SettingsPageState extends State<SettingsPage> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Icon(
-                                    Icons.logout_outlined,
+                                    Icons.sensor_door_outlined,
                                     color: ColorConstants.jazPalette5,
                                     size: 30,
                                   ),
