@@ -52,6 +52,10 @@ class LoginPageState extends State<LoginPage> {
                   bottomLeft: Radius.circular(60),
                   bottomRight: Radius.circular(60),
                 ),
+                image: const DecorationImage(
+                  image: AssetImage('assets/ayanBackground.png'),
+                  fit: BoxFit.cover,
+                ),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
