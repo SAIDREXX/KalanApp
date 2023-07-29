@@ -80,7 +80,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       height: height / 1.7,
                       margin: const EdgeInsets.all(20),
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 32, vertical: 20),
+                          horizontal: 40, vertical: 20),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(32),
@@ -347,8 +347,6 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                     )
-
-
                   ],
                 ),
               ),

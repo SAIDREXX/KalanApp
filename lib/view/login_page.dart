@@ -7,6 +7,7 @@ import '../home_screen.dart';
 import 'register_page.dart';
 import 'package:kalanapp/auth/email_signin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 
 
 class LoginPage extends StatefulWidget {

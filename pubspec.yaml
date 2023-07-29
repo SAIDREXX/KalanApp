@@ -43,6 +43,8 @@ dependencies:
   dbcrypt: ^2.0.0
   cloud_firestore: ^4.8.3
   location: ^5.0.0
+  geolocator: ^9.0.2
+  flutter_login_facebook: ^1.8.0
 
 dev_dependencies:
   flutter_test:
