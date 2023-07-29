@@ -35,18 +35,20 @@ class _RegisterPageState extends State<RegisterPage> {
                   bottomLeft: Radius.circular(60),
                   bottomRight: Radius.circular(60),
                 ),
+                image: const DecorationImage(
+                  image: AssetImage('assets/MayanBackground5.png'),
+                  fit: BoxFit.cover,
+                ),
               ),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: Image.asset('assets/kalan_logo_full.png', scale: 2),
+                  SizedBox(
+                    height: 70,
+                    child: Image.asset('assets/kalan_logo_full.png'),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 40,
                   ),
                   const Text(
                     'Conecta, Protege y Comparte con Kalan',
@@ -64,7 +66,7 @@ class _RegisterPageState extends State<RegisterPage> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
-                  height: height / 1.5,
+                  height: height / 1.9,
                   margin: const EdgeInsets.all(20),
                   padding: const EdgeInsets.symmetric(
                     horizontal: 32,

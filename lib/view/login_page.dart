@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kalanapp/main_menu.dart';
 import 'package:kalanapp/view/forgot_password.dart';
 import 'package:kalanapp/view/settings/settings_main.dart';
 import '../constants/colors.dart';
@@ -193,50 +194,51 @@ class LoginPageState extends State<LoginPage> {
                               inactiveTrackColor: ColorConstants.jazPalette2,
                             ),
                             MaterialButton(
-                                onPressed: () async {
-                                  String email = emailController
-                                      .text; // Obtener el valor del campo de texto
-                                  String password = passwordController
-                                      .text; // Obtener el valor del campo de contraseña
+                              onPressed: () async {
+                                String email = emailController
+                                    .text; // Obtener el valor del campo de texto
+                                String password = passwordController
+                                    .text; // Obtener el valor del campo de contraseña
 
-                                  //verificacion del auteticacion
-                                  await Auth().singInWithEmailAndPassword(
-                                      email: email, password: password);
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => HomeScreen(),
-                                    ),
-                                  );
-                                },
-                                color: ColorConstants.jazPalette1,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(31),
+                                //verificacion del auteticacion
+                                await Auth().singInWithEmailAndPassword(
+                                    email: email, password: password);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => HomeScreen(),
+                                  ),
+                                );
+                              },
+                              color: ColorConstants.jazPalette1,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(31),
+                              ),
+                              height: 42,
+                              child: Ink(
+                                decoration: const BoxDecoration(
+                                  image: DecorationImage(
+                                    image: AssetImage(
+                                        'assets/MayanBackground5.png'),
+                                    fit: BoxFit.fill,
+                                  ),
                                 ),
-                                height: 38,
-                                child: Ink(
-                                  decoration: const BoxDecoration(
-                                    image: DecorationImage(
-                                      image: AssetImage(
-                                          'assets/MayanBackground5.png'),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                  child: Stack(
-                                    children: [
-                                      Container(
-                                        alignment: Alignment.center,
-                                        child: const Text(
-                                          'Iniciar Sesión',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w700),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                )),
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                      alignment: Alignment.center,
+                                      child: const Text(
+                                        'Iniciar Sesión',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w700),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
                             const SizedBox(
                               height: 15,
                             ),
@@ -307,7 +309,7 @@ class LoginPageState extends State<LoginPage> {
                                   Navigator.of(context).pushReplacement(
                                 //Cambiar a ForgotPage() después De Settings
                                 MaterialPageRoute(
-                                  builder: (context) => const SettingsPage(),
+                                  builder: (context) => const MainMenu(),
                                 ),
                               ),
                               child: Text(
