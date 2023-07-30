@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:kalanapp/constants/colors.dart';
 import 'package:kalanapp/utils/grid_image_widget.dart';
+import 'package:kalanapp/view/gridTabs/contacts.dart';
+import 'package:kalanapp/view/gridTabs/family_members.dart';
+import 'package:kalanapp/view/gridTabs/help_numbers.dart';
+import 'package:kalanapp/view/gridTabs/monitor.dart';
+import 'package:kalanapp/view/pricing.dart';
+import 'package:kalanapp/view/settings/settings_main.dart';
 
 class MainMenu extends StatefulWidget {
   const MainMenu({super.key});
@@ -22,7 +28,7 @@ class _MainMenuState extends State<MainMenu> {
         child: Stack(
           children: [
             Container(
-              height: height / 2,
+              height: height / 2.5,
               width: double.infinity,
               decoration: BoxDecoration(
                 color: ColorConstants.jazPalette3,
@@ -46,14 +52,68 @@ class _MainMenuState extends State<MainMenu> {
               ),
             ),
             Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 25,
+                ),
+                Row(
+                  children: [
+                    const Expanded(
+                      child: SizedBox(
+                        child: Icon(
+                          Icons.notifications_none_outlined,
+                          size: 50,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    Expanded(
+                      child: SizedBox(
+                        height: 42,
+                        child: MaterialButton(
+                          onPressed: () {},
+                          color: Colors.red,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(32),
+                            side:
+                                const BorderSide(color: Colors.white, width: 2),
+                          ),
+                          child: const Text(
+                            'S.O.S',
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w900,
+                                color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    const Expanded(
+                      child: SizedBox(
+                        child: Icon(
+                          Icons.account_circle_outlined,
+                          size: 50,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            ),
+            Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 SingleChildScrollView(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Container(
-                        height: height / 1.9,
+                        height: height / 1.4,
                         margin: const EdgeInsets.all(20),
                         padding: const EdgeInsets.symmetric(
                           horizontal: 32,
@@ -66,15 +126,69 @@ class _MainMenuState extends State<MainMenu> {
                         child: GridView.count(
                           crossAxisCount: 2,
                           crossAxisSpacing: 10,
-                          mainAxisSpacing: 10,
+                          mainAxisSpacing: 35,
                           padding: const EdgeInsets.all(10),
                           children: [
-                            ImageItem(imagePath: 'assets/gridview/contact.png'),
-                            ImageItem(imagePath: 'assets/gridview/contact.png'),
-                            ImageItem(imagePath: 'assets/gridview/contact.png'),
-                            ImageItem(imagePath: 'assets/gridview/contact.png'),
-                            ImageItem(imagePath: 'assets/gridview/contact.png'),
-                            ImageItem(imagePath: 'assets/gridview/contact.png'),
+                            ImageItem(
+                              imagePath: 'assets/gridview/family.png',
+                              text: 'Monitoreo',
+                              onPressed: () =>
+                                  Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                  builder: (context) => const MonitorPage(),
+                                ),
+                              ),
+                            ),
+                            ImageItem(
+                              imagePath: 'assets/gridview/family.png',
+                              text: 'Familia',
+                              onPressed: () =>
+                                  Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                  builder: (context) => const FamilyPage(),
+                                ),
+                              ),
+                            ),
+                            ImageItem(
+                              imagePath: 'assets/gridview/contact.png',
+                              text: 'Contactos',
+                              onPressed: () =>
+                                  Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                  builder: (context) => const ContactsPage(),
+                                ),
+                              ),
+                            ),
+                            ImageItem(
+                              imagePath: 'assets/gridview/emergency.png',
+                              text: 'Num. De Ayuda',
+                              onPressed: () =>
+                                  Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                  builder: (context) => const HelpNumbersPage(),
+                                ),
+                              ),
+                            ),
+                            ImageItem(
+                              imagePath: 'assets/gridview/family.png',
+                              text: 'Membresía',
+                              onPressed: () =>
+                                  Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                  builder: (context) => const PricingPage(),
+                                ),
+                              ),
+                            ),
+                            ImageItem(
+                              imagePath: 'assets/gridview/family.png',
+                              text: 'Ajustes',
+                              onPressed: () =>
+                                  Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                  builder: (context) => const SettingsPage(),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       )

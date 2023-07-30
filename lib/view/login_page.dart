@@ -212,7 +212,7 @@ class LoginPageState extends State<LoginPage> {
                               },
                               color: ColorConstants.jazPalette1,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(31),
+                                borderRadius: BorderRadius.circular(32),
                               ),
                               height: 42,
                               child: Ink(
