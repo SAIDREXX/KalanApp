@@ -30,6 +30,10 @@ class SettingsPageState extends State<SettingsPage> {
                   bottomLeft: Radius.circular(60),
                   bottomRight: Radius.circular(60),
                 ),
+                image: const DecorationImage(
+                  image: AssetImage('assets/MayanBackground5.png'),
+                  fit: BoxFit.cover,
+                ),
               ),
               child: Padding(
                 padding: const EdgeInsets.only(top: 50),
