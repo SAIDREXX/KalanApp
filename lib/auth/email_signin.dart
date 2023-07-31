@@ -1,11 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
+
 class Auth {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
 
   User? get currentUser => _firebaseAuth.currentUser;
 
@@ -14,7 +11,6 @@ class Auth {
   Future<void> singInWithEmailAndPassword({
     required String email,
     required String password,
-
   }) async {
     await _firebaseAuth.signInWithEmailAndPassword(
       email: email,
@@ -30,28 +26,24 @@ class Auth {
   Future<UserCredential> registerWithEmailAndPassword(
       String email, String password) async {
     try {
-      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+      UserCredential userCredential =
+          await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
       return userCredential;
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
   //Restablecimiento de contraseña
 
-  Future<void>resetpassword(String email) async{
-      try{
-        await _firebaseAuth.sendPasswordResetEmail(email: email);
-
-      }catch(e){
-          throw e;
-      }
-  }
+  Future<void> resetpassword(String email) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+    } catch (e) {
+      rethrow;
     }
-
-
-
-
+  }
+}
