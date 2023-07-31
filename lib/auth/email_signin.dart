@@ -50,39 +50,8 @@ class Auth {
           throw e;
       }
   }
-
-  //TODO: solucionar el problema que no se guarda en base de datos
-  Future<void> saveData(
-      BuildContext context,
-      String name, String email, String password) async {
-    try {
-      await _firestore.collection('usuarios').add({
-        'nombre': name,
-        'correo': email,
-        'contraseña': password,
-      });
-      // Datos guardados correctamente
-    } catch (e) {
-      // Manejo de errores durante la escritura en Firestore
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Error'),
-            content: Text('Error al guardar los datos en Firebase'),
-            actions: [
-              TextButton(
-                child: Text('Aceptar'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
     }
-  }
-}
+
+
 
 

@@ -78,10 +78,16 @@ Future<List> getUsuarios() async{
 }
 
 //Guarda el nombre en base de datos
-Future<void>addUsuarios(String name, String telefono, String email, String password) async{
+Future<void>addUsuarios(String name,String lastName,int Dia,String Mes,double year, String Sex,  double telefono, String telefonolada, String email, String password) async{
   await db.collection("Usuarios").add({
     "Nombre": name,
+    "Apellido": lastName,
+    "Dia": Dia,
+    "Mes": Mes,
+    "Año": year,
+    "Sexo": Sex,
     "Telefono":telefono,
+    "Telefono con lada": telefonolada,
     "email": email,
     "password": password
   }

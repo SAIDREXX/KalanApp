@@ -45,6 +45,8 @@ dependencies:
   location: ^5.0.0
   geolocator: ^9.0.2
   flutter_login_facebook: ^1.8.0
+  country_code_picker: ^3.0.0
+  
 
 dev_dependencies:
   flutter_test:

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kalanapp/constants/colors.dart';
-
+import 'package:kalanapp/view/login_page.dart';
+import 'package:kalanapp/auth/email_signin.dart';
 class ForgotPage extends StatefulWidget {
   const ForgotPage({super.key});
 
@@ -9,6 +10,15 @@ class ForgotPage extends StatefulWidget {
 }
 
 class _ForgotPageState extends State<ForgotPage> {
+
+  TextEditingController _emailController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -27,6 +37,10 @@ class _ForgotPageState extends State<ForgotPage> {
                 borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(60),
                   bottomRight: Radius.circular(60),
+                ),
+                image: const DecorationImage(
+                  image: AssetImage('assets/MayanBackground5.png'),
+                  fit: BoxFit.cover,
                 ),
               ),
               child: Column(
@@ -72,7 +86,7 @@ class _ForgotPageState extends State<ForgotPage> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           const Text(
-                            'Olvidé Mi Contraseña',
+                            'Restablecer Contraseña',
                             style: TextStyle(
                                 fontSize: 23, fontWeight: FontWeight.w500),
                             textAlign: TextAlign.center,
@@ -84,6 +98,7 @@ class _ForgotPageState extends State<ForgotPage> {
                             height: 42,
                             child: TextField(
                               textAlign: TextAlign.left,
+                                controller: _emailController,
                               decoration: InputDecoration(
                                 labelText: 'Correo Electrónico',
                                 contentPadding:
@@ -104,22 +119,54 @@ class _ForgotPageState extends State<ForgotPage> {
                             height: 18,
                           ),
                           MaterialButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              String userEmail = _emailController.text;
+                               Auth().resetpassword(userEmail);
+                            },
                             color: ColorConstants.jazPalette1,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(31),
                             ),
                             height: 38,
                             child: const Text(
-                              'Iniciar Sesión',
+                              'Restablecer',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 13,
                                   fontWeight: FontWeight.w700),
                             ),
                           ),
+                          const SizedBox(
+                            height: 16,
+                          ),
                         ],
                       ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('¿Ya tienes una cuenta?',
+                            style: TextStyle(
+                                color: ColorConstants.jazPalette5,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500)),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        GestureDetector(
+                          onTap: () => Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                              builder: (context) => const LoginPage(),
+                            ),
+                          ),
+                          child: Text(
+                            '¡Inicia Sesión!',
+                            style: TextStyle(
+                                color: ColorConstants.jazPalette1,
+                                fontWeight: FontWeight.w700),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

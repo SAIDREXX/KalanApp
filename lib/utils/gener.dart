@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 final List<String> geners = [
   'Hombre',
   'Mujer',
-  'Nigga',
   'Otro',
-  'Licuadora Philips',
-  '¿?'
 ];
 
 class GenderDropdownButton extends StatelessWidget {
