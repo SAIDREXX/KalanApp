@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kalanapp/constants/colors.dart';
+import 'package:kalanapp/home_screen.dart';
 import 'package:kalanapp/utils/grid_image_widget.dart';
 import 'package:kalanapp/view/gridTabs/contacts.dart';
 import 'package:kalanapp/view/gridTabs/family_members.dart';
@@ -158,7 +159,7 @@ class _MainMenuState extends State<MainMenu> {
                               onPressed: () =>
                                   Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
-                                  builder: (context) => const MonitorPage(),
+                                  builder: (context) => const HomeScreen(),
                                 ),
                               ),
                             ),
