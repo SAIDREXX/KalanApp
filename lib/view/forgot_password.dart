@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kalanapp/constants/colors.dart';
 import 'package:kalanapp/view/login_page.dart';
 import 'package:kalanapp/auth/email_signin.dart';
+import 'package:cool_alert/cool_alert.dart';
 class ForgotPage extends StatefulWidget {
   const ForgotPage({super.key});
 
@@ -100,7 +101,7 @@ class _ForgotPageState extends State<ForgotPage> {
                               textAlign: TextAlign.left,
                                 controller: _emailController,
                               decoration: InputDecoration(
-                                labelText: 'Correo Electrónico',
+                                labelText: 'Ingrese Correo Electrónico',
                                 contentPadding:
                                     const EdgeInsets.fromLTRB(20, 20, 15, 25),
                                 suffixIcon: const Icon(Icons.email_outlined),
@@ -121,7 +122,31 @@ class _ForgotPageState extends State<ForgotPage> {
                           MaterialButton(
                             onPressed: () {
                               String userEmail = _emailController.text;
-                               Auth().resetpassword(userEmail);
+                              if(userEmail ==' '){
+
+                                CoolAlert.show(
+                                context: context,
+                                type: CoolAlertType.error,
+                                title: 'Oops...',
+                                text: 'Ingrese un Correo valido',
+                                backgroundColor: ColorConstants.jazPalette3,
+                                confirmBtnColor: ColorConstants.jazPalette1,
+                                loopAnimation: false,
+                                );
+                              }else{
+                                Auth().resetpassword(userEmail);
+
+                                CoolAlert.show(
+                                  backgroundColor: ColorConstants.jazPalette3,
+                                  confirmBtnColor: ColorConstants.paletteColor1,
+                                  title: 'Correo Enviado',
+                                  context: context,
+                                  type: CoolAlertType.success,
+                                  text: "Revise En su bandeja de Correos",
+                                );
+
+                              }
+
                             },
                             color: ColorConstants.jazPalette1,
                             shape: RoundedRectangleBorder(

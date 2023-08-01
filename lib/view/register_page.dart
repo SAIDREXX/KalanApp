@@ -7,7 +7,9 @@ import 'package:kalanapp/utils/gener.dart';
 import 'package:kalanapp/view/login_page.dart';
 import 'package:kalanapp/utils/month.dart';
 import 'package:flutter/services.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:country_code_picker/country_code_picker.dart';
+
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
   @override
@@ -19,16 +21,16 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   bool _obscureText = true;
 //variables
-  TextEditingController NameController = TextEditingController();
-  TextEditingController lastNameController = TextEditingController();
-  TextEditingController DiaController = TextEditingController();
-  TextEditingController _monthController = TextEditingController();
-  TextEditingController yearController = TextEditingController();
-  TextEditingController EmailController = TextEditingController();
-  TextEditingController PaswordController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
-  TextEditingController phoneLadaController = TextEditingController();
-  TextEditingController SexController = TextEditingController();
+  TextEditingController name_controller = TextEditingController();
+  TextEditingController last_name_controller = TextEditingController();
+  TextEditingController day_controller = TextEditingController();
+  TextEditingController _monthcontroller = TextEditingController();
+  TextEditingController year_controller = TextEditingController();
+  TextEditingController email_controller = TextEditingController();
+  TextEditingController password_controller = TextEditingController();
+  TextEditingController phone_controller = TextEditingController();
+  TextEditingController phone_lada_controller = TextEditingController();
+  TextEditingController sex_controller = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   String _selectedCountryCode = "+52";
   String _selectorGender = 'Sexo';
@@ -42,7 +44,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   void dispose() {
-    _monthController.dispose();
+    _monthcontroller.dispose();
     super.dispose();
   }
 
@@ -126,7 +128,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         SizedBox(
                           height: 42,
                           child: TextField(
-                            controller: NameController,
+                            controller: name_controller,
                             textAlign: TextAlign.left,
                             decoration: InputDecoration(
                               labelText: 'Nombre',
@@ -150,7 +152,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         SizedBox(
                           height: 42,
                           child: TextField(
-                            controller: lastNameController,
+                            controller: last_name_controller,
                             textAlign: TextAlign.left,
                             decoration: InputDecoration(
                               labelText: 'Apellidos',
@@ -177,7 +179,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               child: SizedBox(
                                 height: 42,
                                 child: TextField(
-                                  controller: DiaController,
+                                  controller: day_controller,
                                   keyboardType: TextInputType.number,
                                   inputFormatters: <TextInputFormatter>[
                                     FilteringTextInputFormatter.allow(RegExp(r'^\d+')), // Permite solo números enteros
@@ -210,7 +212,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                       onChanged: (String? newValue) {
                                         setState(() {
                                           _selectedMonth = newValue ?? 'Enero';
-                                          _monthController.text =_selectedMonth;
+                                          _monthcontroller.text =_selectedMonth;
                                         },);
                                       }),
                                 ),
@@ -222,7 +224,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               child: SizedBox(
                                 height: 42,
                                 child: TextField(
-                                  controller: yearController,
+                                  controller: year_controller,
                                   keyboardType: TextInputType.number,
                                   inputFormatters: <TextInputFormatter>[
                                     FilteringTextInputFormatter.allow(RegExp(r'^\d+')), // Permite solo números enteros
@@ -256,7 +258,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               onChanged: (String? newValue) {
                                 setState(() {
                                   _selectorGender = newValue?? 'Sexo';
-                                  SexController.text = _selectorGender;
+                                  sex_controller.text = _selectorGender;
                                 });
                               }),
                         ),
@@ -266,7 +268,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         SizedBox(
                           height: 42,
                           child: TextField(
-                            controller: EmailController,
+                            controller: email_controller,
                             textAlign: TextAlign.left,
                             decoration: InputDecoration(
                               labelText: 'Correo Electrónico',
@@ -290,7 +292,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         SizedBox(
                           height: 42,
                           child: TextField(
-                            controller: PaswordController,
+                            controller: password_controller,
                             textAlign: TextAlign.left,
                             obscureText: _obscureText,
                             decoration: InputDecoration(
@@ -333,7 +335,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           SizedBox(
                             height: 45,
                             child: TextField(
-                              controller: phoneController,
+                              controller: phone_controller,
                               textAlign: TextAlign.left,
                               keyboardType: TextInputType.text,
                               decoration: InputDecoration(
@@ -372,61 +374,66 @@ class _RegisterPageState extends State<RegisterPage> {
                           height: 18,
                         ),
                         //Boton de Registro
-                        MaterialButton(
-                          onPressed: () async {
+                          MaterialButton(
+                            onPressed: () async {
 
-                            String password = PaswordController.text;
-                            String Name = NameController.text;
-                            String lastName = lastNameController.text;
-                            String DiaText = DiaController.text;
-                            //Obtiene un valor y lo convierte de string a entero si es una caracter se convierte en 0
-                            int Dia = int.tryParse(DiaText) ?? 0;
-                            String Mes = _monthController.text;
-                            String yearText = yearController.text;
-                            double year = double.tryParse(yearText) ?? 0;
-                            String phoneText = phoneController.text;
-                            double phone = double.tryParse(phoneText) ?? 0;
-                            String email = EmailController.text;
-                            String Sex = SexController.text;
-                            String phoneNumber = phoneController.text;
-                            String phoneLada = combinePhoneNumberWithLada(phoneNumber);
-                            try {
-                              await Auth().registerWithEmailAndPassword(
-                                  email, password);
-                              await addUsuarios(
-                                  Name,
-                                  lastName,
-                                  Dia,
-                                  Mes,
-                                  year,
-                                  Sex,
-                                  phone,
-                                  phoneLada,
-                                  email,
-                                  password);
-                            }catch(e){
-                              showDialog(
+                              String password = password_controller.text;
+                              String name = name_controller.text;
+                              String lastname = last_name_controller.text;
+                              String dayText = day_controller.text;
+                              //Obtiene un valor y lo convierte de string a entero si es una caracter se convierte en 0
+                              int day = int.tryParse(dayText) ?? 0;
+                              String month = _monthcontroller.text;
+                              String yearText = year_controller.text;
+                              double year = double.tryParse(yearText) ?? 0;
+                              String phoneText = phone_controller.text;
+                              double phone = double.tryParse(phoneText) ?? 0;
+                              String email = email_controller.text;
+                              String Sex = sex_controller.text;
+                              String phoneNumber = phone_controller.text;
+                              String phoneLada = combinePhoneNumberWithLada(phoneNumber);
+                              try {
+                                await Auth().registerWithEmailAndPassword(
+                                    email, password);
+
+                                ///Alerta de registro Exitoso
+                                CoolAlert.show(
+                                  backgroundColor: ColorConstants.jazPalette3,
+                                  confirmBtnColor: ColorConstants.paletteColor1,
+                                  title: 'Felicidades',
                                   context: context,
-                                  builder: (BuildContext context){
-                                    return AlertDialog(
-                                      title: Text('Error'),
-                                      content: Text(e.toString()),
-                                      actions: [
-                                        TextButton(
-                                            onPressed:(){
-                                              Navigator.of(context).pop();
-                                            },
-                                            child: Text('Aceptar'))
-                                      ],
-                                    );
-                                  }
-                              );
-                            }
-                          },
-                          color: ColorConstants.jazPalette1,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(31),
-                          ),
+                                  type: CoolAlertType.success,
+                                  text: "¡El registro fue exitoso!",
+                                );
+
+                                await addUsuarios(
+                                    name,
+                                    lastname,
+                                    day,
+                                    month,
+                                    year,
+                                    Sex,
+                                    phone,
+                                    phoneLada,
+                                    email,
+                                    password);
+
+                              }catch(e){
+                                CoolAlert.show(
+                                    context: context,
+                                    type: CoolAlertType.error,
+                                    title: 'Oops...',
+                                    text: e.toString(),
+                                    backgroundColor: ColorConstants.jazPalette3,
+                                    confirmBtnColor: ColorConstants.jazPalette1,
+                                    loopAnimation: false,
+                                );
+                              }
+                            },
+                            color: ColorConstants.jazPalette1,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(31),
+                            ),
                           height: 38,
                           child: const Text(
                             'Registrar',

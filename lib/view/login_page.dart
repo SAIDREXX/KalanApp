@@ -8,6 +8,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../home_screen.dart';
 import 'register_page.dart';
 import 'package:kalanapp/auth/email_signin.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:cool_alert/cool_alert.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -21,6 +23,40 @@ class LoginPageState extends State<LoginPage> {
   bool _obscureText = true;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSavedValues();
+  }
+//Funciones
+
+  //funcion de cargar los datos guardados
+  Future<void> _loadSavedValues() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      emailController.text = prefs.getString('email') ?? '';
+      passwordController.text = prefs.getString('password') ?? '';
+      rememberMe = prefs.getBool('rememberMe') ?? false;
+    });
+  }
+//funcion para guardar los datos
+  Future<void> _saveValues() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (rememberMe) {
+      await prefs.setString('email', emailController.text);
+      await prefs.setString('password', passwordController.text);
+      await prefs.setBool('rememberMe', rememberMe);
+    } else {
+      // Si el switch está deshabilitado, borramos los datos almacenados
+      await prefs.remove('name');
+      await prefs.remove('email');
+      await prefs.remove('password');
+      await prefs.setBool('rememberMe', rememberMe);
+    }
+  }
+//funicon para iniciar sesion con google
 
   Future<void> signInWithGoogle(BuildContext context) async {
     final UserCredential? userCredential =
@@ -181,6 +217,7 @@ class LoginPageState extends State<LoginPage> {
                               onChanged: (value) {
                                 setState(() {
                                   rememberMe = value;
+                                  _saveValues(); //se llama la funcion de guardar los datos y se cargan
                                 });
                               },
                               contentPadding: EdgeInsets.zero,
@@ -197,20 +234,33 @@ class LoginPageState extends State<LoginPage> {
                             ),
                             MaterialButton(
                                 onPressed: () async {
-                                  String email = emailController
-                                      .text; // Obtener el valor del campo de texto
-                                  String password = passwordController
-                                      .text; // Obtener el valor del campo de contraseña
+                                  try{
+                                    String email = emailController
+                                        .text; // Obtener el valor del campo de texto
+                                    String password = passwordController
+                                        .text; // Obtener el valor del campo de contraseña
 
-                                  //verificacion del auteticacion
-                                  await Auth().singInWithEmailAndPassword(
-                                      email: email, password: password);
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => HomeScreen(),
-                                    ),
-                                  );
+                                    //verificacion del auteticacion
+                                    await Auth().singInWithEmailAndPassword(
+                                        email: email, password: password);
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => HomeScreen(),
+                                      ),
+                                    );
+                                  }catch(e){
+                                    CoolAlert.show(
+                                      context: context,
+                                      type: CoolAlertType.error,
+                                      title: 'Oops...',
+                                      text: e.toString(),
+                                      backgroundColor: ColorConstants.jazPalette3,
+                                      confirmBtnColor: ColorConstants.jazPalette1,
+                                      loopAnimation: false,
+                                    );
+                                  }
+
                                 },
                                 color: ColorConstants.jazPalette1,
                                 shape: RoundedRectangleBorder(
@@ -310,7 +360,7 @@ class LoginPageState extends State<LoginPage> {
                                   Navigator.of(context).pushReplacement(
                                 //Cambiar a ForgotPage() después De Settings
                                 MaterialPageRoute(
-                                  builder: (context) => const SettingsPage(),
+                                  builder: (context) => const ForgotPage(),
                                 ),
                               ),
                               child: Text(
@@ -353,13 +403,15 @@ class LoginPageState extends State<LoginPage> {
                                   fontWeight: FontWeight.w700),
                             ),
                           ),
+                          const SizedBox(
+                            height: 45,
+                          ),
                         ],
-                      ),
-                      const SizedBox(
-                        height: 44,
+
                       ),
                     ],
                   ),
+
                 ),
               ],
             )
