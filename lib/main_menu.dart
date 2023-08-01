@@ -10,8 +10,7 @@ import 'package:kalanapp/view/settings/settings_main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class MainMenu extends StatefulWidget {
-  final UserCredential userCredential;
-  const MainMenu({required this.userCredential, super.key});
+  const MainMenu({super.key});
 
   @override
   State<MainMenu> createState() => _MainMenuState();
@@ -21,7 +20,7 @@ class _MainMenuState extends State<MainMenu> {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
-    final User? user = widget.userCredential.user;
+    final user = FirebaseAuth.instance.currentUser;
 
     Widget _getUserProfileImage() {
       if (user?.photoURL != null) {

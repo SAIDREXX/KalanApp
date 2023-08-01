@@ -29,9 +29,7 @@ class LoginPageState extends State<LoginPage> {
     if (userCredential != null) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => MainMenu(
-            userCredential: userCredential,
-          ),
+          builder: (context) => const MainMenu(),
         ),
       );
     }

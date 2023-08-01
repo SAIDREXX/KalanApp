@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kalanapp/main_menu.dart';
 import 'dart:async';
 import 'home_screen.dart';
 import '/view/get_started_page.dart';
@@ -43,7 +44,7 @@ class SplashScreenState extends State<SplashScreen> {
       );
     } else {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
+        MaterialPageRoute(builder: (context) => const MainMenu()),
       );
     }
   }

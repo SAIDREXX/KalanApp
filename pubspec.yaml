@@ -46,7 +46,6 @@ dependencies:
   geolocator: ^9.0.2
   flutter_login_facebook: ^1.8.0
   country_code_picker: ^3.0.0
-  
 
 dev_dependencies:
   flutter_test:
@@ -98,6 +97,7 @@ flutter:
   assets:
     - assets/
     - assets/gridview/
+    - assets/icons/
 
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
