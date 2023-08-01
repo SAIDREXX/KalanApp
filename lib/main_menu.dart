@@ -7,9 +7,11 @@ import 'package:kalanapp/view/gridTabs/help_numbers.dart';
 import 'package:kalanapp/view/gridTabs/monitor.dart';
 import 'package:kalanapp/view/pricing.dart';
 import 'package:kalanapp/view/settings/settings_main.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class MainMenu extends StatefulWidget {
-  const MainMenu({super.key});
+  final UserCredential userCredential;
+  const MainMenu({required this.userCredential, super.key});
 
   @override
   State<MainMenu> createState() => _MainMenuState();
@@ -19,6 +21,29 @@ class _MainMenuState extends State<MainMenu> {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
+    final User? user = widget.userCredential.user;
+
+    Widget _getUserProfileImage() {
+      if (user?.photoURL != null) {
+        return ClipOval(
+          child: Image.network(
+            user!.photoURL!,
+            width: 50,
+            height: 50,
+            fit: BoxFit.cover,
+          ),
+        );
+      } else {
+        return ClipOval(
+          child: Image.asset(
+            'assets/default_profile.png',
+            width: 50,
+            height: 50,
+            fit: BoxFit.cover,
+          ),
+        );
+      }
+    }
 
     return Scaffold(
       backgroundColor: ColorConstants.jazPalette2,
@@ -55,7 +80,7 @@ class _MainMenuState extends State<MainMenu> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const SizedBox(
-                  height: 25,
+                  height: 30,
                 ),
                 Row(
                   children: [
@@ -79,7 +104,7 @@ class _MainMenuState extends State<MainMenu> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(32),
                             side:
-                                const BorderSide(color: Colors.white, width: 2),
+                                const BorderSide(color: Colors.white, width: 1),
                           ),
                           child: const Text(
                             'S.O.S',
@@ -92,16 +117,15 @@ class _MainMenuState extends State<MainMenu> {
                       ),
                     ),
                     const SizedBox(
-                      width: 5,
+                      width: 50,
                     ),
-                    const Expanded(
-                      child: SizedBox(
-                        child: Icon(
-                          Icons.account_circle_outlined,
-                          size: 50,
-                        ),
+                    Expanded(
+                      flex: 0,
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 50),
+                        child: _getUserProfileImage(),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ],
@@ -130,7 +154,7 @@ class _MainMenuState extends State<MainMenu> {
                           padding: const EdgeInsets.all(10),
                           children: [
                             ImageItem(
-                              imagePath: 'assets/gridview/family.png',
+                              imagePath: 'assets/gridview/map2.png',
                               text: 'Monitoreo',
                               onPressed: () =>
                                   Navigator.of(context).pushReplacement(
@@ -170,7 +194,7 @@ class _MainMenuState extends State<MainMenu> {
                               ),
                             ),
                             ImageItem(
-                              imagePath: 'assets/gridview/family.png',
+                              imagePath: 'assets/gridview/membership.png',
                               text: 'Membresía',
                               onPressed: () =>
                                   Navigator.of(context).pushReplacement(
@@ -180,7 +204,7 @@ class _MainMenuState extends State<MainMenu> {
                               ),
                             ),
                             ImageItem(
-                              imagePath: 'assets/gridview/family.png',
+                              imagePath: 'assets/gridview/settings.png',
                               text: 'Ajustes',
                               onPressed: () =>
                                   Navigator.of(context).pushReplacement(

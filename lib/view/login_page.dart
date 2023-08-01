@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kalanapp/main_menu.dart';
 import 'package:kalanapp/view/forgot_password.dart';
 import 'package:kalanapp/view/settings/settings_main.dart';
 import '../constants/colors.dart';
@@ -27,7 +28,11 @@ class LoginPageState extends State<LoginPage> {
 
     if (userCredential != null) {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
+        MaterialPageRoute(
+          builder: (context) => MainMenu(
+            userCredential: userCredential,
+          ),
+        ),
       );
     }
   }
@@ -381,16 +386,18 @@ class Input extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       decoration: InputDecoration(
-          labelText: hint,
-          labelStyle:
-              const TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
-          enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(26),
-              borderSide: BorderSide(color: ColorConstants.starterWhite)),
-          focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(26),
-              borderSide: BorderSide(color: ColorConstants.paletteColor3)),
-          suffixIcon: Icon(icon)),
+        labelText: hint,
+        labelStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(26),
+          borderSide: BorderSide(color: ColorConstants.starterWhite),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(26),
+          borderSide: BorderSide(color: ColorConstants.paletteColor3),
+        ),
+        suffixIcon: Icon(icon),
+      ),
     );
   }
 }
