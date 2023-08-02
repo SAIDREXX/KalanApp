@@ -15,38 +15,40 @@ class ImageItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onPressed,
-      child: Container(
-        width: 100,
-        height: 100,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            color: Colors.black,
-            width: 2,
-          ),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image.asset(
-                imagePath,
-                width: 90,
-                height: 90,
-                fit: BoxFit.cover,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(
+                  color: Colors.black,
+                  width: 2,
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Text(
+              child: Transform.scale(
+                scale: 0.92,
+                child: Image.asset(
+                  imagePath,
+                  fit: BoxFit.contain,
+                ),
+              )),
+          const SizedBox(
+            height: 8,
+          ),
+          SizedBox(
+            width: 100,
+            child: Text(
               text,
-              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+              textAlign: TextAlign.center,
+              style:
+                  const TextStyle(fontSize: 14.49, fontWeight: FontWeight.w600),
             ),
-          ],
-        ),
+          )
+        ],
       ),
     );
   }

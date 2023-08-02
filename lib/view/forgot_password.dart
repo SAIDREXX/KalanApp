@@ -3,6 +3,7 @@ import 'package:kalanapp/constants/colors.dart';
 import 'package:kalanapp/view/login_page.dart';
 import 'package:kalanapp/auth/email_signin.dart';
 import 'package:cool_alert/cool_alert.dart';
+
 class ForgotPage extends StatefulWidget {
   const ForgotPage({super.key});
 
@@ -11,8 +12,7 @@ class ForgotPage extends StatefulWidget {
 }
 
 class _ForgotPageState extends State<ForgotPage> {
-
-  TextEditingController _emailController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
 
   @override
   void dispose() {
@@ -99,7 +99,7 @@ class _ForgotPageState extends State<ForgotPage> {
                             height: 42,
                             child: TextField(
                               textAlign: TextAlign.left,
-                                controller: _emailController,
+                              controller: _emailController,
                               decoration: InputDecoration(
                                 labelText: 'Ingrese Correo Electrónico',
                                 contentPadding:
@@ -122,18 +122,17 @@ class _ForgotPageState extends State<ForgotPage> {
                           MaterialButton(
                             onPressed: () {
                               String userEmail = _emailController.text;
-                              if(userEmail ==' '){
-
+                              if (userEmail == ' ') {
                                 CoolAlert.show(
-                                context: context,
-                                type: CoolAlertType.error,
-                                title: 'Oops...',
-                                text: 'Ingrese un Correo valido',
-                                backgroundColor: ColorConstants.jazPalette3,
-                                confirmBtnColor: ColorConstants.jazPalette1,
-                                loopAnimation: false,
+                                  context: context,
+                                  type: CoolAlertType.error,
+                                  title: 'Oops...',
+                                  text: 'Ingrese un Correo valido',
+                                  backgroundColor: ColorConstants.jazPalette3,
+                                  confirmBtnColor: ColorConstants.jazPalette1,
+                                  loopAnimation: false,
                                 );
-                              }else{
+                              } else {
                                 Auth().resetpassword(userEmail);
 
                                 CoolAlert.show(
@@ -144,9 +143,7 @@ class _ForgotPageState extends State<ForgotPage> {
                                   type: CoolAlertType.success,
                                   text: "Revise En su bandeja de Correos",
                                 );
-
                               }
-
                             },
                             color: ColorConstants.jazPalette1,
                             shape: RoundedRectangleBorder(

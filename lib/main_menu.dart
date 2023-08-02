@@ -23,7 +23,7 @@ class _MainMenuState extends State<MainMenu> {
     final height = MediaQuery.of(context).size.height;
     final user = FirebaseAuth.instance.currentUser;
 
-    Widget _getUserProfileImage() {
+    Widget getUserProfileImage() {
       if (user?.photoURL != null) {
         return ClipOval(
           child: Image.network(
@@ -76,59 +76,45 @@ class _MainMenuState extends State<MainMenu> {
                 ],
               ),
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 30,
-                ),
-                Row(
-                  children: [
-                    const Expanded(
-                      child: SizedBox(
-                        child: Icon(
-                          Icons.notifications_none_outlined,
-                          size: 50,
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 35),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Icon(
+                    Icons.notifications_none_outlined,
+                    size: 50,
+                    color: ColorConstants.jazPalette4,
+                  ),
+                  const SizedBox(width: 40),
+                  Expanded(
+                    child: SizedBox(
+                      height: 42, // Ajusta el alto del botón aquí
+                      child: MaterialButton(
+                        onPressed: () {},
+                        color: Colors.red,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(32),
+                          side:
+                              const BorderSide(color: Colors.white, width: 1.5),
                         ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Expanded(
-                      child: SizedBox(
-                        height: 42,
-                        child: MaterialButton(
-                          onPressed: () {},
-                          color: Colors.red,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(32),
-                            side:
-                                const BorderSide(color: Colors.white, width: 1),
-                          ),
-                          child: const Text(
-                            'S.O.S',
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w900,
-                                color: Colors.white),
+                        child: const Text(
+                          'S.O.S',
+                          style: TextStyle(
+                            fontSize: 18, // Ajusta el tamaño de fuente aquí
+                            fontWeight: FontWeight.w900,
+                            color: Colors.white,
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      width: 50,
-                    ),
-                    Expanded(
-                      flex: 0,
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 50),
-                        child: _getUserProfileImage(),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+                  ),
+                  const SizedBox(width: 40),
+                  Container(
+                    child: getUserProfileImage(),
+                  ),
+                ],
+              ),
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.end,
