@@ -133,13 +133,29 @@ class _PricingPageState extends State<PricingPage> {
                               ],
                             ),
                             const SizedBox(
-                              height: 10,
+                              height: 7,
+                            ),
+                            //Linea
+                            Container(
+                              color: ColorConstants.greyScale1,
+                              height: 1,
+                            ),
+                            const SizedBox(
+                              height: 7,
                             ),
                             RoundedContainer(
                               child: buildSelectedText(selectedPricedIndex),
                             ),
                             const SizedBox(
-                              height: 10,
+                              height: 7,
+                            ),
+                            //Linea
+                            Container(
+                              color: ColorConstants.greyScale1,
+                              height: 1,
+                            ),
+                            const SizedBox(
+                              height: 7,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
