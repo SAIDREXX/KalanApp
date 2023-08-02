@@ -152,36 +152,48 @@ class _MainMenuState extends State<MainMenu> {
                             ImageItem(
                               imagePath: 'assets/gridview/family.png',
                               text: 'Familia',
-                              onPressed: () => MaterialPageRoute(
-                                builder: (context) => const FamilyPage(),
+                              onPressed: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const FamilyPage(),
+                                ),
                               ),
                             ),
                             ImageItem(
                               imagePath: 'assets/gridview/contact.png',
                               text: 'Contactos',
-                              onPressed: () => MaterialPageRoute(
-                                builder: (context) => const ContactsPage(),
+                              onPressed: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const ContactsPage(),
+                                ),
                               ),
                             ),
                             ImageItem(
                               imagePath: 'assets/gridview/emergency.png',
                               text: 'Num. De Ayuda',
-                              onPressed: () => MaterialPageRoute(
-                                builder: (context) => const HelpNumbersPage(),
+                              onPressed: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const HelpNumbersPage(),
+                                ),
                               ),
                             ),
                             ImageItem(
                               imagePath: 'assets/gridview/membership.png',
                               text: 'Membresía',
-                              onPressed: () => MaterialPageRoute(
-                                builder: (context) => const PricingPage(),
+                              onPressed: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const PricingPage(),
+                                ),
                               ),
                             ),
                             ImageItem(
                               imagePath: 'assets/gridview/settings.png',
                               text: 'Ajustes',
-                              onPressed: () =>
-                                  Navigator.of(context).pushReplacement(
+                              onPressed: () => Navigator.push(
+                                context,
                                 MaterialPageRoute(
                                   builder: (context) => const SettingsPage(),
                                 ),

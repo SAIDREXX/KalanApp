@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:kalanapp/constants/colors.dart';
+import 'package:kalanapp/home_screen.dart';
 import 'package:kalanapp/utils/rounded_container_text.dart';
 import 'package:kalanapp/utils/price_options_icon.dart';
 import 'package:kalanapp/utils/price_options_text.dart';
+import 'package:kalanapp/utils/navigation_bar.dart';
+import 'package:kalanapp/utils/sos_modal.dart';
+import 'package:kalanapp/view/gridTabs/contacts.dart';
+import 'package:kalanapp/view/secure_folder.dart';
 
 class PricingPage extends StatefulWidget {
   const PricingPage({super.key});
@@ -13,11 +18,61 @@ class PricingPage extends StatefulWidget {
 
 class _PricingPageState extends State<PricingPage> {
   int selectedPricedIndex = 0;
+  int currentIndex = 2;
+  double screenHeight = 1.5;
 
   void selectPrice(int index) {
     setState(() {
       selectedPricedIndex = index;
     });
+  }
+
+  void onNavItemTapped(int indexNav) {
+    setState(() {
+      currentIndex = indexNav;
+    });
+    switch (indexNav) {
+      case 0:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const HomeScreen(),
+          ),
+        );
+        break;
+      case 1:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const ContactsPage(),
+          ),
+        );
+        break;
+      case 2:
+        break;
+      case 3:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const SecureFolderPage(),
+          ),
+        );
+        break;
+      case 4:
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              final screenHeight = MediaQuery.of(context).size.height;
+              return Center(
+                child: SizedBox(
+                  width: double.infinity,
+                  height: screenHeight / 3,
+                  child: const SOSPage(),
+                ),
+              );
+            });
+        break;
+    }
   }
 
   @override
@@ -87,7 +142,7 @@ class _PricingPageState extends State<PricingPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Text(
+                            const Text(
                               'Membresía',
                               style: TextStyle(
                                   fontSize: 23, fontWeight: FontWeight.w500),
@@ -198,11 +253,29 @@ class _PricingPageState extends State<PricingPage> {
                       )
                     ],
                   ),
-                )
+                ),
               ],
             )
           ],
         ),
+      ),
+      bottomNavigationBar: NavigationBarKalan(
+        currentIndex: currentIndex,
+        onTap: onNavItemTapped,
+        icons: const [
+          Icons.home_outlined,
+          Icons.quick_contacts_dialer_outlined,
+          Icons.star_border_rounded,
+          Icons.folder_open_outlined,
+          Icons.emergency_outlined
+        ],
+        labels: const [
+          'Ubicación',
+          'Contactos',
+          'Membresía',
+          'Carpeta',
+          'Auxilio'
+        ],
       ),
     );
   }

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:kalanapp/constants/colors.dart';
 
-class NavigationBar extends StatelessWidget {
+class NavigationBarKalan extends StatelessWidget {
   final int currentIndex;
   final List<IconData> icons;
   final List<String> labels;
   final void Function(int index) onTap;
-  const NavigationBar(
+
+  const NavigationBarKalan(
       {required this.currentIndex,
       required this.onTap,
       required this.icons,
@@ -14,14 +16,31 @@ class NavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      currentIndex: currentIndex,
-      onTap: onTap,
-      items: List.generate(
-        icons.length,
-        (index) => BottomNavigationBarItem(
-          icon: Icon(icons[index]),
-          label: labels[index],
+    return SizedBox(
+      height: 80,
+      child: ClipRRect(
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(32),
+          topRight: Radius.circular(32),
+        ),
+        child: BottomNavigationBar(
+          currentIndex: currentIndex,
+          onTap: onTap,
+          showSelectedLabels: true,
+          showUnselectedLabels: true,
+          backgroundColor: Colors.white,
+          selectedItemColor: ColorConstants.jazPalette3,
+          unselectedItemColor: ColorConstants.greyScale2,
+          items: List.generate(
+            icons.length,
+            (index) => BottomNavigationBarItem(
+              icon: Icon(
+                icons[index],
+                size: 35,
+              ),
+              label: labels[index],
+            ),
+          ),
         ),
       ),
     );

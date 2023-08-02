@@ -24,7 +24,6 @@ class LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-
   @override
   void initState() {
     super.initState();
@@ -41,6 +40,7 @@ class LoginPageState extends State<LoginPage> {
       rememberMe = prefs.getBool('rememberMe') ?? false;
     });
   }
+
 //funcion para guardar los datos
   Future<void> _saveValues() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -234,7 +234,7 @@ class LoginPageState extends State<LoginPage> {
                             ),
                             MaterialButton(
                                 onPressed: () async {
-                                  try{
+                                  try {
                                     String email = emailController
                                         .text; // Obtener el valor del campo de texto
                                     String password = passwordController
@@ -249,22 +249,23 @@ class LoginPageState extends State<LoginPage> {
                                         builder: (context) => HomeScreen(),
                                       ),
                                     );
-                                  }catch(e){
+                                  } catch (e) {
                                     CoolAlert.show(
                                       context: context,
                                       type: CoolAlertType.error,
                                       title: 'Oops...',
                                       text: e.toString(),
-                                      backgroundColor: ColorConstants.jazPalette3,
-                                      confirmBtnColor: ColorConstants.jazPalette1,
+                                      backgroundColor:
+                                          ColorConstants.jazPalette3,
+                                      confirmBtnColor:
+                                          ColorConstants.jazPalette1,
                                       loopAnimation: false,
                                     );
                                   }
-
                                 },
                                 color: ColorConstants.jazPalette1,
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(31),
+                                  borderRadius: BorderRadius.circular(32),
                                 ),
                                 height: 38,
                                 child: Ink(
@@ -407,11 +408,9 @@ class LoginPageState extends State<LoginPage> {
                             height: 45,
                           ),
                         ],
-
                       ),
                     ],
                   ),
-
                 ),
               ],
             )
