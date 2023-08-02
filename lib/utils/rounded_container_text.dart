@@ -5,12 +5,14 @@ class RoundedContainer extends StatelessWidget {
   final double borderRadius;
   final Color backgroundColor;
   final EdgeInsets padding;
+  final int selected;
 
   const RoundedContainer(
       {required this.child,
       this.borderRadius = 32,
       this.backgroundColor = Colors.white,
       this.padding = const EdgeInsets.all(16.0),
+      this.selected = 0,
       super.key});
 
   @override

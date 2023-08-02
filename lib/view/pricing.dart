@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kalanapp/constants/colors.dart';
 import 'package:kalanapp/utils/rounded_container_text.dart';
+import 'package:kalanapp/utils/price_options_icon.dart';
+import 'package:kalanapp/utils/price_options_text.dart';
 
 class PricingPage extends StatefulWidget {
   const PricingPage({super.key});
@@ -133,10 +135,48 @@ class _PricingPageState extends State<PricingPage> {
                             const SizedBox(
                               height: 10,
                             ),
-                            const RoundedContainer(
-                              child: Text(
-                                  'Lorem ipsum dolor sit amet consecteur Lorem ipsum dolor sit amet consecteur Lorem ipsum dolor sit amet consecteur'),
-                            )
+                            RoundedContainer(
+                              child: buildSelectedText(selectedPricedIndex),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: 281,
+                                  height: 45,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    border: Border.all(
+                                        width: 1, color: Colors.black),
+                                    borderRadius: BorderRadius.circular(32),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      PriceOptionText(
+                                        isSelected: selectedPricedIndex == 0,
+                                        price: "\$7 USD",
+                                        onSelect: () => selectPrice(0),
+                                      ),
+                                      PriceOptionText(
+                                        isSelected: selectedPricedIndex == 1,
+                                        price: "\$10 USD",
+                                        onSelect: () => selectPrice(1),
+                                      ),
+                                      PriceOptionText(
+                                        isSelected: selectedPricedIndex == 2,
+                                        price: "\$3.5 USD",
+                                        onSelect: () => selectPrice(2),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
                           ],
                         ),
                       )
@@ -152,52 +192,30 @@ class _PricingPageState extends State<PricingPage> {
   }
 }
 
-class PriceOption extends StatelessWidget {
-  final bool isSelected;
-  final IconData icon;
-  final VoidCallback onSelect;
-
-  const PriceOption(
-      {required this.isSelected,
-      required this.icon,
-      required this.onSelect,
-      super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    const selectedColor = Color.fromARGB(255, 29, 89, 139);
-
-    return GestureDetector(
-      onTap: onSelect,
-      child: Container(
-        width: 93,
-        height: 45,
-        decoration: BoxDecoration(
-          color: isSelected ? selectedColor : Colors.transparent,
-          borderRadius: isSelected
-              ? const BorderRadius.only(
-                  topLeft: Radius.circular(32),
-                  bottomLeft: Radius.circular(32),
-                  topRight: Radius.circular(32),
-                  bottomRight: Radius.circular(32),
-                )
-              : const BorderRadius.all(Radius.zero),
-        ),
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                icon,
-                color: isSelected ? Colors.white : Colors.black,
-                size: 32,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+Widget buildSelectedText(int selectedPricedIndex) {
+  switch (selectedPricedIndex) {
+    case 0:
+      return const Text(
+        '-Premium para 2 personas               -Hasta 2 contactos de confianza',
+        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+        // Otras propiedades de estilo para el primer texto
+      );
+    case 1:
+      return const Text(
+        '-Premium para 6 personas               -Hasta 10 contactos de confianza',
+        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+        // Otras propiedades de estilo para el primer texto
+      );
+    case 2:
+      return const Text(
+        '-Premium para 2 personas               -Hasta 5 contactos de confianza -Exclusivo para universitarios',
+        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+        // Otras propiedades de estilo para el primer texto
+      );
+    default:
+      return const Text(
+        'Si lograste ver este texto, reporta el bug. Muchas Gracias <3',
+        // Otras propiedades de estilo para el texto predeterminado
+      );
   }
 }
