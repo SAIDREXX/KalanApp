@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kalanapp/constants/colors.dart';
+import 'package:kalanapp/main_menu.dart';
 import 'package:kalanapp/utils/kalan_navigaton_bar.dart';
 import 'package:kalanapp/utils/sos_modal.dart';
 import 'package:kalanapp/view/gridTabs/contacts.dart';
@@ -46,6 +47,19 @@ class _PageControllerKalanState extends State<PageControllerKalan> {
             setState(() {
               currentIndex = index;
             });
+          },
+          onLongPress: (index) {
+            setState(() {
+              currentIndex = index;
+            });
+            if (index == 0) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const MainMenu(),
+                ),
+              );
+            }
           },
           indexPushed: widget.indexRequired,
         ),

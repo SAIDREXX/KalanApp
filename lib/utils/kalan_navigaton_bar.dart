@@ -3,10 +3,14 @@ import 'package:kalanapp/constants/colors.dart';
 
 class NavBarKalan extends StatefulWidget {
   final Function(int) onItemTapped;
+  final Function(int) onLongPress;
   final int indexPushed;
 
   const NavBarKalan(
-      {required this.onItemTapped, required this.indexPushed, super.key});
+      {required this.onItemTapped,
+      required this.onLongPress,
+      required this.indexPushed,
+      super.key});
 
   @override
   State<NavBarKalan> createState() => _NavBarKalanState();
@@ -43,6 +47,12 @@ class _NavBarKalanState extends State<NavBarKalan> {
     });
   }
 
+  void onLongPress(int index) {
+    setState(() {
+      selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -63,6 +73,12 @@ class _NavBarKalanState extends State<NavBarKalan> {
             return GestureDetector(
               onTap: () {
                 widget.onItemTapped(index);
+                setState(() {
+                  selectedIndex = index;
+                });
+              },
+              onLongPress: () {
+                widget.onLongPress(index);
                 setState(() {
                   selectedIndex = index;
                 });

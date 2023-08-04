@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kalanapp/constants/colors.dart';
 import 'package:kalanapp/home_screen.dart';
+import 'package:kalanapp/utils/button_with_texture.dart';
 import 'package:kalanapp/utils/rounded_container_text.dart';
 import 'package:kalanapp/utils/price_options_icon.dart';
 import 'package:kalanapp/utils/price_options_text.dart';
@@ -104,9 +105,6 @@ class _PricingPageState extends State<PricingPage> {
                   SizedBox(
                     height: 70,
                     child: Image.asset('assets/kalan_logo_full.png'),
-                  ),
-                  const SizedBox(
-                    height: 40,
                   ),
                   const Text(
                     'Conecta, Protege y Comparte con Kalan',
@@ -247,6 +245,13 @@ class _PricingPageState extends State<PricingPage> {
                                 )
                               ],
                             ),
+
+                            const SizedBox(
+                              height: 40,
+                            ),
+                            const MaterialButtonWithTextureAndText(
+                              text: 'Pedir y Pagar',
+                            )
                           ],
                         ),
                       )
