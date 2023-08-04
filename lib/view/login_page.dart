@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kalanapp/main_menu.dart';
 import 'package:kalanapp/view/forgot_password.dart';
-import 'package:kalanapp/view/settings/settings_main.dart';
 import '../constants/colors.dart';
 import 'package:kalanapp/auth/google_signin.dart';
 import 'package:firebase_auth/firebase_auth.dart';

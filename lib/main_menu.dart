@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:kalanapp/constants/colors.dart';
-import 'package:kalanapp/home_screen.dart';
 import 'package:kalanapp/utils/grid_image_widget.dart';
-import 'package:kalanapp/view/gridTabs/contacts.dart';
+import 'package:kalanapp/utils/navigation_bar_controller.dart';
 import 'package:kalanapp/view/gridTabs/family_members.dart';
 import 'package:kalanapp/view/gridTabs/help_numbers.dart';
-import 'package:kalanapp/view/gridTabs/monitor.dart';
-import 'package:kalanapp/view/pricing.dart';
 import 'package:kalanapp/view/settings/settings_main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -145,7 +142,10 @@ class _MainMenuState extends State<MainMenu> {
                               onPressed: () => Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const HomeScreen(),
+                                  builder: (context) =>
+                                      const PageControllerKalan(
+                                    indexRequired: 0,
+                                  ),
                                 ),
                               ),
                             ),
@@ -165,7 +165,10 @@ class _MainMenuState extends State<MainMenu> {
                               onPressed: () => Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const ContactsPage(),
+                                  builder: (context) =>
+                                      const PageControllerKalan(
+                                    indexRequired: 1,
+                                  ),
                                 ),
                               ),
                             ),
@@ -185,7 +188,10 @@ class _MainMenuState extends State<MainMenu> {
                               onPressed: () => Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const PricingPage(),
+                                  builder: (context) =>
+                                      const PageControllerKalan(
+                                    indexRequired: 2,
+                                  ),
                                 ),
                               ),
                             ),

@@ -4,7 +4,6 @@ import 'package:kalanapp/home_screen.dart';
 import 'package:kalanapp/utils/rounded_container_text.dart';
 import 'package:kalanapp/utils/price_options_icon.dart';
 import 'package:kalanapp/utils/price_options_text.dart';
-import 'package:kalanapp/utils/navigation_bar.dart';
 import 'package:kalanapp/utils/sos_modal.dart';
 import 'package:kalanapp/view/gridTabs/contacts.dart';
 import 'package:kalanapp/view/secure_folder.dart';
@@ -258,24 +257,6 @@ class _PricingPageState extends State<PricingPage> {
             )
           ],
         ),
-      ),
-      bottomNavigationBar: NavigationBarKalan(
-        currentIndex: currentIndex,
-        onTap: onNavItemTapped,
-        icons: const [
-          Icons.home_outlined,
-          Icons.quick_contacts_dialer_outlined,
-          Icons.star_border_rounded,
-          Icons.folder_open_outlined,
-          Icons.emergency_outlined
-        ],
-        labels: const [
-          'Ubicación',
-          'Contactos',
-          'Membresía',
-          'Carpeta',
-          'Auxilio'
-        ],
       ),
     );
   }
