@@ -138,8 +138,8 @@ class _FamilyPageState extends State<FamilyPage> {
                           padding: const EdgeInsets.all(10),
                           children: [
                             FamilyItem(
-                              imagePath: 'assets/gridview/map2.png',
-                              text: 'Monitoreo',
+                              imagePath: 'assets/family/Ester.png',
+                              text: 'Ester Expósito',
                               onPressed: () => Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -150,9 +150,9 @@ class _FamilyPageState extends State<FamilyPage> {
                                 ),
                               ),
                             ),
-                            ImageItem(
-                              imagePath: 'assets/gridview/family.png',
-                              text: 'Familia',
+                            FamilyItem(
+                              imagePath: 'assets/family/Bad.png',
+                              text: 'Bad Bunny',
                               onPressed: () => Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -161,8 +161,8 @@ class _FamilyPageState extends State<FamilyPage> {
                               ),
                             ),
                             ImageItem(
-                              imagePath: 'assets/gridview/contact.png',
-                              text: 'Contactos',
+                              imagePath: 'assets/family/Biyin.png',
+                              text: 'Sara Biyin',
                               onPressed: () => Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -174,8 +174,8 @@ class _FamilyPageState extends State<FamilyPage> {
                               ),
                             ),
                             ImageItem(
-                              imagePath: 'assets/gridview/emergency.png',
-                              text: 'Num. De Ayuda',
+                              imagePath: 'assets/family/Nata.png',
+                              text: 'Compa Nata',
                               onPressed: () => Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -184,8 +184,8 @@ class _FamilyPageState extends State<FamilyPage> {
                               ),
                             ),
                             ImageItem(
-                              imagePath: 'assets/gridview/membership.png',
-                              text: 'Membresía',
+                              imagePath: 'assets/family/Dua.png',
+                              text: 'Dua Lipa',
                               onPressed: () => Navigator.push(
                                 context,
                                 MaterialPageRoute(
