@@ -29,9 +29,13 @@ class FamilyItem extends StatelessWidget {
                 width: 2,
               ),
             ),
-            child: Image.asset(
-              imagePath,
-              fit: BoxFit.contain,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              clipBehavior: Clip.antiAlias,
+              child: Image.asset(
+                imagePath,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           const SizedBox(

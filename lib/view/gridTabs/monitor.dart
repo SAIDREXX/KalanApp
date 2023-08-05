@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kalanapp/constants/colors.dart';
 import 'package:kalanapp/utils/following_to_button.dart';
+import 'package:kalanapp/utils/set_status_button.dart';
 
 class MonitorPage extends StatefulWidget {
   const MonitorPage({super.key});
@@ -37,7 +38,11 @@ class _MonitorPageState extends State<MonitorPage> {
                   height: 15,
                 ),
               ),
-              FollowingButton()
+              FollowingButton(),
+              SizedBox(
+                height: 450,
+              ),
+              StatusButton(),
             ],
           ),
         ),

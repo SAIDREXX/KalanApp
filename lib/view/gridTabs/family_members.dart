@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kalanapp/constants/colors.dart';
 import 'package:kalanapp/utils/grid_family_widget.dart';
-import 'package:kalanapp/utils/grid_image_widget.dart';
-import 'package:kalanapp/utils/navigation_bar_controller.dart';
-import 'package:kalanapp/view/gridTabs/family_members.dart';
-import 'package:kalanapp/view/gridTabs/help_numbers.dart';
-import 'package:kalanapp/view/settings/settings_main.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 
 class FamilyPage extends StatefulWidget {
@@ -140,71 +136,32 @@ class _FamilyPageState extends State<FamilyPage> {
                             FamilyItem(
                               imagePath: 'assets/family/Ester.png',
                               text: 'Ester Expósito',
-                              onPressed: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const PageControllerKalan(
-                                    indexRequired: 0,
-                                  ),
-                                ),
-                              ),
+                              onPressed: () {},
                             ),
                             FamilyItem(
                               imagePath: 'assets/family/Bad.png',
                               text: 'Bad Bunny',
-                              onPressed: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const FamilyPage(),
-                                ),
-                              ),
+                              onPressed: () {},
                             ),
-                            ImageItem(
+                            FamilyItem(
                               imagePath: 'assets/family/Biyin.png',
                               text: 'Sara Biyin',
-                              onPressed: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const PageControllerKalan(
-                                    indexRequired: 1,
-                                  ),
-                                ),
-                              ),
+                              onPressed: () {},
                             ),
-                            ImageItem(
+                            FamilyItem(
                               imagePath: 'assets/family/Nata.png',
                               text: 'Compa Nata',
-                              onPressed: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const HelpNumbersPage(),
-                                ),
-                              ),
+                              onPressed: () {},
                             ),
-                            ImageItem(
+                            FamilyItem(
                               imagePath: 'assets/family/Dua.png',
                               text: 'Dua Lipa',
-                              onPressed: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const PageControllerKalan(
-                                    indexRequired: 2,
-                                  ),
-                                ),
-                              ),
+                              onPressed: () {},
                             ),
-                            ImageItem(
+                            FamilyItem(
                               imagePath: 'assets/gridview/settings.png',
                               text: 'Ajustes',
-                              onPressed: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const SettingsPage(),
-                                ),
-                              ),
+                              onPressed: () {},
                             ),
                           ],
                         ),
