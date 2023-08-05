@@ -45,6 +45,9 @@ class _NavBarKalanState extends State<NavBarKalan> {
     setState(() {
       selectedIndex = index;
     });
+    if (index == 4) {
+      print('Tenemos presion');
+    }
   }
 
   void onLongPress(int index) {
@@ -78,10 +81,13 @@ class _NavBarKalanState extends State<NavBarKalan> {
                 });
               },
               onLongPress: () {
-                widget.onLongPress(index);
-                setState(() {
-                  selectedIndex = index;
-                });
+                //Si el usuario matiene presiondo cualqiuer index que no sea el 0, no se actualiza la barra
+                if (index == 0) {
+                  widget.onLongPress(index);
+                  setState(() {
+                    selectedIndex = index;
+                  });
+                }
               },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
