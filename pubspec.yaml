@@ -99,7 +99,7 @@ flutter:
     - assets/
     - assets/gridview/
     - assets/icons/
-    - assetts/family/
+    - assets/family/
 
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
