@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:kalanapp/constants/colors.dart';
 import 'package:kalanapp/main_menu.dart';
 import 'package:kalanapp/utils/kalan_navigaton_bar.dart';
-import 'package:kalanapp/utils/sos_modal.dart';
 import 'package:kalanapp/utils/sos_screen.dart';
 import 'package:kalanapp/view/gridTabs/contacts.dart';
 import 'package:kalanapp/view/gridTabs/monitor.dart';
@@ -44,9 +43,21 @@ class _PageControllerKalanState extends State<PageControllerKalan> {
         children: pageList,
       ),
       bottomNavigationBar: Container(
-        color: ColorConstants.jazPalette2,
+        color: currentIndex == 0
+            ? ColorConstants.jazPalette3
+            : ColorConstants.jazPalette2,
         child: NavBarKalan(
           onItemTapped: (index) {
+            if (index == 4) {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return const Center(
+                    child: KalanSOSPage(),
+                  );
+                },
+              );
+            }
             setState(() {
               previousIndex = currentIndex;
               currentIndex = index;

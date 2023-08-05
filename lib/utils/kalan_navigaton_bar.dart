@@ -64,9 +64,10 @@ class _NavBarKalanState extends State<NavBarKalan> {
       color: ColorConstants.jazPalette4,
       child: Container(
         decoration: const BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage('assets/MayanBackground5.png'),
-                fit: BoxFit.cover)),
+          image: DecorationImage(
+              image: AssetImage('assets/MayanBackground5.png'),
+              fit: BoxFit.cover),
+        ),
         height: 80,
         width: double.infinity,
         child: Row(

@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:kalanapp/constants/colors.dart';
-import 'package:kalanapp/home_screen.dart';
 import 'package:kalanapp/utils/button_with_texture.dart';
 import 'package:kalanapp/utils/rounded_container_text.dart';
 import 'package:kalanapp/utils/price_options_icon.dart';
 import 'package:kalanapp/utils/price_options_text.dart';
-import 'package:kalanapp/utils/sos_modal.dart';
-import 'package:kalanapp/view/gridTabs/contacts.dart';
-import 'package:kalanapp/view/secure_folder.dart';
 
 class PricingPage extends StatefulWidget {
   const PricingPage({super.key});
@@ -25,54 +21,6 @@ class _PricingPageState extends State<PricingPage> {
     setState(() {
       selectedPricedIndex = index;
     });
-  }
-
-  void onNavItemTapped(int indexNav) {
-    setState(() {
-      currentIndex = indexNav;
-    });
-    switch (indexNav) {
-      case 0:
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const HomeScreen(),
-          ),
-        );
-        break;
-      case 1:
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const ContactsPage(),
-          ),
-        );
-        break;
-      case 2:
-        break;
-      case 3:
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const SecureFolderPage(),
-          ),
-        );
-        break;
-      case 4:
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              final screenHeight = MediaQuery.of(context).size.height;
-              return Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  height: screenHeight / 3,
-                  child: const SOSPage(),
-                ),
-              );
-            });
-        break;
-    }
   }
 
   @override

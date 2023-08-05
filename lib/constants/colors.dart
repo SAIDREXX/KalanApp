@@ -18,6 +18,7 @@ class ColorConstants {
   static Color jazPalette7 = hexToColor('#97A19E');
   static Color jazPalette8 = hexToColor('#356B85');
   static Color jazPalette9 = hexToColor('#4A4A4A');
+  static Color jazPalette10 = hexToColor('#022E4F');
   //Colorcitos Guapos By SAIDREXXX
   static Color saidInactive = hexToColor('#ED435E'); //Rojito Guapo
   static Color saidActive = hexToColor('#2AB51D'); //Verde Cuqui
