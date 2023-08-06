@@ -4,12 +4,16 @@ class FamilyItem extends StatelessWidget {
   final String imagePath;
   final String text;
   final VoidCallback? onPressed;
+  static int itemCount = 0;
 
-  FamilyItem(
-      {required this.imagePath,
-      required this.text,
-      required this.onPressed,
-      super.key});
+  FamilyItem({
+    required this.imagePath,
+    required this.text,
+    required this.onPressed,
+    Key? key,
+  }) : super(key: key) {
+    itemCount++;
+  }
 
   @override
   Widget build(BuildContext context) {

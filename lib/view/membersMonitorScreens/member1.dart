@@ -1,31 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:kalanapp/constants/colors.dart';
-import 'package:kalanapp/utils/following_to_button.dart';
-import 'package:kalanapp/utils/set_status_button.dart';
 
-class MonitorPage extends StatefulWidget {
-  const MonitorPage({super.key});
+import '../../constants/colors.dart';
+import '../../utils/following_to_button.dart';
+import '../../utils/set_status_button.dart';
+
+class Member1 extends StatefulWidget {
+  const Member1({super.key});
 
   @override
-  State<MonitorPage> createState() => _MonitorPageState();
+  State<Member1> createState() => _Member1State();
 }
 
-class _MonitorPageState extends State<MonitorPage> {
+class _Member1State extends State<Member1> {
+  int currentIndex = 0;
+
+  void onItemSelected(int index) {
+    currentIndex = index;
+  }
+
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: ColorConstants.jazPalette3,
       body: SizedBox(
         height: height,
         width: double.infinity,
         child: Container(
           decoration: BoxDecoration(
             color: ColorConstants.jazPalette3,
-            borderRadius: const BorderRadius.only(
-              bottomLeft: Radius.circular(60),
-              bottomRight: Radius.circular(60),
-            ),
             image: const DecorationImage(
               image: AssetImage('assets/MayanBackground5.png'),
               fit: BoxFit.cover,
@@ -33,16 +35,17 @@ class _MonitorPageState extends State<MonitorPage> {
           ),
           child: const Column(
             children: [
-              SafeArea(
-                child: SizedBox(
-                  height: 15,
-                ),
+              SizedBox(
+                height: 40,
               ),
               FollowingButton(),
               SizedBox(
                 height: 450,
               ),
               StatusButton(),
+              SizedBox(
+                height: 15,
+              ),
             ],
           ),
         ),

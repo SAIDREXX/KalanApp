@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/colors.dart';
@@ -10,6 +11,17 @@ class FollowingButton extends StatefulWidget {
 }
 
 class _FollowingButtonState extends State<FollowingButton> {
+  final userName = FirebaseAuth.instance.currentUser!.displayName;
+  String userNameNotNull = '';
+
+  @override
+  void initState() {
+    super.initState();
+    if (userName != null) {
+      userNameNotNull = userName ?? 'Usuario Sin Nombre';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -47,46 +59,24 @@ class _FollowingButtonState extends State<FollowingButton> {
                         ),
                       ),
                     ),
-                    const Spacer(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            print('Right Arrow Touched');
-                          },
-                          child: Icon(
-                            Icons.arrow_back_ios,
-                            color: ColorConstants.jazPalette2,
-                            size: 20,
-                          ),
-                        ),
-                        Text(
-                          'Ester Exposito  ',
-                          textAlign: TextAlign.center,
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    SizedBox(
+                      width: width / 1.9,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Text(
+                          userNameNotNull,
+                          textAlign: TextAlign.left,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            color: ColorConstants.jazPalette2,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'Inter',
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            right: 15,
-                          ),
-                          child: GestureDetector(
-                            onTap: () {
-                              print('Left Arrow Touched');
-                            },
-                            child: Icon(
-                              Icons.arrow_forward_ios,
                               color: ColorConstants.jazPalette2,
-                              size: 20,
-                            ),
-                          ),
+                              fontSize: 16,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w500),
                         ),
-                      ],
+                      ),
                     ),
                   ],
                 ),

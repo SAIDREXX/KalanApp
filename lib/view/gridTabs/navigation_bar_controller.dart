@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:kalanapp/constants/colors.dart';
 import 'package:kalanapp/main_menu.dart';
 import 'package:kalanapp/utils/kalan_navigaton_bar.dart';
+import 'package:kalanapp/utils/monitor_controller.dart';
 import 'package:kalanapp/utils/sos_screen.dart';
 import 'package:kalanapp/view/gridTabs/contacts.dart';
-import 'package:kalanapp/view/gridTabs/monitor.dart';
 import 'package:kalanapp/view/pricing.dart';
 import 'package:kalanapp/view/secure_folder.dart';
 
@@ -28,7 +28,7 @@ class _PageControllerKalanState extends State<PageControllerKalan> {
   }
 
   List<Widget> pageList = [
-    const MonitorPage(),
+    const MonitorController(),
     const ContactsPage(),
     const PricingPage(),
     const SecureFolderPage(),
@@ -83,4 +83,3 @@ class _PageControllerKalanState extends State<PageControllerKalan> {
     );
   }
 }
-//Routes(index: index),

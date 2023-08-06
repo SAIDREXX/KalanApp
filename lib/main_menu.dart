@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kalanapp/constants/colors.dart';
 import 'package:kalanapp/utils/grid_image_widget.dart';
-import 'package:kalanapp/utils/navigation_bar_controller.dart';
+import 'package:kalanapp/view/gridTabs/navigation_bar_controller.dart';
 import 'package:kalanapp/view/gridTabs/family_members.dart';
 import 'package:kalanapp/view/gridTabs/help_numbers.dart';
 import 'package:kalanapp/view/settings/settings_main.dart';

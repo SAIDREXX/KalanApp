@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kalanapp/constants/colors.dart';
 
@@ -10,9 +11,50 @@ class SettingsPage extends StatefulWidget {
 
 class SettingsPageState extends State<SettingsPage> {
   bool _isDarkMode = false;
+  final userName = FirebaseAuth.instance.currentUser!.displayName;
+  final userEmail = FirebaseAuth.instance.currentUser!.email;
+  String userNameNotNull = '';
+  String userEmailNotNull = '';
+
+  @override
+  void initState() {
+    super.initState();
+    if (userName != null) {
+      userNameNotNull = userName ?? 'Usuario Sin Nombre';
+    }
+
+    if (userEmail != null) {
+      userEmailNotNull = userEmail ?? 'noemail@defaultemail.com';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
+
     final height = MediaQuery.of(context).size.height;
+
+    Widget getUserProfileImage() {
+      if (user?.photoURL != null) {
+        return ClipOval(
+          child: Image.network(
+            user!.photoURL!,
+            width: 100,
+            height: 100,
+            fit: BoxFit.cover,
+          ),
+        );
+      } else {
+        return ClipOval(
+          child: Image.asset(
+            'assets/default_profile.png',
+            width: 50,
+            height: 50,
+            fit: BoxFit.cover,
+          ),
+        );
+      }
+    }
 
     return Scaffold(
       backgroundColor: ColorConstants.jazPalette2,
@@ -40,11 +82,7 @@ class SettingsPageState extends State<SettingsPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Image.asset(
-                      'assets/default_test_image.png',
-                      width: 100,
-                      height: 100,
-                    ),
+                    getUserProfileImage(),
                     const SizedBox(
                       height: 15,
                     ),
@@ -52,7 +90,7 @@ class SettingsPageState extends State<SettingsPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'SAIDREXXX',
+                          userNameNotNull,
                           style: TextStyle(
                               fontSize: 23,
                               fontWeight: FontWeight.w600,
@@ -68,7 +106,7 @@ class SettingsPageState extends State<SettingsPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'example@example.com',
+                          userEmailNotNull,
                           style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w500,
