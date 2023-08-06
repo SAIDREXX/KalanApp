@@ -42,7 +42,9 @@ class _Member1State extends State<Member1> {
               SizedBox(
                 height: 450,
               ),
-              StatusButton(),
+              StatusButton(
+                userIndex: 0,
+              ),
               SizedBox(
                 height: 15,
               ),

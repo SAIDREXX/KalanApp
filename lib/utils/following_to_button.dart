@@ -30,7 +30,7 @@ class _FollowingButtonState extends State<FollowingButton> {
         height: 50,
         width: width / 1.1,
         decoration: BoxDecoration(
-          color: ColorConstants.jazPalette10,
+          color: ColorConstants.jazPalette6,
           image: const DecorationImage(
             image: AssetImage('assets/MayanBackground5.png'),
             fit: BoxFit.cover, // Ajustar la imagen al tamaño del botón
