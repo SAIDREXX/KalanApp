@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:kalanapp/auth/google_signin.dart';
 import 'package:kalanapp/constants/colors.dart';
+import 'package:kalanapp/view/login_page.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -660,7 +663,18 @@ class SettingsPageState extends State<SettingsPage> {
                           height: 7,
                         ),
                         OutlinedButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            try {
+                              await GoogleAuthService().signOutWithGoogle();
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                  builder: (context) => const LoginPage(),
+                                ),
+                              );
+                            } catch (error) {
+                              print('No fue posible cerrar sesión');
+                            }
+                          },
                           style: OutlinedButton.styleFrom(
                             side: BorderSide(
                               color: ColorConstants.greyScale1,

@@ -26,4 +26,12 @@ class GoogleAuthService {
       return null;
     }
   }
+
+  Future<void> signOutWithGoogle() async {
+    try {
+      await GoogleSignIn().signOut();
+    } catch (error) {
+      print('No fue posible cerrar la sesión');
+    }
+  }
 }
