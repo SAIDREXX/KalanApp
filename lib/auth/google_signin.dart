@@ -17,6 +17,7 @@ class GoogleAuthService {
     try {
       final UserCredential userCredential =
           await FirebaseAuth.instance.signInWithCredential(credential);
+
       // Autenticación exitosa, mostrar mensaje de éxito en la consola
       print('Inicio de sesión exitoso: ${userCredential.user!.displayName}');
       return userCredential;
