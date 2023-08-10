@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kalanapp/home_screen.dart';
+import 'package:kalanapp/main_menu.dart';
 import '../constants/colors.dart';
 import 'login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -62,7 +62,7 @@ class GetStartedPage extends StatelessWidget {
 
                       if (user != null) {
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => const HomeScreen()));
+                            builder: (context) => const MainMenu()));
                       } else {
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
                             builder: (context) => const LoginPage()));

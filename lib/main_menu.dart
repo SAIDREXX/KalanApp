@@ -201,7 +201,7 @@ class _MainMenuState extends State<MainMenu> {
                               onPressed: () => Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const SettingsPage(),
+                                  builder: (context) =>  SettingsPage(),
                                 ),
                               ),
                             ),

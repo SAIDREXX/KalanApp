@@ -4,7 +4,6 @@ import 'package:kalanapp/view/forgot_password.dart';
 import '../constants/colors.dart';
 import 'package:kalanapp/auth/google_signin.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../home_screen.dart';
 import 'register_page.dart';
 import 'package:kalanapp/auth/email_signin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -245,7 +244,7 @@ class LoginPageState extends State<LoginPage> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => HomeScreen(),
+                                        builder: (context) => MainMenu(),
                                       ),
                                     );
                                   } catch (e) {
