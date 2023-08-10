@@ -21,10 +21,10 @@ class _MainMenuState extends State<MainMenu> {
     final user = FirebaseAuth.instance.currentUser;
 
     Widget getUserProfileImage() {
-      if (user?.photoURL != null) {
+      if (user!.photoURL != null) {
         return ClipOval(
           child: Image.network(
-            user!.photoURL!,
+            user.photoURL!,
             width: 50,
             height: 50,
             fit: BoxFit.cover,
@@ -152,12 +152,14 @@ class _MainMenuState extends State<MainMenu> {
                             ImageItem(
                               imagePath: 'assets/gridview/family.png',
                               text: 'Familia',
-                              onPressed: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const FamilyPage(),
-                                ),
-                              ),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const FamilyPage(),
+                                  ),
+                                );
+                              },
                             ),
                             ImageItem(
                               imagePath: 'assets/gridview/contact.png',

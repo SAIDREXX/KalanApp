@@ -36,7 +36,7 @@ class FamilyItem extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
               clipBehavior: Clip.antiAlias,
-              child: Image.asset(
+              child: Image.network(
                 imagePath,
                 fit: BoxFit.cover,
               ),
@@ -49,6 +49,8 @@ class FamilyItem extends StatelessWidget {
             width: 100,
             child: Text(
               text,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
               style:
                   const TextStyle(fontSize: 14.49, fontWeight: FontWeight.w600),

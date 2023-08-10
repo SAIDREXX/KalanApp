@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:kalanapp/main_menu.dart';
 import 'package:kalanapp/view/forgot_password.dart';
@@ -59,7 +60,25 @@ class LoginPageState extends State<LoginPage> {
   Future<void> signInWithGoogle(BuildContext context) async {
     final UserCredential? userCredential =
         await GoogleAuthService().signInWithGoogle();
+    final User? user = userCredential!.user;
+    String userId = user!.uid;
+    String? userName = user.displayName;
+    String? userPhotoURL = user.photoURL;
+    String userGroupIdentifier = userId.substring(0, 6);
 
+    await FirebaseFirestore.instance
+        .collection('groups')
+        .doc(userGroupIdentifier)
+        .set({
+      'creator': userId,
+      'members': [userId],
+      'membersInfo': {
+        userId: {
+          'name': userName,
+          'pictureURL': userPhotoURL,
+        },
+      },
+    });
     if (userCredential != null) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
