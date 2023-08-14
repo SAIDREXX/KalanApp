@@ -15,6 +15,7 @@ class FamilyPage extends StatefulWidget {
 class _FamilyPageState extends State<FamilyPage> {
   late String groupName;
   late User? user;
+  bool isInGroup = false;
 
   @override
   void initState() {
@@ -37,9 +38,10 @@ class _FamilyPageState extends State<FamilyPage> {
     setState(() {
       groupName = newGroupName;
       print('Valor de GroupName en setState: $groupName');
+      isInGroup = false;
     });
     await FirebaseFirestore.instance
-        .collection('users')
+        .collection('groups')
         .doc(groupName)
         .update({'groupName': newGroupName});
   }
@@ -47,7 +49,6 @@ class _FamilyPageState extends State<FamilyPage> {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
-    bool isInGroup = false;
 
     Widget getUserProfileImage() {
       if (user!.photoURL != null) {
@@ -203,6 +204,7 @@ class _FamilyPageState extends State<FamilyPage> {
                                       if (familyItems.length > 1) {
                                         isInGroup = true;
                                       }
+
                                       return GridView.count(
                                         crossAxisCount: 2,
                                         crossAxisSpacing: 10,
@@ -221,18 +223,29 @@ class _FamilyPageState extends State<FamilyPage> {
                                 margin: const EdgeInsets.only(bottom: 0),
                                 child: MaterialButton(
                                   onPressed: () {
-                                    print(
-                                        'Valor Actual De la Variable Group en Unirse al grupo button: $groupName');
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return Center(
-                                          child: JoinGroupModal(
-                                            updateGroupName: updateGroupName,
-                                          ),
-                                        );
-                                      },
-                                    );
+                                    isInGroup
+                                        ? showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return Center(
+                                                child: LeaveGroupModal(
+                                                  updateGroupName:
+                                                      updateGroupName,
+                                                ),
+                                              );
+                                            },
+                                          )
+                                        : showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return Center(
+                                                child: JoinGroupModal(
+                                                  updateGroupName:
+                                                      updateGroupName,
+                                                ),
+                                              );
+                                            },
+                                          );
                                   },
                                   color: isInGroup
                                       ? Colors.red
@@ -387,6 +400,165 @@ class _JoinGroupModalState extends State<JoinGroupModal> {
                       color: ColorConstants.jazPalette3,
                       child: const Text(
                         'Unirse',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                  SizedBox(
+                    width: width / 4,
+                    child: MaterialButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(32),
+                      ),
+                      color: Colors.red,
+                      child: const Text(
+                        'Volver',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class LeaveGroupModal extends StatefulWidget {
+  final Function(String) updateGroupName;
+  const LeaveGroupModal({required this.updateGroupName, super.key});
+
+  @override
+  State<LeaveGroupModal> createState() => _LeaveGroupModalState();
+}
+
+class _LeaveGroupModalState extends State<LeaveGroupModal> {
+  late SharedPreferences prefs;
+
+  @override
+  Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
+
+    String userId = user!.uid;
+    String? userName = user.displayName;
+    String? userPhotoURL = user.photoURL;
+    String userGroupIdentifier = userId.substring(0, 6);
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+
+    return Material(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(32),
+      ),
+      child: Container(
+        width: width / 1.1,
+        height: height / 3.5,
+        padding: const EdgeInsets.symmetric(
+          horizontal: 32,
+          vertical: 20,
+        ),
+        decoration: BoxDecoration(
+          color: ColorConstants.jazPalette4,
+          borderRadius: BorderRadius.circular(32),
+          image: const DecorationImage(
+              image: AssetImage('assets/MayanBackground5.png'),
+              fit: BoxFit.cover),
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              const Text(
+                'Abandonar Grupo',
+                style: TextStyle(
+                    fontSize: 23,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                    decoration: TextDecoration.none),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(
+                height: 22,
+              ),
+              const Text(
+                '¿Estás seguro de abandonar el grupo actual?',
+                style: TextStyle(
+                    fontSize: 15,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                    decoration: TextDecoration.none),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(
+                    width: width / 4,
+                    child: MaterialButton(
+                      onPressed: () async {
+                        SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        DocumentSnapshot groupDoc = await FirebaseFirestore
+                            .instance
+                            .collection('groups')
+                            .doc(prefs.getString('groupName'))
+                            .get();
+
+                        if (groupDoc.exists) {
+                          await groupDoc.reference.update({
+                            'members': FieldValue.arrayRemove([userId]),
+                            'membersInfo.$userId': FieldValue.delete(),
+                          });
+                          await FirebaseFirestore.instance
+                              .collection('groups')
+                              .doc(userGroupIdentifier)
+                              .set({
+                            'creator': userId,
+                            'members': [userId],
+                            'membersInfo': {
+                              userId: {
+                                'name': userName,
+                                'pictureURL': userPhotoURL,
+                              },
+                            },
+                          });
+                          //Insertar Pantalla de Agregado con exito
+                          widget.updateGroupName(userGroupIdentifier);
+                          print(
+                              'El valor de la variable group en el Modal es: $userGroupIdentifier');
+                          Navigator.of(context).pop();
+                        } else {
+                          print('Error Al Añadir');
+                        }
+                      },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(32),
+                      ),
+                      color: ColorConstants.jazPalette3,
+                      child: const Text(
+                        'Salir',
                         style: TextStyle(
                           fontFamily: 'Inter',
                           fontSize: 16,
