@@ -1,8 +1,12 @@
 import 'dart:async';
-import 'package:location/location.dart';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kalanapp/utils/Map_Search.dart';
+import 'package:location/location.dart';
+
 class Member1 extends StatefulWidget {
   const Member1({super.key});
 
@@ -13,13 +17,19 @@ class Member1 extends StatefulWidget {
 class _Member1 extends State<Member1> {
   List<LatLng> _routePoints = [];
   Location _location = Location();
-  final Completer<GoogleMapController>_controller =
-  Completer<GoogleMapController>();
+  final Completer<GoogleMapController> _controller =
+      Completer<GoogleMapController>();
   List<Polyline> _polylines = []; // Lista de polilíneas para dibujar en el mapa
   @override
   void initState() {
     super.initState();
-    _startLocationUpdates();
+    Future.delayed(Duration(seconds: 5), () {
+      _startLocationUpdates();
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        _loadPreviousRoutes(user.uid); // Llamada a cargar rutas anteriores
+      }
+    });
   }
 
   void _startLocationUpdates() {
@@ -28,13 +38,32 @@ class _Member1 extends State<Member1> {
     });
   }
 
+  void _loadPreviousRoutes(String userId) async {
+    _routePoints.clear(); // Limpiar rutas anteriores
+    _polylines.clear(); // Limpiar polilíneas anteriores
+    final QuerySnapshot snapshot = await FirebaseFirestore.instance
+        .collection('Usuarios')
+        .doc(userId)
+        .collection('routes')
+        .get();
+    _routePoints.clear(); // Limpiar rutas anteriores
+    _polylines.clear(); // Limpiar polilíneas anteriores
+
+    snapshot.docs.forEach((doc) {
+      final data = doc.data() as Map<String, dynamic>;
+      final latitude = data['latitude'];
+      final longitude = data['longitude'];
+      final LatLng point = LatLng(latitude, longitude);
+      _routePoints.add(point);
+    });
+
+    _updateRouteOnMap();
+  }
 
   static const CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
     zoom: 14.4746,
-
   );
-
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +106,6 @@ class _Member1 extends State<Member1> {
     );
   }
 
-
   Future<void> _goToTheLake() async {
     final GoogleMapController controller = await _controller.future;
 
@@ -106,6 +134,7 @@ class _Member1 extends State<Member1> {
     final Polyline polyline = Polyline(
       polylineId: PolylineId('route'),
       color: Colors.blue, // Color personalizado para la línea de la ruta
+      width: 5,
       points: _routePoints,
     );
 
@@ -129,9 +158,20 @@ class _Member1 extends State<Member1> {
       locationData.latitude!,
       locationData.longitude!,
     );
-
-    _routePoints.add(
-        currentLocation);
+    _routePoints.add(currentLocation);
     _updateRouteOnMap();
+
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      await FirebaseFirestore.instance
+          .collection('Usuarios')
+          .doc(user.uid)
+          .collection('routes')
+          .add({
+        'latitude': currentLocation.latitude,
+        'longitude': currentLocation.longitude,
+        'timestamp': FieldValue.serverTimestamp(),
+      });
+    }
   }
 }
