@@ -1,15 +1,9 @@
-import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kalanapp/auth/google_signin.dart';
 import 'package:kalanapp/constants/colors.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:kalanapp/view/login_page.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -25,8 +19,6 @@ class SettingsPageState extends State<SettingsPage> {
   final userEmail = FirebaseAuth.instance.currentUser!.email;
   String userNameNotNull = '';
   String userEmailNotNull = '';
-  File? _selectedImage;
-
 
   @override
   void initState() {
@@ -45,7 +37,6 @@ class SettingsPageState extends State<SettingsPage> {
     final user = FirebaseAuth.instance.currentUser;
 
     final height = MediaQuery.of(context).size.height;
-
 
     Widget getUserProfileImage() {
       if (user?.photoURL != null) {
@@ -95,11 +86,9 @@ class SettingsPageState extends State<SettingsPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-
                     const SizedBox(
                       height: 7,
                     ),
-
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -156,12 +145,12 @@ class SettingsPageState extends State<SettingsPage> {
                         Row(
                           children: [
                             GestureDetector(
-                              onTap:(){
+                              onTap: () {
                                 Navigator.pop(context);
                               },
                               child: const Icon(
-                              Icons.close,
-                              size: 25,
+                                Icons.close,
+                                size: 25,
                               ),
                             ),
                             const SizedBox(
@@ -689,8 +678,7 @@ class SettingsPageState extends State<SettingsPage> {
                               text: "Seguro que quieres Cerrar Sesion?",
                               confirmBtnText: 'Yes',
                               cancelBtnText: 'No',
-                              backgroundColor:
-                              ColorConstants.jazPalette3,
+                              backgroundColor: ColorConstants.jazPalette3,
                               confirmBtnColor: ColorConstants.saidInactive,
                               onConfirmBtnTap: () {
                                 userConfirmed = true;
