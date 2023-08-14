@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:kalanapp/main_menu.dart';
 import 'splash_screen.dart';
 import '/view/get_started_page.dart';
-import 'home_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       home: const SplashScreen(),
       routes: {
         '/getStarted': (context) => const GetStartedPage(),
-        '/home': (context) => const HomeScreen(),
+        '/home': (context) => const MainMenu(),
       },
     );
   }
