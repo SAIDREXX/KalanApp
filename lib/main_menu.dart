@@ -1,3 +1,6 @@
+import 'dart:ffi';
+
+import 'package:background_location/background_location.dart';
 import 'package:flutter/material.dart';
 import 'package:kalanapp/constants/colors.dart';
 import 'package:kalanapp/utils/grid_image_widget.dart';
@@ -6,6 +9,7 @@ import 'package:kalanapp/view/gridTabs/family_members.dart';
 import 'package:kalanapp/view/gridTabs/help_numbers.dart';
 import 'package:kalanapp/view/settings/settings_main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class MainMenu extends StatefulWidget {
   const MainMenu({super.key});
@@ -15,6 +19,47 @@ class MainMenu extends StatefulWidget {
 }
 
 class _MainMenuState extends State<MainMenu> {
+  @override
+  void initState() {
+    super.initState();
+    checkPermissions();
+    initBackgroundLocation();
+  }
+
+  Future<void> checkPermissions() async {
+    List<Permission> permissions = [
+      Permission.location,
+      Permission.notification,
+      Permission.phone,
+    ];
+    for (var permission in permissions) {
+      var status = await permission.status;
+      if (!status.isGranted) {
+        var result = await permission.request();
+        if (result.isPermanentlyDenied) {}
+      }
+    }
+  }
+
+  Future<void> initBackgroundLocation() async {
+    await BackgroundLocation.setAndroidNotification(
+      title: 'Vigilando tu ubicación',
+      message: 'Kalan está actualizando tu ubicación!',
+      icon: 'assets/icons/kalanicon.png',
+    );
+    await BackgroundLocation.startLocationService(
+      distanceFilter: 10,
+    );
+    BackgroundLocation.getLocationUpdates(
+      (location) {
+        setState(() {
+          double? lat = location.latitude;
+          print('Latitude : $lat');
+        });
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -203,7 +248,7 @@ class _MainMenuState extends State<MainMenu> {
                               onPressed: () => Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) =>  SettingsPage(),
+                                  builder: (context) => const SettingsPage(),
                                 ),
                               ),
                             ),

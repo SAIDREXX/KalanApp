@@ -35,7 +35,6 @@ class SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
-
     final height = MediaQuery.of(context).size.height;
 
     Widget getUserProfileImage() {
@@ -86,8 +85,9 @@ class SettingsPageState extends State<SettingsPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    getUserProfileImage(),
                     const SizedBox(
-                      height: 7,
+                      height: 15,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -100,7 +100,6 @@ class SettingsPageState extends State<SettingsPage> {
                               fontFamily: 'Inter,',
                               color: ColorConstants.starterWhite),
                         ),
-                        getUserProfileImage(),
                       ],
                     ),
                     const SizedBox(

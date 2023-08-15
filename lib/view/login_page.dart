@@ -65,6 +65,8 @@ class LoginPageState extends State<LoginPage> {
     String? userName = user.displayName;
     String? userPhotoURL = user.photoURL;
     String userGroupIdentifier = userId.substring(0, 6);
+    String defaultLatitude = '19.137275040411904';
+    String defaultLongitude = '-96.9761493805079';
 
     await FirebaseFirestore.instance
         .collection('groups')
@@ -76,6 +78,8 @@ class LoginPageState extends State<LoginPage> {
         userId: {
           'name': userName,
           'pictureURL': userPhotoURL,
+          'latitude': defaultLatitude,
+          'longitude': defaultLongitude,
         },
       },
     });
