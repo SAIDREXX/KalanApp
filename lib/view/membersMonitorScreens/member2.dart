@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:kalanapp/utils/following_to_button.dart';
+import 'package:kalanapp/utils/set_status_button.dart';
 
 import '../../constants/colors.dart';
 
@@ -24,6 +26,21 @@ class _Member2State extends State<Member2> {
               image: AssetImage('assets/MayanBackground5.png'),
               fit: BoxFit.cover,
             ),
+          ),
+          child: const Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: 40),
+              FollowingButton(
+                index: 1,
+              ),
+              Spacer(),
+              StatusButton(userIndex: 1),
+              SizedBox(
+                height: 150,
+              )
+            ],
           ),
         ),
       ),

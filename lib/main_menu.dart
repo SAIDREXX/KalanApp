@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:background_location/background_location.dart';
 import 'package:flutter/material.dart';
 import 'package:kalanapp/constants/colors.dart';

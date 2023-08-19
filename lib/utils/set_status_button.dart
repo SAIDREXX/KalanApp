@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kalanapp/utils/status_modal.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants/colors.dart';
 
@@ -12,42 +15,60 @@ class StatusButton extends StatefulWidget {
 }
 
 class _StatusButtonState extends State<StatusButton> {
+  late String groupName;
+  late User? user;
   late int userIndex;
-
+  late int accountIndex;
   int statusSelected = 0;
 
   @override
   void initState() {
     super.initState();
     userIndex = widget.userIndex;
+
+    loadGroupName();
   }
 
-  List<String> statusOptions = [
-    'Establecer Estado',
-    'Calle',
-    'Casa',
-    'Escuela',
-    'Fiesta',
-    'Trabajo',
-    'Transporte',
-    'Zona sin cobertura'
-  ];
+  void loadGroupName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      user = FirebaseAuth.instance.currentUser;
+      groupName = prefs.getString('groupName') ?? user!.uid.substring(0, 6);
+      accountIndex = prefs.getInt('groupPosition') ?? 0;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
+    final user = FirebaseAuth.instance.currentUser;
+
+    String userId = user!.uid;
     return GestureDetector(
       onTap: () {
-        if (userIndex == 0) {
+        if (userIndex == accountIndex) {
           showDialog(
             context: context,
             builder: (context) {
               return Center(
                 child: StatusModal(
-                  onStatusSelected: (selectedStatus) {
+                  onStatusSelected: (selectedStatus) async {
                     setState(() {
                       statusSelected = selectedStatus;
                     });
+                    DocumentSnapshot groupDoc = await FirebaseFirestore.instance
+                        .collection('groups')
+                        .doc(groupName)
+                        .get();
+
+                    if (groupDoc.exists) {
+                      await groupDoc.reference.update({
+                        'membersInfo.$userId.currentStatus': selectedStatus,
+                      });
+
+                      setState(() {});
+                    }
                   },
                 ),
               );
@@ -87,32 +108,103 @@ class _StatusButtonState extends State<StatusButton> {
                         ),
                       ),
                       const Spacer(),
-                      Text(
-                        statusOptions[statusSelected],
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: ColorConstants.jazPalette3,
-                          fontSize: 17,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: 'Inter',
-                        ),
+                      StreamBuilder<DocumentSnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection('groups')
+                            .doc(groupName)
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(
+                              child: CircularProgressIndicator(
+                                color: ColorConstants.jazPalette3,
+                              ),
+                            );
+                          }
+
+                          if (snapshot.hasData) {
+                            Map<String, dynamic> membersInfo =
+                                snapshot.data!['membersInfo'];
+
+                            List<MapEntry<String, dynamic>> memberEntries =
+                                membersInfo.entries.toList();
+
+                            memberEntries.sort((a, b) {
+                              Timestamp timestampA = a.value['joinTimestamp'];
+                              Timestamp timestampB = b.value['joinTimestamp'];
+                              return timestampA.compareTo(timestampB);
+                            });
+
+                            List<int> statusNumber = [];
+                            for (var entry in memberEntries) {
+                              int status = entry.value['currentStatus'];
+                              statusNumber.add(status);
+                            }
+                            List<String> statusOptions = [
+                              'Establecer Estado',
+                              'Calle',
+                              'Casa',
+                              'Escuela',
+                              'Fiesta',
+                              'Trabajo',
+                              'Transporte',
+                              'Zona sin cobertura'
+                            ];
+
+                            return Center(
+                              child: Text(
+                                statusOptions[statusNumber[userIndex]],
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: ColorConstants.jazPalette3,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: 'Inter',
+                                ),
+                              ),
+                            );
+                          }
+
+                          return Center(
+                            child: CircularProgressIndicator(
+                              color: ColorConstants.paletteColor2,
+                            ),
+                          );
+                        },
                       ),
                       const Spacer(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              right: 15,
+                      userIndex != accountIndex
+                          ? const Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                    right: 15,
+                                  ),
+                                  child: Icon(
+                                    Icons.arrow_forward_ios,
+                                    color: Colors.transparent,
+                                    size: 20,
+                                  ),
+                                ),
+                              ],
+                            )
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    right: 15,
+                                  ),
+                                  child: Icon(
+                                    Icons.arrow_forward_ios,
+                                    color: ColorConstants.jazPalette3,
+                                    size: 20,
+                                  ),
+                                ),
+                              ],
                             ),
-                            child: Icon(
-                              Icons.arrow_forward_ios,
-                              color: ColorConstants.jazPalette3,
-                              size: 20,
-                            ),
-                          ),
-                        ],
-                      ),
                     ],
                   ),
                 ),

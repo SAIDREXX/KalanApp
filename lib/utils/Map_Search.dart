@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kalanapp/utils/set_status_button.dart';
 import '../../utils/following_to_button.dart';
+
 class MyWidget extends StatelessWidget {
   const MyWidget({Key? key}) : super(key: key);
 
@@ -11,7 +12,9 @@ class MyWidget extends StatelessWidget {
         SizedBox(
           height: 40,
         ),
-        FollowingButton(),
+        FollowingButton(
+          index: 0,
+        ),
         SizedBox(
           height: 450,
         ),
@@ -25,4 +28,3 @@ class MyWidget extends StatelessWidget {
     );
   }
 }
-

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kalanapp/utils/contacts_nav_bar.dart';
+import 'package:kalanapp/utils/contacts_nav_bar_kalan.dart';
 import 'package:kalanapp/view/membersMonitorScreens/member1.dart';
 import 'package:kalanapp/view/membersMonitorScreens/member5.dart';
 import 'package:kalanapp/view/membersMonitorScreens/member6.dart';
@@ -9,7 +9,8 @@ import '../view/membersMonitorScreens/member3.dart';
 import '../view/membersMonitorScreens/member4.dart';
 
 class MonitorController extends StatefulWidget {
-  const MonitorController({super.key});
+  final int index;
+  const MonitorController({required this.index, super.key});
 
   @override
   State<MonitorController> createState() => _MonitorControllerState();
@@ -17,6 +18,21 @@ class MonitorController extends StatefulWidget {
 
 class _MonitorControllerState extends State<MonitorController> {
   int currentIndex = 0;
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    updateState();
+
+    print('El valor en Monitor Es: $currentIndex');
+  }
+
+  void updateState() async {
+    setState(() {});
+    currentIndex = widget.index;
+    isLoading = false;
+  }
 
   void onItemSelected(int index) {
     currentIndex = index;
@@ -30,18 +46,29 @@ class _MonitorControllerState extends State<MonitorController> {
     const Member5(),
     const Member6(),
   ];
+
+  Widget loadingWidget() {
+    return Center(
+      child: CircularProgressIndicator(
+        color: ColorConstants.jazPalette3,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorConstants.jazPalette3,
       extendBody: true,
-      body: IndexedStack(
-        index: currentIndex,
-        children: internalMonitorPages,
-      ),
+      body: isLoading
+          ? loadingWidget()
+          : IndexedStack(
+              index: currentIndex,
+              children: internalMonitorPages,
+            ),
       bottomNavigationBar: Container(
         margin: const EdgeInsets.only(bottom: 50),
-        child: ContactsNavBar(
+        child: ContactsNavBarKalan(
           onItemTapped: (index) {
             setState(() {});
           },
@@ -49,6 +76,7 @@ class _MonitorControllerState extends State<MonitorController> {
             setState(() {});
           },
           onItemSelected: onItemSelected,
+          index: currentIndex,
         ),
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kalanapp/constants/colors.dart';
 import 'package:kalanapp/main_menu.dart';
@@ -7,6 +8,7 @@ import 'package:kalanapp/utils/sos_screen.dart';
 import 'package:kalanapp/view/gridTabs/contacts.dart';
 import 'package:kalanapp/view/pricing.dart';
 import 'package:kalanapp/view/secure_folder.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PageControllerKalan extends StatefulWidget {
   final int indexRequired;
@@ -17,30 +19,46 @@ class PageControllerKalan extends StatefulWidget {
 }
 
 class _PageControllerKalanState extends State<PageControllerKalan> {
+  late String groupName;
+  late User? user;
   int currentIndex = 0;
   int previousIndex = 0;
+  //ToDo: Modificar el  valor de accountIndex aplicando un orderBy de TimeStamp a los datos y actualizar el valor con el index correspondiente al dueño de la cuenta
+  late int accountIndex;
 
   @override
   void initState() {
     super.initState();
     currentIndex = widget.indexRequired;
     previousIndex = currentIndex;
+    user = FirebaseAuth.instance.currentUser;
+    loadGroupName();
   }
 
-  List<Widget> pageList = [
-    const MonitorController(),
-    const ContactsPage(),
-    const PricingPage(),
-    const SecureFolderPage(),
-    const KalanSOSPage(),
-  ];
+  void loadGroupName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      groupName = prefs.getString('groupName') ?? user!.uid.substring(0, 6);
+      accountIndex = prefs.getInt('groupPosition') ?? 0;
+      print('La posición en NavBar es: $accountIndex');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: IndexedStack(
         index: currentIndex,
-        children: pageList,
+        children: [
+          MonitorController(
+            index: accountIndex,
+          ),
+          const ContactsPage(),
+          const PricingPage(),
+          const SecureFolderPage(),
+          const KalanSOSPage(),
+        ],
       ),
       bottomNavigationBar: Container(
         color: currentIndex == 0

@@ -52,6 +52,9 @@ dependencies:
   permission_handler: ^10.4.3
   background_location: ^0.11.8
 
+  flutter_local_notifications: ^15.1.0+1
+  flutter_background_service: ^5.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -103,7 +106,6 @@ flutter:
     - assets/
     - assets/gridview/
     - assets/icons/
-    - assets/family/
 
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

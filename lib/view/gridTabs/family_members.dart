@@ -26,6 +26,7 @@ class _FamilyPageState extends State<FamilyPage> {
 
   void loadGroupName() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+
     setState(() {
       groupName = prefs.getString('groupName') ?? user!.uid.substring(0, 6);
     });
@@ -44,6 +45,11 @@ class _FamilyPageState extends State<FamilyPage> {
         .collection('groups')
         .doc(groupName)
         .update({'groupName': newGroupName});
+  }
+
+  void addUserPositionToSharedPreferences(int position) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('groupPosition', position);
   }
 
   @override
@@ -184,16 +190,45 @@ class _FamilyPageState extends State<FamilyPage> {
                                       .doc(groupName)
                                       .snapshots(),
                                   builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return Center(
+                                        child: CircularProgressIndicator(
+                                          color: ColorConstants.jazPalette3,
+                                        ),
+                                      );
+                                    }
+
                                     if (snapshot.hasData) {
                                       Map<String, dynamic> membersInfo =
                                           snapshot.data!['membersInfo'];
 
+                                      List<MapEntry<String, dynamic>>
+                                          memberEntries =
+                                          membersInfo.entries.toList();
+
+                                      memberEntries.sort((a, b) {
+                                        Timestamp timestampA =
+                                            a.value['joinTimestamp'];
+                                        Timestamp timestampB =
+                                            b.value['joinTimestamp'];
+                                        return timestampA.compareTo(timestampB);
+                                      });
+
                                       List<Widget> familyItems = [];
-                                      membersInfo
-                                          .forEach((memberId, memberData) {
-                                        String name = memberData['name'];
+                                      int position = -1;
+                                      memberEntries.forEach((entry) {
+                                        String name = entry.value['name'];
                                         String pictureURL =
-                                            memberData['pictureURL'];
+                                            entry.value['pictureURL'];
+                                        String userIdentificator =
+                                            entry.value['userIdentificator'];
+                                        position++;
+                                        if (userIdentificator == user!.uid) {
+                                          print('La posición es: $position');
+                                          addUserPositionToSharedPreferences(
+                                              position);
+                                        }
 
                                         familyItems.add(FamilyItem(
                                           imagePath: pictureURL,
@@ -299,6 +334,10 @@ class _JoinGroupModalState extends State<JoinGroupModal> {
     String? userName = user.displayName;
     String? userPhotoURL = user.photoURL;
     String userGroupIdentifier = userId.substring(0, 6);
+    String defaultLatitude = '19.137275040411904';
+    String defaultLongitude = '-96.9761493805079';
+    int membershipTier = 0;
+    int currentStatus = 0;
     TextEditingController textFieldController = TextEditingController();
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
@@ -379,12 +418,22 @@ class _JoinGroupModalState extends State<JoinGroupModal> {
                             'membersInfo.$userId': {
                               'name': userName,
                               'pictureURL': userPhotoURL,
+                              'latitude': defaultLatitude,
+                              'longitude': defaultLongitude,
+                              'joinTimestamp': FieldValue.serverTimestamp(),
+                              'membership': membershipTier,
+                              'currentStatus': currentStatus,
+                              'userIdentificator': userId,
                             }
                           });
                           await FirebaseFirestore.instance
                               .collection('groups')
                               .doc(userGroupIdentifier)
                               .delete();
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          await prefs.setString(
+                              'groupName', textFieldController.text);
                           //Insertar Pantalla de Agregado con exito
                           widget.updateGroupName(textFieldController.text);
                           print(
@@ -460,6 +509,10 @@ class _LeaveGroupModalState extends State<LeaveGroupModal> {
     String? userName = user.displayName;
     String? userPhotoURL = user.photoURL;
     String userGroupIdentifier = userId.substring(0, 6);
+    String defaultLatitude = '19.137275040411904';
+    String defaultLongitude = '-96.9761493805079';
+    int membershipTier = 0;
+    int currentStatus = 0;
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
@@ -541,6 +594,12 @@ class _LeaveGroupModalState extends State<LeaveGroupModal> {
                               userId: {
                                 'name': userName,
                                 'pictureURL': userPhotoURL,
+                                'latitude': defaultLatitude,
+                                'longitude': defaultLongitude,
+                                'joinTimestamp': FieldValue.serverTimestamp(),
+                                'membership': membershipTier,
+                                'currentStatus': currentStatus,
+                                'userIdentificator': userId,
                               },
                             },
                           });

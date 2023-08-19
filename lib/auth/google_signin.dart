@@ -31,6 +31,7 @@ class GoogleAuthService {
   Future<void> signOutWithGoogle() async {
     try {
       await GoogleSignIn().signOut();
+      await FirebaseAuth.instance.signOut();
     } catch (error) {
       print('No fue posible cerrar la sesión');
     }

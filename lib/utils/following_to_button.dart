@@ -1,25 +1,36 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants/colors.dart';
 
 class FollowingButton extends StatefulWidget {
-  const FollowingButton({super.key});
+  final int index;
+  const FollowingButton({required this.index, super.key});
 
   @override
   State<FollowingButton> createState() => _FollowingButtonState();
 }
 
 class _FollowingButtonState extends State<FollowingButton> {
-  final userName = FirebaseAuth.instance.currentUser!.displayName;
-  String userNameNotNull = '';
-
+  late String groupName;
+  late User? user;
+  int index = 0;
   @override
   void initState() {
     super.initState();
-    if (userName != null) {
-      userNameNotNull = userName ?? 'Usuario Sin Nombre';
-    }
+    index = widget.index;
+    user = FirebaseAuth.instance.currentUser;
+    loadGroupName();
+  }
+
+  void loadGroupName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      groupName = prefs.getString('groupName') ?? user!.uid.substring(0, 6);
+    });
   }
 
   @override
@@ -62,21 +73,59 @@ class _FollowingButtonState extends State<FollowingButton> {
                     const SizedBox(
                       width: 15,
                     ),
-                    SizedBox(
-                      width: width / 1.9,
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Text(
-                          userNameNotNull,
-                          textAlign: TextAlign.left,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              color: ColorConstants.jazPalette2,
-                              fontSize: 16,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ),
+                    StreamBuilder<DocumentSnapshot>(
+                      stream: FirebaseFirestore.instance
+                          .collection('groups')
+                          .doc(groupName)
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(
+                            child: CircularProgressIndicator(
+                              color: ColorConstants.jazPalette3,
+                            ),
+                          );
+                        }
+
+                        if (snapshot.hasData) {
+                          Map<String, dynamic> membersInfo =
+                              snapshot.data!['membersInfo'];
+
+                          List<MapEntry<String, dynamic>> memberEntries =
+                              membersInfo.entries.toList();
+
+                          memberEntries.sort((a, b) {
+                            Timestamp timestampA = a.value['joinTimestamp'];
+                            Timestamp timestampB = b.value['joinTimestamp'];
+                            return timestampA.compareTo(timestampB);
+                          });
+
+                          List<String> familyNames = [];
+                          for (var entry in memberEntries) {
+                            String name = entry.value['name'];
+                            familyNames.add(name);
+                          }
+                          print(familyNames);
+                          return SizedBox(
+                            width: width / 1.9,
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Text(
+                                familyNames[index],
+                                textAlign: TextAlign.left,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    color: ColorConstants.jazPalette2,
+                                    fontSize: 16,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                          );
+                        }
+                        return const CircularProgressIndicator();
+                      },
                     ),
                   ],
                 ),
@@ -88,3 +137,19 @@ class _FollowingButtonState extends State<FollowingButton> {
     );
   }
 }
+/* SizedBox(
+                      width: width / 1.9,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Text(
+                          'Hola',
+                          textAlign: TextAlign.left,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              color: ColorConstants.jazPalette2,
+                              fontSize: 16,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    ),*/

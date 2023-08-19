@@ -4,6 +4,9 @@ import 'package:kalanapp/auth/google_signin.dart';
 import 'package:kalanapp/constants/colors.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:kalanapp/view/login_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../services/notification_services.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -192,7 +195,9 @@ class SettingsPageState extends State<SettingsPage> {
                         ),
 
                         OutlinedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            showNotificaction();
+                          },
                           style: OutlinedButton.styleFrom(
                             side: BorderSide(
                               color: ColorConstants.greyScale1,
@@ -691,6 +696,9 @@ class SettingsPageState extends State<SettingsPage> {
                                     builder: (context) => const LoginPage(),
                                   ),
                                 );
+                                SharedPreferences prefs =
+                                    await SharedPreferences.getInstance();
+                                await prefs.clear();
                               } catch (error) {
                                 print('No fue posible cerrar sesión');
                               }
