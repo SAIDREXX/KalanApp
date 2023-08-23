@@ -1,10 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kalanapp/auth/google_signin.dart';
 import 'package:kalanapp/constants/colors.dart';
-import 'package:cool_alert/cool_alert.dart';
 import 'package:kalanapp/view/login_page.dart';
+import 'package:kalanapp/view/settings/settings_tabs/accesibility.dart';
+import 'package:kalanapp/view/settings/settings_tabs/account.dart';
+import 'package:kalanapp/view/settings/settings_tabs/language.dart';
+import 'package:kalanapp/view/settings/settings_tabs/location.dart';
+import 'package:kalanapp/view/settings/settings_tabs/notifications.dart';
+import 'package:kalanapp/view/settings/settings_tabs/security.dart';
+import 'package:kalanapp/view/settings/settings_tabs/support.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../services/notification_services.dart';
@@ -195,9 +202,11 @@ class SettingsPageState extends State<SettingsPage> {
                             ),
                           ],
                         ),
-
+                        //Boton de Cuenta
                         OutlinedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            showNotificaction();
+                          },
                           style: OutlinedButton.styleFrom(
                             side: BorderSide(
                               color: ColorConstants.greyScale1,
@@ -252,8 +261,15 @@ class SettingsPageState extends State<SettingsPage> {
                         const SizedBox(
                           height: 7,
                         ),
+                        //Boton de Seguridad
                         OutlinedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SecurityPage()),
+                            );
+                          },
                           style: OutlinedButton.styleFrom(
                             side: BorderSide(
                               color: ColorConstants.greyScale1,
@@ -312,8 +328,16 @@ class SettingsPageState extends State<SettingsPage> {
                         const SizedBox(
                           height: 7,
                         ),
+                        //Boton de Notificaciones
                         OutlinedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => NotificationPage(),
+                              ),
+                            );
+                          },
                           style: OutlinedButton.styleFrom(
                             side: BorderSide(
                               color: ColorConstants.greyScale1,
@@ -372,8 +396,16 @@ class SettingsPageState extends State<SettingsPage> {
                         const SizedBox(
                           height: 7,
                         ),
+                        //Boton de locacion
                         OutlinedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LocationPage(),
+                              ),
+                            );
+                          },
                           style: OutlinedButton.styleFrom(
                             side: BorderSide(
                               color: ColorConstants.greyScale1,
@@ -456,7 +488,7 @@ class SettingsPageState extends State<SettingsPage> {
                                   ),
                                   //const SizedBox(width: 50),
                                   Text(
-                                    '',
+                                    'Ayuda',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       color: ColorConstants.greyScale2,
@@ -492,8 +524,15 @@ class SettingsPageState extends State<SettingsPage> {
                         const SizedBox(
                           height: 7,
                         ),
+
+                        //Boton de Accesibilidad
                         OutlinedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AccesibilityPage()));
+                          },
                           style: OutlinedButton.styleFrom(
                             side: BorderSide(
                               color: ColorConstants.greyScale1,
@@ -552,8 +591,16 @@ class SettingsPageState extends State<SettingsPage> {
                         const SizedBox(
                           height: 7,
                         ),
+                        //Boton de Idiomas
                         OutlinedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LeguagePage(),
+                              ),
+                            );
+                          },
                           style: OutlinedButton.styleFrom(
                             side: BorderSide(
                               color: ColorConstants.greyScale1,
@@ -613,7 +660,14 @@ class SettingsPageState extends State<SettingsPage> {
                           height: 7,
                         ),
                         OutlinedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SupportPage(),
+                              ),
+                            );
+                          },
                           style: OutlinedButton.styleFrom(
                             side: BorderSide(
                               color: ColorConstants.greyScale1,

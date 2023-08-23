@@ -1,6 +1,6 @@
 # kalanapp
 
-A new Flutter project.
+Repositorio oficial de la app de seguridad Kalan, sientase libre de NO COPIAR nada de lo escrito aquí, que tenga un lindo dia
 
 ## Getting Started
 
