@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:kalanapp/constants/colors.dart';
 import 'package:kalanapp/utils/grid_family_widget.dart';
@@ -327,6 +328,18 @@ class JoinGroupModal extends StatefulWidget {
 }
 
 class _JoinGroupModalState extends State<JoinGroupModal> {
+  late String? deviceToken;
+
+  @override
+  void initState() {
+    super.initState();
+    loadDeviceToken();
+  }
+
+  Future<void> loadDeviceToken() async {
+    deviceToken = await FirebaseMessaging.instance.getToken();
+  }
+
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
@@ -424,6 +437,7 @@ class _JoinGroupModalState extends State<JoinGroupModal> {
                               'membership': membershipTier,
                               'currentStatus': currentStatus,
                               'userIdentificator': userId,
+                              'deviceToken': deviceToken,
                             }
                           });
                           await FirebaseFirestore.instance
@@ -500,6 +514,17 @@ class LeaveGroupModal extends StatefulWidget {
 
 class _LeaveGroupModalState extends State<LeaveGroupModal> {
   late SharedPreferences prefs;
+  late String? deviceToken;
+
+  @override
+  void initState() {
+    super.initState();
+    loadDeviceToken();
+  }
+
+  Future<void> loadDeviceToken() async {
+    deviceToken = await FirebaseMessaging.instance.getToken();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -600,6 +625,7 @@ class _LeaveGroupModalState extends State<LeaveGroupModal> {
                                 'membership': membershipTier,
                                 'currentStatus': currentStatus,
                                 'userIdentificator': userId,
+                                'deviceToken': deviceToken,
                               },
                             },
                           });

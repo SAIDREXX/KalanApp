@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:kalanapp/main_menu.dart';
 import 'package:kalanapp/view/forgot_password.dart';
+
 import '../constants/colors.dart';
 import 'package:kalanapp/auth/google_signin.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -61,6 +63,8 @@ class LoginPageState extends State<LoginPage> {
     final UserCredential? userCredential =
         await GoogleAuthService().signInWithGoogle();
     final User? user = userCredential!.user;
+    final String? deviceToken = await FirebaseMessaging.instance.getToken();
+
     String userId = user!.uid;
     String? userName = user.displayName;
     String? userPhotoURL = user.photoURL;
@@ -69,6 +73,9 @@ class LoginPageState extends State<LoginPage> {
     String defaultLongitude = '-96.9761493805079';
     int membershipTier = 0;
     int currentStatus = 0;
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('userName', userName ?? 'Sin Nombre');
 
     await FirebaseFirestore.instance
         .collection('groups')
@@ -86,6 +93,7 @@ class LoginPageState extends State<LoginPage> {
           'membership': membershipTier,
           'currentStatus': currentStatus,
           'userIdentificator': userId,
+          'deviceToken': deviceToken,
         },
       },
     });

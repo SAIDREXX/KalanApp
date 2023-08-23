@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kalanapp/auth/google_signin.dart';
@@ -38,6 +39,7 @@ class SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
+    String userId = user!.uid;
     final height = MediaQuery.of(context).size.height;
 
     Widget getUserProfileImage() {
@@ -195,9 +197,7 @@ class SettingsPageState extends State<SettingsPage> {
                         ),
 
                         OutlinedButton(
-                          onPressed: () {
-                            showNotificaction();
-                          },
+                          onPressed: () {},
                           style: OutlinedButton.styleFrom(
                             side: BorderSide(
                               color: ColorConstants.greyScale1,
@@ -691,14 +691,27 @@ class SettingsPageState extends State<SettingsPage> {
                             if (userConfirmed) {
                               try {
                                 await GoogleAuthService().signOutWithGoogle();
+                                SharedPreferences prefs =
+                                    await SharedPreferences.getInstance();
+
+                                DocumentSnapshot groupDoc =
+                                    await FirebaseFirestore.instance
+                                        .collection('groups')
+                                        .doc(prefs.getString('groupName'))
+                                        .get();
+
+                                if (groupDoc.exists) {
+                                  await groupDoc.reference.update({
+                                    'members': FieldValue.arrayRemove([userId]),
+                                    'membersInfo.$userId': FieldValue.delete(),
+                                  });
+                                }
+                                await prefs.clear();
                                 Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
                                     builder: (context) => const LoginPage(),
                                   ),
                                 );
-                                SharedPreferences prefs =
-                                    await SharedPreferences.getInstance();
-                                await prefs.clear();
                               } catch (error) {
                                 print('No fue posible cerrar sesión');
                               }

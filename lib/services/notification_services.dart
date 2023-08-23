@@ -1,4 +1,5 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:kalanapp/services/push_notification_service.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -24,13 +25,19 @@ Future<void> showNotificaction() async {
     'Kalan',
     'KalanChannel',
     importance: Importance.max,
-    priority: Priority.high,
   );
-
   const NotificationDetails notificationDetails = NotificationDetails(
     android: androidNotificationDetails,
   );
+  PushNotificationService.messageStreamGet.listen((message) async {
+    String accountName = message['accountName'];
+    String userStatus = message['status'];
 
-  await flutterLocalNotificationsPlugin.show(
-      777, 'Kalan', 'Primera notificación de prueba', notificationDetails);
+    await flutterLocalNotificationsPlugin.show(
+      5,
+      'Kalan',
+      'El usuario $accountName ha establecido su estado como: $userStatus',
+      notificationDetails,
+    );
+  });
 }
