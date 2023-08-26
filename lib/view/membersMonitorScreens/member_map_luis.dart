@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:http/http.dart' as http; // Importa el paquete http
 import 'package:kalanapp/utils/Map_Search.dart';
 import 'package:location/location.dart';
 
@@ -15,11 +17,17 @@ class MemberMapLuis extends StatefulWidget {
 }
 
 class _Member1 extends State<MemberMapLuis> {
+  String userProfileImage = '';
+
+  Marker? _userMarker;
+  BitmapDescriptor? userProfileIcon;
+
   List<LatLng> _routePoints = [];
   Location _location = Location();
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
   List<Polyline> _polylines = []; // Lista de polilíneas para dibujar en el mapa
+  @override
   @override
   void initState() {
     super.initState();
@@ -28,8 +36,38 @@ class _Member1 extends State<MemberMapLuis> {
       final user = FirebaseAuth.instance.currentUser;
       if (user != null) {
         _loadPreviousRoutes(user.uid); // Llamada a cargar rutas anteriores
+        loadUserProfileIcon();
       }
     });
+  }
+
+  /// metodos de cargar imagenes
+
+  Future<void> loadUserProfileIcon() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      final String? profileImageUrl = user.photoURL;
+      if (profileImageUrl != null) {
+        // Obtener los bytes de la imagen a partir de la URL
+        final imageBytes = await getBytesFromUrl(profileImageUrl);
+
+        // Crear un BitmapDescriptor a partir de los bytes de la imagen
+        userProfileIcon = BitmapDescriptor.fromBytes(imageBytes);
+
+        setState(() {
+          userProfileImage = profileImageUrl;
+        });
+      } else {
+        // Maneja el caso en el que la propiedad photoURL sea nula
+      }
+    } else {
+      // Maneja el caso en el que el usuario no haya iniciado sesión
+    }
+  }
+
+  Future<Uint8List> getBytesFromUrl(String url) async {
+    final response = await http.get(Uri.parse(url));
+    return response.bodyBytes;
   }
 
   void _startLocationUpdates() {
@@ -74,10 +112,13 @@ class _Member1 extends State<MemberMapLuis> {
             GoogleMap(
               //zomControlsEneabled: activa y desativa el + y - de google maps
               zoomControlsEnabled: false,
-              myLocationEnabled: true,
+              myLocationEnabled: false,
               polylines: Set<Polyline>.of(_polylines),
               myLocationButtonEnabled: false,
               mapType: MapType.normal,
+              markers: {
+                if (_userMarker != null) _userMarker!,
+              },
               initialCameraPosition: _kGooglePlex,
               onMapCreated: (GoogleMapController controller) {
                 _controller.complete(controller);
@@ -171,6 +212,13 @@ class _Member1 extends State<MemberMapLuis> {
         'latitude': currentLocation.latitude,
         'longitude': currentLocation.longitude,
         'timestamp': FieldValue.serverTimestamp(),
+      });
+
+      setState(() {
+        _userMarker = Marker(
+            markerId: MarkerId('userProfileMarker'),
+            position: currentLocation,
+            icon: userProfileIcon!);
       });
     }
   }
