@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
+import 'package:kalanapp/services/notification_services.dart';
+import 'package:kalanapp/services/push_message_json.dart';
 import 'package:kalanapp/utils/status_modal.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -8,6 +11,7 @@ import '../constants/colors.dart';
 
 class StatusButton extends StatefulWidget {
   final int userIndex;
+
   const StatusButton({required this.userIndex, super.key});
 
   @override
@@ -19,13 +23,24 @@ class _StatusButtonState extends State<StatusButton> {
   late User? user;
   late int userIndex;
   late int accountIndex;
+  late String accountName;
   int statusSelected = 0;
+  List<String> deviceTokens = [];
+  List<String> statusOptionsFist = [
+    'Establecer Estado',
+    'Calle',
+    'Casa',
+    'Escuela',
+    'Fiesta',
+    'Trabajo',
+    'Transporte',
+    'Zona sin cobertura'
+  ];
 
   @override
   void initState() {
     super.initState();
     userIndex = widget.userIndex;
-
     loadGroupName();
   }
 
@@ -36,6 +51,7 @@ class _StatusButtonState extends State<StatusButton> {
       user = FirebaseAuth.instance.currentUser;
       groupName = prefs.getString('groupName') ?? user!.uid.substring(0, 6);
       accountIndex = prefs.getInt('groupPosition') ?? 0;
+      accountName = prefs.getString('userName') ?? 'Sin Nombre';
     });
   }
 
@@ -43,7 +59,6 @@ class _StatusButtonState extends State<StatusButton> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final user = FirebaseAuth.instance.currentUser;
-
     String userId = user!.uid;
     return GestureDetector(
       onTap: () {
@@ -68,6 +83,12 @@ class _StatusButtonState extends State<StatusButton> {
                       });
 
                       setState(() {});
+                      sendPushMessage(
+                        deviceTokens,
+                        accountName,
+                        statusOptionsFist[selectedStatus],
+                      );
+                      await showNotificaction();
                     }
                   },
                 ),
@@ -135,11 +156,15 @@ class _StatusButtonState extends State<StatusButton> {
                               Timestamp timestampB = b.value['joinTimestamp'];
                               return timestampA.compareTo(timestampB);
                             });
-
+                            List<String> accountsName = [];
                             List<int> statusNumber = [];
+
                             for (var entry in memberEntries) {
                               int status = entry.value['currentStatus'];
+                              String deviceToken = entry.value['deviceToken'];
+                              deviceTokens.add(deviceToken);
                               statusNumber.add(status);
+                              accountsName.add(accountName);
                             }
                             List<String> statusOptions = [
                               'Establecer Estado',

@@ -1,0 +1,11 @@
+<channels xmlns:android="http://schemas.android.com/apk/res/android">
+    <channel
+        android:id="@string/set_status_channel"
+        android:name="Set Status Channel"
+        android:description="Canal usado para mostar las notificaciones relacionadas a establecer estado"
+        android:importance="high"
+        android:lightColor="@color/colorPrimary"
+        android:lockscreenVisibility="public"
+        android:showBadge="true"
+        android:smallIcon="@drawable/app_icon" />
+</channels>

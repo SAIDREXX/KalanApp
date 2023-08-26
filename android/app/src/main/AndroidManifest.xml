@@ -35,6 +35,9 @@
 
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
         <meta-data android:name="com.facebook.sdk.ClientToken" android:value="@string/facebook_client_token"/>
+        <meta-data
+        android:name="com.google.firebase.messaging.default_notification_channel_id"
+        android:value="high_importance_channel" />
 
         <activity
             android:name="com.facebook.FacebookActivity"
@@ -87,8 +90,7 @@
             android:value="AIzaSyB_u_XB0Y7A3uTLc44hTq6in6ETYsgGC9Y"
             />
 
-    </application
-        >
+    </application>
 
 
 </manifest>
