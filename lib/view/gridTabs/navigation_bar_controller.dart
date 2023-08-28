@@ -61,9 +61,8 @@ class _PageControllerKalanState extends State<PageControllerKalan> {
         ],
       ),
       bottomNavigationBar: Container(
-        color: currentIndex == 0
-            ? ColorConstants.jazPalette3
-            : ColorConstants.jazPalette2,
+        color:
+            currentIndex == 0 ? Colors.transparent : ColorConstants.jazPalette2,
         child: NavBarKalan(
           onItemTapped: (index) {
             if (index == 4) {

@@ -33,7 +33,13 @@ class _GoogleMapsMapsState extends State<GoogleMapsMaps> {
   @override
   Widget build(BuildContext context) {
     return GoogleMap(
-      initialCameraPosition: CameraPosition(target: LatLng(0, 0), zoom: 15),
+      zoomControlsEnabled: false,
+      compassEnabled: true,
+      myLocationEnabled: true,
+      myLocationButtonEnabled: true,
+      mapType: MapType.normal,
+      initialCameraPosition: const CameraPosition(
+          target: LatLng(19.137275040411904, -96.9761493805079), zoom: 15),
       onMapCreated: (GoogleMapController controller) {
         mapController = controller;
       },
