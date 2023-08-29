@@ -1,5 +1,7 @@
 import 'package:background_location/background_location.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:kalanapp/constants/colors.dart';
 import 'package:kalanapp/utils/grid_image_widget.dart';
 import 'package:kalanapp/view/gridTabs/navigation_bar_controller.dart';
@@ -8,6 +10,7 @@ import 'package:kalanapp/view/gridTabs/help_numbers.dart';
 import 'package:kalanapp/view/settings/settings_main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MainMenu extends StatefulWidget {
   const MainMenu({super.key});
@@ -17,11 +20,13 @@ class MainMenu extends StatefulWidget {
 }
 
 class _MainMenuState extends State<MainMenu> {
+  late SharedPreferences prefs;
+  late String groupName;
+  late User? user;
   @override
   void initState() {
     super.initState();
     checkPermissions();
-    initBackgroundLocation();
   }
 
   Future<void> checkPermissions() async {
@@ -37,31 +42,45 @@ class _MainMenuState extends State<MainMenu> {
         if (result.isPermanentlyDenied) {}
       }
     }
-  }
 
-  Future<void> initBackgroundLocation() async {
-    await BackgroundLocation.setAndroidNotification(
-      title: 'Vigilando tu ubicación',
-      message: 'Kalan está actualizando tu ubicación!',
-      icon: 'assets/icons/kalanicon.png',
-    );
-    await BackgroundLocation.startLocationService(
-      distanceFilter: 10,
-    );
-    BackgroundLocation.getLocationUpdates(
-      (location) {
-        setState(() {
-          double? lat = location.latitude;
-          print('Latitude : $lat');
-        });
-      },
-    );
+    prefs = await SharedPreferences.getInstance();
+    setState(() {
+      user = FirebaseAuth.instance.currentUser;
+      groupName = prefs.getString('groupName') ?? user!.uid.substring(0, 6);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final user = FirebaseAuth.instance.currentUser;
+    final userId = user!.uid;
+
+    Geolocator.getPositionStream(
+        locationSettings: const LocationSettings(
+      accuracy: LocationAccuracy.best,
+      distanceFilter:
+          10, //Distancia que tiene que recorrer el usuario para actualizar (Metros)
+    )).listen((Position position) async {
+      groupName = prefs.getString('groupName') ?? user!.uid.substring(0, 6);
+      DocumentSnapshot groupDoc = await FirebaseFirestore.instance
+          .collection('groups')
+          .doc(groupName)
+          .get();
+
+      if (groupDoc.exists) {
+        Map<String, dynamic> membersInfo = groupDoc['membersInfo'];
+        membersInfo[userId] = {
+          ...membersInfo[userId],
+          'latitude': position.latitude,
+          'longitude': position.longitude,
+          'lastLocationTime': FieldValue.serverTimestamp(),
+        };
+        await groupDoc.reference.update({
+          'membersInfo': membersInfo,
+        });
+      }
+    });
 
     Widget getUserProfileImage() {
       if (user!.photoURL != null) {

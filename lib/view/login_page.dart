@@ -73,6 +73,7 @@ class LoginPageState extends State<LoginPage> {
     String defaultLongitude = '-96.9761493805079';
     int membershipTier = 0;
     int currentStatus = 0;
+    FieldValue locationTimestamp = FieldValue.serverTimestamp();
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('userName', userName ?? 'Sin Nombre');
@@ -94,6 +95,7 @@ class LoginPageState extends State<LoginPage> {
           'currentStatus': currentStatus,
           'userIdentificator': userId,
           'deviceToken': deviceToken,
+          'lastLocationTime': locationTimestamp,
         },
       },
     });

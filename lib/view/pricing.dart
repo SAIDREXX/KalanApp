@@ -197,8 +197,11 @@ class _PricingPageState extends State<PricingPage> {
                             const SizedBox(
                               height: 40,
                             ),
-                            const MaterialButtonWithTextureAndText(
-                              text: 'Pedir y Pagar',
+                            MaterialButtonWithTextureAndText(
+                              text: selectedPricedIndex != 0 &&
+                                      selectedPricedIndex != 2
+                                  ? 'Cancelar Membresía'
+                                  : 'Pedir y Pagar',
                             )
                           ],
                         ),

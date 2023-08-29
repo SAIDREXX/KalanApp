@@ -1,6 +1,7 @@
 //Librerias
 import 'package:flutter/material.dart';
 import 'package:kalanapp/utils/contacts_nav_bar_kalan.dart';
+import 'package:kalanapp/view/membersMonitorScreens/member1.dart';
 import 'package:kalanapp/view/membersMonitorScreens/member5.dart';
 import 'package:kalanapp/view/membersMonitorScreens/member6.dart';
 import 'package:kalanapp/view/membersMonitorScreens/member_map_luis.dart';
@@ -41,7 +42,7 @@ class _MonitorControllerState extends State<MonitorController> {
   }
 
   List<Widget> internalMonitorPages = [
-    const MemberMapLuis(),
+    const Member1(),
     const Member2(),
     const Member3(),
     const Member4(),
@@ -60,7 +61,7 @@ class _MonitorControllerState extends State<MonitorController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorConstants.jazPalette3,
+      backgroundColor: Colors.transparent,
       extendBody: true,
       body: isLoading
           ? loadingWidget()
