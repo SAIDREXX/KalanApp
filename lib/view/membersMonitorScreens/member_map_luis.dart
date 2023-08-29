@@ -17,8 +17,9 @@ class MemberMapLuis extends StatefulWidget {
 }
 
 class _Member1 extends State<MemberMapLuis> {
-  String userProfileImage = '';
 
+  String userProfileImage = '';
+  Set<Marker> markers = {};
   Marker? _userMarker;
   BitmapDescriptor? userProfileIcon;
 
@@ -116,6 +117,7 @@ class _Member1 extends State<MemberMapLuis> {
               polylines: Set<Polyline>.of(_polylines),
               myLocationButtonEnabled: false,
               mapType: MapType.normal,
+
               markers: {
                 if (_userMarker != null) _userMarker!,
               },

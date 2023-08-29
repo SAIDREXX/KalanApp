@@ -57,7 +57,10 @@ dependencies:
   cached_network_image: ^3.2.3
   http: ^1.1.0
   onesignal_flutter: ^5.0.0
-
+  circle_avatar: ^1.0.1
+  custom_map_markers: ^0.0.2+1
+  image: ^3.0.1
+  custom_marker: ^1.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
