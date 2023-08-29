@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kalanapp/map/google_map.dart';
+import 'package:kalanapp/map/google_map_kalan.dart';
 import 'package:kalanapp/utils/following_to_button.dart';
 import 'package:kalanapp/utils/set_status_button.dart';
 
@@ -24,7 +25,7 @@ class _Member1State extends State<Member1> {
           child: Stack(
             alignment: Alignment.center,
             children: [
-              GoogleMapsMaps(),
+              GoogleMapKalan(userIndex: 0),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -45,5 +46,10 @@ class _Member1State extends State<Member1> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

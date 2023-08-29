@@ -104,7 +104,7 @@ class _ContactsPageState extends State<ContactsPage> {
                                       ),
                                     ),
                                     Text(
-                                      'Contacto 1',
+                                      'Mamá',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         color: ColorConstants.greyScale2,
@@ -170,7 +170,7 @@ class _ContactsPageState extends State<ContactsPage> {
                                       ),
                                     ),
                                     Text(
-                                      'Contacto 2',
+                                      'Papá',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         color: ColorConstants.greyScale2,
@@ -236,7 +236,7 @@ class _ContactsPageState extends State<ContactsPage> {
                                       ),
                                     ),
                                     Text(
-                                      'Contacto 3',
+                                      'Jazmín',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         color: ColorConstants.greyScale2,
@@ -302,7 +302,7 @@ class _ContactsPageState extends State<ContactsPage> {
                                       ),
                                     ),
                                     Text(
-                                      'Contacto 4',
+                                      'Ariana',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         color: ColorConstants.greyScale2,
@@ -368,7 +368,7 @@ class _ContactsPageState extends State<ContactsPage> {
                                       ),
                                     ),
                                     Text(
-                                      'Contacto 5',
+                                      'Axel',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         color: ColorConstants.greyScale2,
@@ -434,7 +434,7 @@ class _ContactsPageState extends State<ContactsPage> {
                                       ),
                                     ),
                                     Text(
-                                      'Contacto 6',
+                                      'Luisillo',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         color: ColorConstants.greyScale2,
@@ -500,7 +500,7 @@ class _ContactsPageState extends State<ContactsPage> {
                                       ),
                                     ),
                                     Text(
-                                      'Contacto 7',
+                                      'Tio Ricardo',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         color: ColorConstants.greyScale2,
@@ -566,7 +566,7 @@ class _ContactsPageState extends State<ContactsPage> {
                                       ),
                                     ),
                                     Text(
-                                      'Contacto 8',
+                                      'Tia Mariana',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         color: ColorConstants.greyScale2,
@@ -632,7 +632,7 @@ class _ContactsPageState extends State<ContactsPage> {
                                       ),
                                     ),
                                     Text(
-                                      'Contacto 9',
+                                      'Maria José',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         color: ColorConstants.greyScale2,
@@ -698,7 +698,7 @@ class _ContactsPageState extends State<ContactsPage> {
                                       ),
                                     ),
                                     Text(
-                                      'Contacto 10',
+                                      'Samuel',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         color: ColorConstants.greyScale2,

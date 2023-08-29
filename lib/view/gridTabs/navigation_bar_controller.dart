@@ -19,11 +19,12 @@ class PageControllerKalan extends StatefulWidget {
 }
 
 class _PageControllerKalanState extends State<PageControllerKalan> {
+  int savedIndex = 0;
   late String groupName;
   late User? user;
   int currentIndex = 0;
   int previousIndex = 0;
-  //ToDo: Modificar el  valor de accountIndex aplicando un orderBy de TimeStamp a los datos y actualizar el valor con el index correspondiente al dueño de la cuenta
+
   late int accountIndex;
 
   @override
@@ -57,7 +58,6 @@ class _PageControllerKalanState extends State<PageControllerKalan> {
           const ContactsPage(),
           const PricingPage(),
           const SecureFolderPage(),
-          const KalanSOSPage(),
         ],
       ),
       bottomNavigationBar: Container(
@@ -66,6 +66,7 @@ class _PageControllerKalanState extends State<PageControllerKalan> {
         child: NavBarKalan(
           onItemTapped: (index) {
             if (index == 4) {
+              savedIndex = currentIndex;
               showDialog(
                 context: context,
                 builder: (context) {
@@ -73,12 +74,17 @@ class _PageControllerKalanState extends State<PageControllerKalan> {
                     child: KalanSOSPage(),
                   );
                 },
-              );
+              ).then((_) {
+                setState(() {
+                  currentIndex = savedIndex;
+                });
+              });
+            } else {
+              setState(() {
+                previousIndex = currentIndex;
+                currentIndex = index;
+              });
             }
-            setState(() {
-              previousIndex = currentIndex;
-              currentIndex = index;
-            });
           },
           onLongPress: (index) {
             if (index == 0) {

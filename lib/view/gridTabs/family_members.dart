@@ -351,6 +351,7 @@ class _JoinGroupModalState extends State<JoinGroupModal> {
     String defaultLongitude = '-96.9761493805079';
     int membershipTier = 0;
     int currentStatus = 0;
+    FieldValue locationTimestamp = FieldValue.serverTimestamp();
     TextEditingController textFieldController = TextEditingController();
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
@@ -438,6 +439,7 @@ class _JoinGroupModalState extends State<JoinGroupModal> {
                               'currentStatus': currentStatus,
                               'userIdentificator': userId,
                               'deviceToken': deviceToken,
+                              'lastLocationTime': locationTimestamp,
                             }
                           });
                           await FirebaseFirestore.instance
@@ -538,6 +540,7 @@ class _LeaveGroupModalState extends State<LeaveGroupModal> {
     String defaultLongitude = '-96.9761493805079';
     int membershipTier = 0;
     int currentStatus = 0;
+    FieldValue locationTimestamp = FieldValue.serverTimestamp();
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
@@ -626,6 +629,7 @@ class _LeaveGroupModalState extends State<LeaveGroupModal> {
                                 'currentStatus': currentStatus,
                                 'userIdentificator': userId,
                                 'deviceToken': deviceToken,
+                                'lastLocationTime': locationTimestamp,
                               },
                             },
                           });
