@@ -31,10 +31,10 @@ class _Member2State extends State<Member2> {
                 children: [
                   SizedBox(height: 40),
                   FollowingButton(
-                    index: 0,
+                    index: 1,
                   ),
                   Spacer(),
-                  StatusButton(userIndex: 0),
+                  StatusButton(userIndex: 1),
                   SizedBox(
                     height: 150,
                   )

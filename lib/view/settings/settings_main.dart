@@ -49,10 +49,10 @@ class SettingsPageState extends State<SettingsPage> {
     final height = MediaQuery.of(context).size.height;
 
     Widget getUserProfileImage() {
-      if (user?.photoURL != null) {
+      if (user.photoURL != null) {
         return ClipOval(
           child: Image.network(
-            user!.photoURL!,
+            user.photoURL!,
             width: 100,
             height: 100,
             fit: BoxFit.cover,
@@ -743,14 +743,12 @@ class SettingsPageState extends State<SettingsPage> {
                             );
                             if (userConfirmed) {
                               try {
-                                await GoogleAuthService().signOutWithGoogle();
                                 SharedPreferences prefs =
                                     await SharedPreferences.getInstance();
-
                                 DocumentSnapshot groupDoc =
                                     await FirebaseFirestore.instance
                                         .collection('groups')
-                                        .doc(prefs.getString('groupName'))
+                                        .doc('MIsjzD')
                                         .get();
 
                                 if (groupDoc.exists) {
@@ -758,13 +756,15 @@ class SettingsPageState extends State<SettingsPage> {
                                     'members': FieldValue.arrayRemove([userId]),
                                     'membersInfo.$userId': FieldValue.delete(),
                                   });
+                                  await prefs.clear();
+                                  await GoogleAuthService().signOutWithGoogle();
                                 }
+
                                 Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
                                     builder: (context) => const LoginPage(),
                                   ),
                                 );
-                                await prefs.clear();
                               } catch (error) {
                                 print('No fue posible cerrar sesión');
                               }
