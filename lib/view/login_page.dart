@@ -1,16 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cool_alert/cool_alert.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:kalanapp/auth/email_signin.dart';
+import 'package:kalanapp/auth/google_signin.dart';
 import 'package:kalanapp/main_menu.dart';
 import 'package:kalanapp/view/forgot_password.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants/colors.dart';
-import 'package:kalanapp/auth/google_signin.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'register_page.dart';
-import 'package:kalanapp/auth/email_signin.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:cool_alert/cool_alert.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -99,11 +99,23 @@ class LoginPageState extends State<LoginPage> {
         },
       },
     });
-    if (userCredential != null) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => const MainMenu(),
-        ),
+    try {
+      if (userCredential != null) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const MainMenu(),
+          ),
+        );
+      }
+    } catch (e) {
+      CoolAlert.show(
+        context: context,
+        type: CoolAlertType.error,
+        title: 'Oops...',
+        text: e.toString(),
+        backgroundColor: ColorConstants.jazPalette3,
+        confirmBtnColor: ColorConstants.jazPalette1,
+        loopAnimation: false,
       );
     }
   }

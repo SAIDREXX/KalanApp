@@ -6,7 +6,6 @@ import 'package:kalanapp/auth/google_signin.dart';
 import 'package:kalanapp/constants/colors.dart';
 import 'package:kalanapp/view/login_page.dart';
 import 'package:kalanapp/view/settings/settings_tabs/accesibility.dart';
-import 'package:kalanapp/view/settings/settings_tabs/account.dart';
 import 'package:kalanapp/view/settings/settings_tabs/language.dart';
 import 'package:kalanapp/view/settings/settings_tabs/location.dart';
 import 'package:kalanapp/view/settings/settings_tabs/notifications.dart';
@@ -760,12 +759,12 @@ class SettingsPageState extends State<SettingsPage> {
                                     'membersInfo.$userId': FieldValue.delete(),
                                   });
                                 }
-                                await prefs.clear();
                                 Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
                                     builder: (context) => const LoginPage(),
                                   ),
                                 );
+                                await prefs.clear();
                               } catch (error) {
                                 print('No fue posible cerrar sesión');
                               }
