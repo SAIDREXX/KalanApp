@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:custom_marker/marker_icon.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -219,11 +221,17 @@ class _Member1 extends State<MemberMapLuis> {
         'timestamp': FieldValue.serverTimestamp(),
       });
 
-      setState(() {
+      setState(() async {
         _userMarker = Marker(
-            markerId: MarkerId('userProfileMarker'),
-            position: currentLocation,
-            icon: userProfileIcon!);
+          markerId: MarkerId('userProfileMarker'),
+          position: currentLocation,
+          //borde del incono
+          icon: await MarkerIcon.downloadResizePictureCircle(userProfileImage,
+              size: 150,
+              addBorder: true,
+              borderColor: Colors.white,
+              borderSize: 15),
+        );
       });
     }
   }
