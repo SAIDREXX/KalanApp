@@ -7,7 +7,6 @@ import 'package:kalanapp/view/membersMonitorScreens/member6.dart';
 import 'package:kalanapp/view/membersMonitorScreens/member_map_luis.dart';
 
 import '../constants/colors.dart';
-import '../view/membersMonitorScreens/member2.dart';
 import '../view/membersMonitorScreens/member3.dart';
 import '../view/membersMonitorScreens/member4.dart';
 
@@ -43,7 +42,7 @@ class _MonitorControllerState extends State<MonitorController> {
 
   List<Widget> internalMonitorPages = [
     const Member1(),
-    const Member2(),
+    const MemberMapLuis(),
     const Member3(),
     const Member4(),
     const Member5(),

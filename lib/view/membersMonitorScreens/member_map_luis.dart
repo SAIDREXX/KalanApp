@@ -11,13 +11,11 @@ import 'package:location/location.dart';
 
 class MemberMapLuis extends StatefulWidget {
   const MemberMapLuis({super.key});
-
   @override
   State<MemberMapLuis> createState() => _Member1();
 }
 
 class _Member1 extends State<MemberMapLuis> {
-
   String userProfileImage = '';
   Set<Marker> markers = {};
   Marker? _userMarker;
@@ -106,44 +104,49 @@ class _Member1 extends State<MemberMapLuis> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Stack(
-          children: [
-            GoogleMap(
-              //zomControlsEneabled: activa y desativa el + y - de google maps
-              zoomControlsEnabled: false,
-              myLocationEnabled: false,
-              polylines: Set<Polyline>.of(_polylines),
-              myLocationButtonEnabled: false,
-              mapType: MapType.normal,
+    return Scaffold(
+      body: SizedBox(
+        child: SizedBox(
+          width: 500,
+          height: 800,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              GoogleMap(
+                //zomControlsEneabled: activa y desativa el + y - de google maps
+                zoomControlsEnabled: false,
+                myLocationEnabled: false,
+                polylines: Set<Polyline>.of(_polylines),
+                myLocationButtonEnabled: false,
+                mapType: MapType.normal,
 
-              markers: {
-                if (_userMarker != null) _userMarker!,
-              },
-              initialCameraPosition: _kGooglePlex,
-              onMapCreated: (GoogleMapController controller) {
-                _controller.complete(controller);
-              },
-            ),
-            Positioned(
-              bottom: 16,
-              right: 16,
-              child: FloatingActionButton.extended(
-                onPressed: _goToTheLake,
-                label: const Text(''),
-                icon: const Icon(Icons.gps_fixed),
+                markers: {
+                  if (_userMarker != null) _userMarker!,
+                },
+                initialCameraPosition: _kGooglePlex,
+                onMapCreated: (GoogleMapController controller) {
+                  _controller.complete(controller);
+                },
               ),
-            ),
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: Center(
-                child: MyWidget(),
+              Positioned(
+                bottom: 16,
+                right: 16,
+                child: FloatingActionButton.extended(
+                  onPressed: _goToTheLake,
+                  label: const Text(''),
+                  icon: const Icon(Icons.gps_fixed),
+                ),
               ),
-            ),
-          ],
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: Center(
+                  child: MyWidget(),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
