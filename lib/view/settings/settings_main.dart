@@ -737,38 +737,41 @@ class SettingsPageState extends State<SettingsPage> {
                               cancelBtnText: 'No',
                               backgroundColor: ColorConstants.jazPalette3,
                               confirmBtnColor: ColorConstants.saidInactive,
-                              onConfirmBtnTap: () {
+                              onConfirmBtnTap: () async {
                                 userConfirmed = true;
+                                if (userConfirmed) {
+                                  try {
+                                    SharedPreferences prefs =
+                                        await SharedPreferences.getInstance();
+                                    DocumentSnapshot groupDoc =
+                                        await FirebaseFirestore.instance
+                                            .collection('groups')
+                                            .doc('MIsjzD')
+                                            .get();
+
+                                    if (groupDoc.exists) {
+                                      await groupDoc.reference.update({
+                                        'members':
+                                            FieldValue.arrayRemove([userId]),
+                                        'membersInfo.$userId':
+                                            FieldValue.delete(),
+                                      });
+                                      await prefs.clear();
+                                      await GoogleAuthService()
+                                          .signOutWithGoogle();
+                                    }
+
+                                    Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                        builder: (context) => const LoginPage(),
+                                      ),
+                                    );
+                                  } catch (error) {
+                                    print('No fue posible cerrar sesión');
+                                  }
+                                }
                               },
                             );
-                            if (userConfirmed) {
-                              try {
-                                SharedPreferences prefs =
-                                    await SharedPreferences.getInstance();
-                                DocumentSnapshot groupDoc =
-                                    await FirebaseFirestore.instance
-                                        .collection('groups')
-                                        .doc('MIsjzD')
-                                        .get();
-
-                                if (groupDoc.exists) {
-                                  await groupDoc.reference.update({
-                                    'members': FieldValue.arrayRemove([userId]),
-                                    'membersInfo.$userId': FieldValue.delete(),
-                                  });
-                                  await prefs.clear();
-                                  await GoogleAuthService().signOutWithGoogle();
-                                }
-
-                                Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                    builder: (context) => const LoginPage(),
-                                  ),
-                                );
-                              } catch (error) {
-                                print('No fue posible cerrar sesión');
-                              }
-                            }
                           },
                           style: OutlinedButton.styleFrom(
                             side: BorderSide(

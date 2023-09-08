@@ -61,6 +61,8 @@ dependencies:
   custom_map_markers: ^0.0.2+1
   image: ^3.0.1
   custom_marker: ^1.0.0
+  flutter_svg: ^1.1.6
+  flutter_polyline_points: ^2.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

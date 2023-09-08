@@ -7,7 +7,6 @@ import '../view/membersMonitorScreens/member3.dart';
 import '../view/membersMonitorScreens/member4.dart';
 import 'package:kalanapp/view/membersMonitorScreens/member5.dart';
 import 'package:kalanapp/view/membersMonitorScreens/member6.dart';
-import 'package:kalanapp/view/membersMonitorScreens/member_map_luis.dart';
 
 import '../constants/colors.dart';
 
