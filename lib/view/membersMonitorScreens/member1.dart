@@ -1,114 +1,120 @@
 import 'dart:async';
-import 'dart:typed_data';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:custom_marker/marker_icon.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:http/http.dart' as http; // Importa el paquete http
+import 'package:kalanapp/constants.dart';
+import 'package:kalanapp/constants/colors.dart';
 import 'package:kalanapp/utils/following_to_button.dart';
 import 'package:kalanapp/utils/set_status_button.dart';
 import 'package:location/location.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class Member1 extends StatefulWidget {
   const Member1({super.key});
+
   @override
-  State<Member1> createState() => _Member1();
+  State<Member1> createState() => _Member1State();
 }
 
-class _Member1 extends State<Member1> {
-  String userProfileImage = '';
-  Set<Marker> markers = {};
-  Marker? _userMarker;
-  BitmapDescriptor? userProfileIcon;
-
-  List<LatLng> routePoints = [];
-  Location location = Location();
-  final Completer<GoogleMapController> _controller =
-      Completer<GoogleMapController>();
-  List<Polyline> polylines = []; // Lista de polilíneas para dibujar en el mapa
+class _Member1State extends State<Member1> {
+  final Completer<GoogleMapController> controller = Completer();
+  late String groupName;
+  //Lista que guarda las rutas
+  List<LatLng> polylinesCoordinates = [];
+  LocationData? currentLocation;
+  late User? user;
+  late Map<String, dynamic> membersInfo;
+  PolylinePoints polylinePoints = PolylinePoints();
+  BitmapDescriptor currentLocationImage = BitmapDescriptor.defaultMarker;
 
   @override
   void initState() {
+    getCurrentLocation();
+    user = FirebaseAuth.instance.currentUser;
+    fetchUserPicture();
     super.initState();
-    Future.delayed(const Duration(seconds: 5), () {
-      _startLocationUpdates();
-      final user = FirebaseAuth.instance.currentUser;
-      if (user != null) {
-        _loadPreviousRoutes(user.uid); // Llamada a cargar rutas anteriores
-        loadUserProfileIcon();
-      }
-    });
   }
 
-  /// metodos de cargar imagenes
+  void fetchUserPicture() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    groupName = prefs.getString('groupName') ?? user!.uid.substring(0, 6);
+    Future<DocumentSnapshot> groupData =
+        FirebaseFirestore.instance.collection('groups').doc(groupName).get();
+    DocumentSnapshot snapshot = await groupData;
 
-  Future<void> loadUserProfileIcon() async {
-    final user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      final String? profileImageUrl = user.photoURL;
-      if (profileImageUrl != null) {
-        // Obtener los bytes de la imagen a partir de la URL
-        final imageBytes = await getBytesFromUrl(profileImageUrl);
+    if (snapshot.exists) {
+      membersInfo = snapshot['membersInfo'];
 
-        // Crear un BitmapDescriptor a partir de los bytes de la imagen
-        userProfileIcon = BitmapDescriptor.fromBytes(imageBytes);
+      List<MapEntry<String, dynamic>> memberEntries =
+          membersInfo.entries.toList();
 
-        setState(() {
-          userProfileImage = profileImageUrl;
-        });
-      } else {
-        // Maneja el caso en el que la propiedad photoURL sea nula
-      }
-    } else {
-      // Maneja el caso en el que el usuario no haya iniciado sesión
+      memberEntries.sort((a, b) {
+        Timestamp timestampA = a.value['joinTimestamp'];
+        Timestamp timestampB = b.value['joinTimestamp'];
+        return timestampA.compareTo(timestampB);
+      });
+      List<String> userProfilePicture = [];
+
+      memberEntries.forEach((entry) {
+        String profilePictureURL = entry.value['pictureURL'];
+        userProfilePicture.add(profilePictureURL);
+      });
+
+      final pictureRequest = await http.get(Uri.parse(userProfilePicture[0]));
+      final pictureBytes = pictureRequest.bodyBytes;
+      setState(() {
+        currentLocationImage = BitmapDescriptor.fromBytes(pictureBytes);
+      });
     }
   }
 
-  Future<Uint8List> getBytesFromUrl(String url) async {
-    final response = await http.get(Uri.parse(url));
-    return response.bodyBytes;
-  }
+  void getCurrentLocation() async {
+    Location location = Location();
 
-  void _startLocationUpdates() {
-    Timer.periodic(const Duration(seconds: 3), (Timer timer) {
-      _getCurrentLocationAndAddToRoute();
+    location.onLocationChanged.listen((newLocation) async {
+      if (currentLocation == null) {
+        final GoogleMapController googleMapController = await controller.future;
+        googleMapController.animateCamera(
+          CameraUpdate.newCameraPosition(CameraPosition(
+              target: LatLng(newLocation.latitude!, newLocation.longitude!),
+              zoom: 16)),
+        );
+      }
+      setState(() {
+        currentLocation = newLocation;
+        polylinesCoordinates.add(
+            LatLng(currentLocation!.latitude!, currentLocation!.longitude!));
+
+        if (polylinesCoordinates.length >= 2) {
+          Future<PolylineResult> result =
+              polylinePoints.getRouteBetweenCoordinates(
+                  google_api_key,
+                  PointLatLng(
+                      polylinesCoordinates[polylinesCoordinates.length - 2]
+                          .latitude,
+                      polylinesCoordinates[polylinesCoordinates.length - 2]
+                          .longitude),
+                  PointLatLng(newLocation.latitude!, newLocation.longitude!));
+
+          result.then((value) {
+            if (value.points.isNotEmpty) {
+              value.points.forEach((point) {
+                polylinesCoordinates
+                    .add(LatLng(point.latitude, point.longitude));
+              });
+            }
+          });
+        }
+      });
     });
   }
-
-  void _loadPreviousRoutes(String userId) async {
-    routePoints.clear(); // Limpiar rutas anteriores
-    polylines.clear(); // Limpiar polilíneas anteriores
-    final QuerySnapshot snapshot = await FirebaseFirestore.instance
-        .collection('Usuarios')
-        .doc(userId)
-        .collection('routes')
-        .get();
-    routePoints.clear(); // Limpiar rutas anteriores
-    polylines.clear(); // Limpiar polilíneas anteriores
-
-    snapshot.docs.forEach((doc) {
-      final data = doc.data() as Map<String, dynamic>;
-      final latitude = data['latitude'];
-      final longitude = data['longitude'];
-      final LatLng point = LatLng(latitude, longitude);
-      routePoints.add(point);
-    });
-
-    _updateRouteOnMap();
-  }
-
-  static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(19.13699303254463, -96.97727638015108),
-    zoom: 16,
-  );
 
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
-
     return Scaffold(
       body: SizedBox(
         height: height,
@@ -120,28 +126,32 @@ class _Member1 extends State<Member1> {
             alignment: Alignment.center,
             children: [
               GoogleMap(
-                //zomControlsEneabled: activa y desativa el + y - de google maps
-                zoomControlsEnabled: false,
-                myLocationEnabled: false,
-                polylines: Set<Polyline>.of(polylines),
-                myLocationButtonEnabled: false,
-                mapType: MapType.normal,
-
-                markers: {
-                  if (_userMarker != null) _userMarker!,
+                initialCameraPosition:
+                    const CameraPosition(target: LatLng(0, 0), zoom: 10),
+                polylines: {
+                  Polyline(
+                    polylineId: const PolylineId("route"),
+                    points: polylinesCoordinates,
+                    color: ColorConstants.jazPalette3,
+                    width: 6,
+                  ),
                 },
-                initialCameraPosition: _kGooglePlex,
-                onMapCreated: (GoogleMapController controller) {
-                  _controller.complete(controller);
+                markers: {
+                  Marker(
+                      icon: currentLocationImage,
+                      markerId: const MarkerId("currentLocation"),
+                      position: LatLng(currentLocation?.latitude ?? 0,
+                          currentLocation?.longitude ?? 0)),
+                },
+                onMapCreated: (mapController) {
+                  controller.complete(mapController);
                 },
               ),
               const Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    height: 40,
-                  ),
+                  SizedBox(height: 40),
                   FollowingButton(
                     index: 0,
                   ),
@@ -149,9 +159,9 @@ class _Member1 extends State<Member1> {
                   StatusButton(userIndex: 0),
                   SizedBox(
                     height: 150,
-                  ),
+                  )
                 ],
-              )
+              ),
             ],
           ),
         ),
@@ -159,85 +169,8 @@ class _Member1 extends State<Member1> {
     );
   }
 
-  Future<void> _goToTheLake() async {
-    final GoogleMapController controller = await _controller.future;
-
-    LocationData locationData;
-
-    try {
-      locationData = await location.getLocation();
-    } catch (e) {
-      print('Error de la ubiacion $e');
-      return;
-    }
-
-    final LatLng currentLocation = LatLng(
-      locationData.latitude!,
-      locationData.longitude!,
-    );
-    controller.animateCamera(CameraUpdate.newCameraPosition(
-      CameraPosition(
-        target: currentLocation,
-        zoom: 15,
-      ),
-    ));
-  }
-
-  void _updateRouteOnMap() {
-    final Polyline polyline = Polyline(
-      polylineId: const PolylineId('route'),
-      color: Colors.blue, // Color personalizado para la línea de la ruta
-      width: 5,
-      points: routePoints,
-    );
-
-    setState(() {
-      polylines.add(polyline);
-    });
-  }
-
-  //funcion para
-  void _getCurrentLocationAndAddToRoute() async {
-    LocationData locationData;
-
-    try {
-      locationData = await location.getLocation();
-    } catch (e) {
-      print('Error de la ubicación $e');
-      return;
-    }
-
-    final LatLng currentLocation = LatLng(
-      locationData.latitude!,
-      locationData.longitude!,
-    );
-    routePoints.add(currentLocation);
-    _updateRouteOnMap();
-
-    final user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      await FirebaseFirestore.instance
-          .collection('Usuarios')
-          .doc(user.uid)
-          .collection('routes')
-          .add({
-        'latitude': currentLocation.latitude,
-        'longitude': currentLocation.longitude,
-        'timestamp': FieldValue.serverTimestamp(),
-      });
-
-      setState(() async {
-        _userMarker = Marker(
-          markerId: const MarkerId('userProfileMarker'),
-          position: currentLocation,
-          //borde del incono
-          icon: await MarkerIcon.downloadResizePictureCircle(userProfileImage,
-              size: 150,
-              addBorder: true,
-              borderColor: Colors.white,
-              borderSize: 15),
-        );
-      });
-    }
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

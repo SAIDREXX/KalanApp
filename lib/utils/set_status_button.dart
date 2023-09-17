@@ -1,9 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/material.dart';
-import 'package:kalanapp/services/notification_services.dart';
-import 'package:kalanapp/services/push_message_json.dart';
 import 'package:kalanapp/utils/status_modal.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -46,9 +43,8 @@ class _StatusButtonState extends State<StatusButton> {
 
   void loadGroupName() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-
+    user = FirebaseAuth.instance.currentUser;
     setState(() {
-      user = FirebaseAuth.instance.currentUser;
       groupName = prefs.getString('groupName') ?? user!.uid.substring(0, 6);
       accountIndex = prefs.getInt('groupPosition') ?? 0;
       accountName = prefs.getString('userName') ?? 'Sin Nombre';
@@ -83,12 +79,6 @@ class _StatusButtonState extends State<StatusButton> {
                       });
 
                       setState(() {});
-                      sendPushMessage(
-                        deviceTokens,
-                        accountName,
-                        statusOptionsFist[selectedStatus],
-                      );
-                      await showNotificaction();
                     }
                   },
                 ),

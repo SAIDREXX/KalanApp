@@ -74,6 +74,7 @@ class LoginPageState extends State<LoginPage> {
     int membershipTier = 0;
     int currentStatus = 0;
     FieldValue locationTimestamp = FieldValue.serverTimestamp();
+    List<GeoPoint> defaultLocation = [const GeoPoint(0, 0)];
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('userName', userName ?? 'Sin Nombre');
@@ -96,17 +97,16 @@ class LoginPageState extends State<LoginPage> {
           'userIdentificator': userId,
           'deviceToken': deviceToken,
           'lastLocationTime': locationTimestamp,
+          'routes': defaultLocation,
         },
       },
     });
     try {
-      if (userCredential != null) {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const MainMenu(),
-          ),
-        );
-      }
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const MainMenu(),
+        ),
+      );
     } catch (e) {
       CoolAlert.show(
         context: context,

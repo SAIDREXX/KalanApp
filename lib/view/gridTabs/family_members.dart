@@ -226,7 +226,6 @@ class _FamilyPageState extends State<FamilyPage> {
                                             entry.value['userIdentificator'];
                                         position++;
                                         if (userIdentificator == user!.uid) {
-                                          print('La posición es: $position');
                                           addUserPositionToSharedPreferences(
                                               position);
                                         }
@@ -353,6 +352,7 @@ class _JoinGroupModalState extends State<JoinGroupModal> {
     int currentStatus = 0;
     FieldValue locationTimestamp = FieldValue.serverTimestamp();
     TextEditingController textFieldController = TextEditingController();
+    List<GeoPoint> defaultLocation = [const GeoPoint(0, 0)];
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
@@ -440,6 +440,7 @@ class _JoinGroupModalState extends State<JoinGroupModal> {
                               'userIdentificator': userId,
                               'deviceToken': deviceToken,
                               'lastLocationTime': locationTimestamp,
+                              'routes': defaultLocation,
                             }
                           });
                           await FirebaseFirestore.instance
@@ -540,6 +541,7 @@ class _LeaveGroupModalState extends State<LeaveGroupModal> {
     String defaultLongitude = '-96.9761493805079';
     int membershipTier = 0;
     int currentStatus = 0;
+    List<GeoPoint> defaultLocation = [const GeoPoint(0, 0)];
     FieldValue locationTimestamp = FieldValue.serverTimestamp();
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
@@ -630,6 +632,7 @@ class _LeaveGroupModalState extends State<LeaveGroupModal> {
                                 'userIdentificator': userId,
                                 'deviceToken': deviceToken,
                                 'lastLocationTime': locationTimestamp,
+                                'routes': defaultLocation,
                               },
                             },
                           });

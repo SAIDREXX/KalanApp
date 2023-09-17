@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:custom_marker/marker_icon.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -11,6 +10,7 @@ import 'package:kalanapp/utils/following_to_button.dart';
 import 'package:kalanapp/utils/set_status_button.dart';
 import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class Member4 extends StatefulWidget {
   const Member4({super.key});
@@ -26,7 +26,6 @@ class _Member4State extends State<Member4> {
   List<LatLng> polylinesCoordinates = [];
   LocationData? currentLocation;
   late User? user;
-  late Marker customImageMarker;
   late Map<String, dynamic> membersInfo;
   PolylinePoints polylinePoints = PolylinePoints();
   BitmapDescriptor currentLocationImage = BitmapDescriptor.defaultMarker;
@@ -35,6 +34,7 @@ class _Member4State extends State<Member4> {
   void initState() {
     getCurrentLocation();
     user = FirebaseAuth.instance.currentUser;
+    fetchUserPicture();
     super.initState();
   }
 
@@ -63,24 +63,10 @@ class _Member4State extends State<Member4> {
         userProfilePicture.add(profilePictureURL);
       });
 
-      setState(() async {
-        currentLocationImage = await MarkerIcon.downloadResizePictureCircle(
-            userProfilePicture[3],
-            size: 150,
-            addBorder: true,
-            borderColor: Colors.white,
-            borderSize: 15);
-        customImageMarker = Marker(
-          markerId: const MarkerId('userProfilePicture'),
-          position: LatLng(
-              currentLocation?.latitude ?? 0, currentLocation?.longitude ?? 0),
-          icon: await MarkerIcon.downloadResizePictureCircle(
-              userProfilePicture[3],
-              size: 150,
-              addBorder: true,
-              borderColor: Colors.white,
-              borderSize: 15),
-        );
+      final pictureRequest = await http.get(Uri.parse(userProfilePicture[3]));
+      final pictureBytes = pictureRequest.bodyBytes;
+      setState(() {
+        currentLocationImage = BitmapDescriptor.fromBytes(pictureBytes);
       });
     }
   }
@@ -98,7 +84,6 @@ class _Member4State extends State<Member4> {
         );
       }
       setState(() {
-        fetchUserPicture();
         currentLocation = newLocation;
         polylinesCoordinates.add(
             LatLng(currentLocation!.latitude!, currentLocation!.longitude!));
@@ -156,7 +141,7 @@ class _Member4State extends State<Member4> {
                       icon: currentLocationImage,
                       markerId: const MarkerId("currentLocation"),
                       position: LatLng(currentLocation?.latitude ?? 0,
-                          currentLocation?.longitude ?? 0))
+                          currentLocation?.longitude ?? 0)),
                 },
                 onMapCreated: (mapController) {
                   controller.complete(mapController);
@@ -168,10 +153,10 @@ class _Member4State extends State<Member4> {
                 children: [
                   SizedBox(height: 40),
                   FollowingButton(
-                    index: 2,
+                    index: 3,
                   ),
                   Spacer(),
-                  StatusButton(userIndex: 2),
+                  StatusButton(userIndex: 3),
                   SizedBox(
                     height: 150,
                   )

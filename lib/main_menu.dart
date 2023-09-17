@@ -1,4 +1,3 @@
-import 'package:background_location/background_location.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -62,7 +61,7 @@ class _MainMenuState extends State<MainMenu> {
       distanceFilter:
           10, //Distancia que tiene que recorrer el usuario para actualizar (Metros)
     )).listen((Position position) async {
-      groupName = prefs.getString('groupName') ?? user!.uid.substring(0, 6);
+      groupName = prefs.getString('groupName') ?? user.uid.substring(0, 6);
       DocumentSnapshot groupDoc = await FirebaseFirestore.instance
           .collection('groups')
           .doc(groupName)
@@ -83,7 +82,7 @@ class _MainMenuState extends State<MainMenu> {
     });
 
     Widget getUserProfileImage() {
-      if (user!.photoURL != null) {
+      if (user.photoURL != null) {
         return ClipOval(
           child: Image.network(
             user.photoURL!,
