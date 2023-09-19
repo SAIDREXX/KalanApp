@@ -12,9 +12,9 @@ class AccesibilityPageState extends State<AccesibilityPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Accesibilidad"),
+        title: const Text("Accesibilidad"),
       ),
-      body: Center(
+      body: const Center(
         child: Text('Esto es el apartado de Accesibilidad'),
       ),
     );

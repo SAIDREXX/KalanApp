@@ -11,9 +11,9 @@ class NotificationPageState extends State<NotificationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Notificaciones "),
+        title: const Text("Notificaciones "),
       ),
-      body: Center(
+      body: const Center(
         child: Text('Este es el apartado de Notificaciones'),
       ),
     );

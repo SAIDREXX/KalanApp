@@ -12,9 +12,9 @@ class LeguagePageState extends State<LeguagePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Lenguajes'),
+        title: const Text('Lenguajes'),
       ),
-      body: Center(
+      body: const Center(
         child: Text('Apartado de Lenguaje'),
       ),
     );

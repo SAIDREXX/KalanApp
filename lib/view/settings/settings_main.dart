@@ -266,7 +266,7 @@ class SettingsPageState extends State<SettingsPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => SecurityPage()),
+                                  builder: (context) => const SecurityPage()),
                             );
                           },
                           style: OutlinedButton.styleFrom(
@@ -333,7 +333,7 @@ class SettingsPageState extends State<SettingsPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => NotificationPage(),
+                                builder: (context) => const NotificationPage(),
                               ),
                             );
                           },
@@ -401,7 +401,7 @@ class SettingsPageState extends State<SettingsPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => LocationPage(),
+                                builder: (context) => const LocationPage(),
                               ),
                             );
                           },
@@ -530,7 +530,7 @@ class SettingsPageState extends State<SettingsPage> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => AccesibilityPage()));
+                                    builder: (context) => const AccesibilityPage()));
                           },
                           style: OutlinedButton.styleFrom(
                             side: BorderSide(
@@ -596,7 +596,7 @@ class SettingsPageState extends State<SettingsPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => LeguagePage(),
+                                builder: (context) => const LeguagePage(),
                               ),
                             );
                           },
@@ -663,7 +663,7 @@ class SettingsPageState extends State<SettingsPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => SupportPage(),
+                                builder: (context) => const SupportPage(),
                               ),
                             );
                           },

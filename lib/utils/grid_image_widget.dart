@@ -5,7 +5,7 @@ class ImageItem extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
 
-  ImageItem(
+  const ImageItem(
       {required this.imagePath,
       required this.text,
       required this.onPressed,

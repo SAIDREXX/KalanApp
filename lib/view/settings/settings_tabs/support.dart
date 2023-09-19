@@ -8,12 +8,13 @@ class SupportPage extends StatefulWidget {
 }
 
 class SupportPageState extends State<SupportPage> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Soporte'),
+        title: const Text('Soporte'),
       ),
-      body: Center(
+      body: const Center(
         child: Text('Este es el apartado de Soporte'),
       ),
     );

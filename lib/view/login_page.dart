@@ -295,7 +295,7 @@ class LoginPageState extends State<LoginPage> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => MainMenu(),
+                                        builder: (context) => const MainMenu(),
                                       ),
                                     );
                                   } catch (e) {
@@ -473,8 +473,8 @@ class LoginPageState extends State<LoginPage> {
 class Input extends StatelessWidget {
   const Input({
     super.key,
-    required String this.hint,
-    required IconData this.icon,
+    required this.hint,
+    required this.icon,
   });
 
   final String hint;

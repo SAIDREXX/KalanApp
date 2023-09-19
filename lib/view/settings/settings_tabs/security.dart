@@ -12,9 +12,9 @@ class SecuritypageState extends State<SecurityPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Seguridad "),
+        title: const Text("Seguridad "),
       ),
-      body: Center(
+      body: const Center(
         child: Text('esto es el apartado de seguridad'),
       ),
     );

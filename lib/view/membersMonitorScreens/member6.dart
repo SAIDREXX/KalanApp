@@ -58,10 +58,10 @@ class _Member6State extends State<Member6> {
       });
       List<String> userProfilePicture = [];
 
-      memberEntries.forEach((entry) {
+      for (var entry in memberEntries) {
         String profilePictureURL = entry.value['pictureURL'];
         userProfilePicture.add(profilePictureURL);
-      });
+      }
 
       setState(() async {
         currentLocationImage = await MarkerIcon.downloadResizePictureCircle(
@@ -116,10 +116,10 @@ class _Member6State extends State<Member6> {
 
           result.then((value) {
             if (value.points.isNotEmpty) {
-              value.points.forEach((point) {
+              for (var point in value.points) {
                 polylinesCoordinates
                     .add(LatLng(point.latitude, point.longitude));
-              });
+              }
             }
           });
         }

@@ -19,7 +19,7 @@ bool verifyPassword(String password, HashedPassword hashedPassword) {
 }
 
 void main() {
-  final password = 'secretpassword';
+  const password = 'secretpassword';
 
   // Registro de usuario
   final hashedPassword = hashPassword(password);
@@ -29,7 +29,7 @@ void main() {
   print('Contraseña encriptada: ${hashedPassword.hash}');
 
   // Simulación de inicio de sesión
-  final inputPassword = 'secretpassword';
+  const inputPassword = 'secretpassword';
   final passwordMatch = verifyPassword(inputPassword, hashedPassword);
 
   if (passwordMatch) {

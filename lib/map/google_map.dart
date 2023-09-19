@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -78,7 +77,7 @@ class _GoogleMapsMapsState extends State<GoogleMapsMaps> {
           List<double> latitudes = [];
           List<double> longitudes = [];
 
-          memberEntries.forEach((entry) {
+          for (var entry in memberEntries) {
             double longitude = entry.value['longitude'];
             double latitude = entry.value['latitude'];
 
@@ -91,7 +90,7 @@ class _GoogleMapsMapsState extends State<GoogleMapsMaps> {
                     latitudes[widget.userIndex], longitudes[widget.userIndex]);
               });
             });
-          });
+          }
         }
 
         return GoogleMap(

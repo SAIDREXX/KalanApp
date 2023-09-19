@@ -63,6 +63,7 @@ dependencies:
   custom_marker: ^1.0.0
   flutter_svg: ^1.1.6
   flutter_polyline_points: ^2.0.0
+  url_launcher: ^6.1.14
 dev_dependencies:
   flutter_test:
     sdk: flutter

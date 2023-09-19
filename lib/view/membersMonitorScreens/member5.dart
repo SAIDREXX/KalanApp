@@ -58,10 +58,10 @@ class _Member5State extends State<Member5> {
       });
       List<String> userProfilePicture = [];
 
-      memberEntries.forEach((entry) {
+      for (var entry in memberEntries) {
         String profilePictureURL = entry.value['pictureURL'];
         userProfilePicture.add(profilePictureURL);
-      });
+      }
 
       final pictureRequest = await http.get(Uri.parse(userProfilePicture[4]));
       final pictureBytes = pictureRequest.bodyBytes;
@@ -101,10 +101,10 @@ class _Member5State extends State<Member5> {
 
           result.then((value) {
             if (value.points.isNotEmpty) {
-              value.points.forEach((point) {
+              for (var point in value.points) {
                 polylinesCoordinates
                     .add(LatLng(point.latitude, point.longitude));
-              });
+              }
             }
           });
         }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kalanapp/constants/colors.dart';
+import 'package:kalanapp/utils/add_contact_modal.dart';
 
 class ContactsPage extends StatefulWidget {
   const ContactsPage({super.key});
@@ -122,7 +123,13 @@ class _ContactsPageState extends State<ContactsPage> {
                                               const EdgeInsets.only(right: 7),
                                           child: GestureDetector(
                                             onTap: () {
-                                              print('Touch');
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return const Center(
+                                                      child: ContactsModal(),
+                                                    );
+                                                  });
                                             },
                                             child: Icon(
                                               Icons.arrow_forward_ios,

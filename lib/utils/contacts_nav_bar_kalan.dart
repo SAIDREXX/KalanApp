@@ -117,12 +117,12 @@ class _ContactsNavBarKalanState extends State<ContactsNavBarKalan> {
 
                   List<Widget> profilePictures = [];
 
-                  memberEntries.forEach((memberEntry) {
+                  for (var memberEntry in memberEntries) {
                     String pictureURL = memberEntry.value['pictureURL'];
                     profilePictures.add(ProfilePicturesList(
                       imagePath: pictureURL,
                     ));
-                  });
+                  }
 
                   return Row(
                     children: [

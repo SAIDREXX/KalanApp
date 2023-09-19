@@ -12,9 +12,9 @@ class LocationPageState extends State<LocationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Ubicacion "),
+        title: const Text("Ubicacion "),
       ),
-      body: Center(
+      body: const Center(
         child: Text("Este es el apartado de Ubicacion"),
       ),
     );

@@ -218,7 +218,7 @@ class _FamilyPageState extends State<FamilyPage> {
 
                                       List<Widget> familyItems = [];
                                       int position = -1;
-                                      memberEntries.forEach((entry) {
+                                      for (var entry in memberEntries) {
                                         String name = entry.value['name'];
                                         String pictureURL =
                                             entry.value['pictureURL'];
@@ -235,7 +235,7 @@ class _FamilyPageState extends State<FamilyPage> {
                                           text: name,
                                           onPressed: () {},
                                         ));
-                                      });
+                                      }
                                       if (familyItems.length > 1) {
                                         isInGroup = true;
                                       }

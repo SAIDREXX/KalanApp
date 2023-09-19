@@ -23,7 +23,7 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController name_controller = TextEditingController();
   TextEditingController last_name_controller = TextEditingController();
   TextEditingController day_controller = TextEditingController();
-  TextEditingController _monthcontroller = TextEditingController();
+  final TextEditingController _monthcontroller = TextEditingController();
   TextEditingController year_controller = TextEditingController();
   TextEditingController email_controller = TextEditingController();
   TextEditingController password_controller = TextEditingController();
@@ -360,7 +360,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     initialSelection: 'MX',
                                     showCountryOnly: true,
                                     showOnlyCountryWhenClosed: false,
-                                    favorite: ['+1', 'US'],
+                                    favorite: const ['+1', 'US'],
                                     onChanged: (CountryCode? countryCode) {
                                       // Aquí puedes realizar alguna acción cuando cambie el código de país seleccionado.
                                       setState(() {
