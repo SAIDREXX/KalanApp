@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kalanapp/constants/colors.dart';
+import 'package:kalanapp/utils/upload_file_modal.dart';
 
 class SecureFolderPage extends StatefulWidget {
   const SecureFolderPage({super.key});
@@ -123,7 +124,13 @@ class _SecureFolderPageState extends State<SecureFolderPage> {
                                               const EdgeInsets.only(right: 7),
                                           child: GestureDetector(
                                             onTap: () {
-                                              print('Touch');
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return const Center(
+                                                      child: UploadFileModal(),
+                                                    );
+                                                  });
                                             },
                                             child: Icon(
                                               Icons.arrow_forward_ios,
@@ -190,7 +197,13 @@ class _SecureFolderPageState extends State<SecureFolderPage> {
                                               const EdgeInsets.only(right: 7),
                                           child: GestureDetector(
                                             onTap: () {
-                                              print('Touch');
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return const Center(
+                                                      child: UploadFileModal(),
+                                                    );
+                                                  });
                                             },
                                             child: Icon(
                                               Icons.arrow_forward_ios,
@@ -257,7 +270,13 @@ class _SecureFolderPageState extends State<SecureFolderPage> {
                                               const EdgeInsets.only(right: 7),
                                           child: GestureDetector(
                                             onTap: () {
-                                              print('Touch');
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return const Center(
+                                                      child: UploadFileModal(),
+                                                    );
+                                                  });
                                             },
                                             child: Icon(
                                               Icons.arrow_forward_ios,
@@ -324,7 +343,13 @@ class _SecureFolderPageState extends State<SecureFolderPage> {
                                               const EdgeInsets.only(right: 7),
                                           child: GestureDetector(
                                             onTap: () {
-                                              print('Touch');
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return const Center(
+                                                      child: UploadFileModal(),
+                                                    );
+                                                  });
                                             },
                                             child: Icon(
                                               Icons.arrow_forward_ios,
@@ -391,7 +416,13 @@ class _SecureFolderPageState extends State<SecureFolderPage> {
                                               const EdgeInsets.only(right: 7),
                                           child: GestureDetector(
                                             onTap: () {
-                                              print('Touch');
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return const Center(
+                                                      child: UploadFileModal(),
+                                                    );
+                                                  });
                                             },
                                             child: Icon(
                                               Icons.arrow_forward_ios,
@@ -458,7 +489,13 @@ class _SecureFolderPageState extends State<SecureFolderPage> {
                                               const EdgeInsets.only(right: 7),
                                           child: GestureDetector(
                                             onTap: () {
-                                              print('Touch');
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return const Center(
+                                                      child: UploadFileModal(),
+                                                    );
+                                                  });
                                             },
                                             child: Icon(
                                               Icons.arrow_forward_ios,
