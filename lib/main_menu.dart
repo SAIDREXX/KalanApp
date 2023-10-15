@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:kalanapp/constants/colors.dart';
 import 'package:kalanapp/utils/grid_image_widget.dart';
+import 'package:kalanapp/utils/sos_screen.dart';
 import 'package:kalanapp/view/gridTabs/navigation_bar_controller.dart';
 import 'package:kalanapp/view/gridTabs/family_members.dart';
 import 'package:kalanapp/view/gridTabs/help_numbers.dart';
@@ -149,7 +150,15 @@ class _MainMenuState extends State<MainMenu> {
                     child: SizedBox(
                       height: 42, // Ajusta el alto del botón aquí
                       child: MaterialButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return const Center(
+                                  child: KalanSOSPage(),
+                                );
+                              });
+                        },
                         color: Colors.red,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(32),

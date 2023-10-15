@@ -78,7 +78,9 @@ class _KalanSOSPageState extends State<KalanSOSPage> {
               SizedBox(
                 width: 140,
                 child: MaterialButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                   color: Colors.green,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(32),
