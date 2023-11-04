@@ -1,16 +1,21 @@
-# kalanapp
+# Kalan - ¡Cuida a tus seres queridos! 🌟
 
-Repositorio oficial de la app de seguridad Kalan, sientase libre de NO COPIAR nada de lo escrito aquí, que tenga un lindo dia
+Kalan, cuyo nombre proviene del Maya y significa "Cuidar" o "Proteger", es una aplicación móvil desarrollada orgullosamente por estudiantes mexicanos para ayudarte a cuidar a las personas que más te importan.
 
-## Getting Started
+## Ventajas
+🔒 **Membresías Personalizadas**: Adquiere una membresía para parejas, familias o grupos de amigos de hasta 6 personas y agrégalos a tu grupo de monitoreo.
 
-This project is a starting point for a Flutter application.
+📍 **Monitoreo en Tiempo Real**: Mantente siempre seguro al seguir las rutas y conocer la ubicación actual de tus seres queridos. La función de "Monitoreo" está a tu disposición.
 
-A few resources to get you started if this is your first Flutter project:
+🚨 **Establece tu Estado**: Notifica a los miembros del grupo si estarás en la calle o en algún lugar de riesgo, como una fiesta, a través de la función "Establecer Estado".
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+🆘 **Números de Emergencia Dinámicos**: Accede rápidamente a los números de emergencia locales que se actualizan según tu ubicación actual. Ahorra tiempo vital en caso de emergencia.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+📁 **Carpeta Segura**: Guarda tus documentos personales en formato PDF en un lugar seguro y fuera del almacenamiento local del dispositivo con la función "Carpeta Segura". Tus documentos estarán protegidos de posibles intentos de robo y serán de fácil acceso para trámites digitales.
+
+## TuApp - Proyecto Final
+Kalan es el proyecto final de un concurso internacional de aplicaciones móviles llamado "TuApp". Estamos emocionados de compartir esta aplicación con el mundo y esperamos que sea útil para aquellos que desean mantener a sus seres queridos seguros y cuidados.
+
+¡Descarga Kalan y empieza a proteger a quienes más quieres hoy mismo! 🤗
+
+Para obtener más información y detalles sobre cómo comenzar, visita nuestra [página web](https://www.kalanapp.com).
